@@ -554,6 +554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2979184442491675943}
+  - component: {fileID: 8858893661814273795}
   m_Layer: 0
   m_Name: RewardShoot
   m_TagString: Untagged
@@ -579,6 +580,29 @@ Transform:
   - {fileID: 6682355168906085045}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8858893661814273795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2944881989750253367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddcff58c489103f43ad884db5a9312d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardShoot
+  fuelSpherePrefab: {fileID: 115112926155041883, guid: 8f29b004a1a08734aa8c8c0aba8e2c0d, type: 3}
+  shootPath:
+  - {x: 0, y: 6, z: 0}
+  - {x: 0, y: 1.642, z: 0}
+  - {x: 0, y: 1.389, z: 0}
+  shootPathScale:
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  spawnAnimDuration: 0.5
+  delayBetweenSpawn: 0.1
 --- !u!1 &3963839063657199184
 GameObject:
   m_ObjectHideFlags: 0

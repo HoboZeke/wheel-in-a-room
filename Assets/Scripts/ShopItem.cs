@@ -2,15 +2,8 @@ using UnityEngine;
 
 public class ShopItem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string ItemName {  get; private set; }
+    [TextArea(3,10)]
+    public string ItemDescription { get; private set; }
+    public int ItemCost { get; private set; }
 }

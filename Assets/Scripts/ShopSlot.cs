@@ -1,16 +1,19 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ShopSlot : MonoBehaviour
+public class ShopSlot : MonoBehaviour, IPointerDownHandler
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] Shop shop;
+    [SerializeField] GameObject shopItemVisual;
+    [SerializeField] ShopItem itemInSlot;
+    [SerializeField] int shopItemCost;
+    [SerializeField] TextMeshProUGUI shopCostLabel;
+
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        
+        shop.SelectActiveShopSlot(this);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public ShopItem ItemInSlot() { return itemInSlot; }
 }
