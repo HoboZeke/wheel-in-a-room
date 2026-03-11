@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RewardProfile : MonoBehaviour
 {
-    public enum RewardType { Fuel }
+    public enum RewardType { Fuel, Coins }
     [SerializeField] RewardType rewardType;
     [SerializeField] int amount;
 
@@ -12,6 +12,9 @@ public class RewardProfile : MonoBehaviour
         {
             case RewardType.Fuel:
                 RewardShoot.main.SpawnFuelReward(amount);
+                break;
+            case RewardType.Coins:
+                CoinSpawner.main.SpawnCoins(amount);
                 break;
         }
     }

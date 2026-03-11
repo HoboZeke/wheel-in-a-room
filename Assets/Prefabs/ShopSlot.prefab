@@ -70,6 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopSlot
   shop: {fileID: 0}
   shopItemVisual: {fileID: 3865582668779174646}
+  shopItemMeshFilter: {fileID: 2695913229992131101}
+  shopItemMeshRenderer: {fileID: 1912460909534450486}
   itemInSlot: {fileID: 0}
   shopItemCost: 0
   shopCostLabel: {fileID: 0}
