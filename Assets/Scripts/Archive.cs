@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Archive : MonoBehaviour
 {
@@ -7,6 +9,9 @@ public class Archive : MonoBehaviour
 
     [SerializeField] ShopItem[] shopItems;
     List<ShopItem> shopItemPool = new List<ShopItem>();
+
+    [SerializeField] WheelSegment.SegmentColour colourLookup;
+    [SerializeField] RewardProfile[] colourProfiles;
 
     private void Awake()
     {
@@ -34,4 +39,8 @@ public class Archive : MonoBehaviour
         }
     }
 
+    public RewardProfile RewardProfileForSegmentColour(WheelSegment.SegmentColour colour)
+    {
+        return colourProfiles[(int)colour];
+    }
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ShopItem", menuName = "ScriptableObjects/ShopItem")]
@@ -13,6 +14,10 @@ public class ShopItem : ScriptableObject
     [SerializeField] ItemType type;
     [SerializeField] ItemRarity rarity;
 
+    [UnitHeaderInspectable("Optionals")]
+    [SerializeField] WheelSegment.SegmentColour segmentColour;
+    [SerializeField] Color visualColour;
+
     public enum ItemType { Wedge, Arrow, Trinket }
     public enum ItemRarity { Common, Uncommon, Rare, Unique }
 
@@ -23,4 +28,6 @@ public class ShopItem : ScriptableObject
     public Material ItemMaterial { get { return material; } private set { material = value; } }
     public ItemType Type { get { return type; } private set { type = value; } }
     public ItemRarity Rarity { get { return rarity; } private set { rarity = value; } }
+    public WheelSegment.SegmentColour SegmentColour { get { return segmentColour; } private set { segmentColour = value; } }
+    public Color VisualColour { get {return visualColour; } private set { visualColour = value; } }
 }

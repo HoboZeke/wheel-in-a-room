@@ -25,13 +25,20 @@ public class Wheel : MonoBehaviour
 
     private void Start()
     {
-        AddSegment(3, null, Color.azure);
-        AddSegment(2, null, Color.orangeRed);
-        AddSegment(1, null, Color.green);
+        AddSegment(3, WheelSegment.SegmentColour.White, Color.azure);
+        AddSegment(2, WheelSegment.SegmentColour.Red, Color.orangeRed);
+        AddSegment(1, WheelSegment.SegmentColour.Green, Color.green);
     }
 
-    void AddSegment(int size, RewardProfile reward, Color color)
+    public void AddSegment(int size, WheelSegment.SegmentColour sColour, Color color)
     {
+        if(GetSegment(sColour) != null)
+        {
+            GetSegment(sColour).AdjustSegmentSize(size);
+            AlignAllSegments();
+            return;
+        }
+
         GameObject obj = Instantiate(wheelSegmentPrefab);
         obj.transform.SetParent(segmentCanvas);
         obj.transform.localPosition = Vector3.zero;
@@ -39,8 +46,17 @@ public class Wheel : MonoBehaviour
 
         WheelSegment seg = obj.GetComponent<WheelSegment>();
         wheelSegments.Add(seg);
-        seg.Setup(size, color, reward);
+        seg.Setup(size, color, sColour);
         AlignAllSegments();
+    }
+
+    WheelSegment GetSegment(WheelSegment.SegmentColour sColour)
+    {
+        foreach (WheelSegment seg in wheelSegments)
+        {
+            if(seg.SegColour() == sColour) { return seg; }
+        }
+        return null;
     }
 
     void AlignAllSegments()
@@ -58,6 +74,7 @@ public class Wheel : MonoBehaviour
     {
         if (currentState != WheelState.Idle) { return; }
 
+        ProgressTracker.main.UseSpin();
         ChangeState(WheelState.Spinning);
         StartCoroutine(AnimateWheelSpin(Random.Range(spinDuration.x, spinDuration.y)));
     }
@@ -76,19 +93,23 @@ public class Wheel : MonoBehaviour
         {
             Debug.LogWarning("No reward segment found!!!");
         }
+
+        ChangeState(WheelState.Idle);
     }
 
     WheelSegment RewardSegmentAtPoint(float evaluationAngle)
     {
-        float evaluationPosition = TopOfWheelAngle() * -1f;
+        float evaluationPosition = TopOfWheelAngle();
         float checkedAngles = 0f;
 
 
         for (int i = 0; i < wheelSegments.Count; i++)
         {
             checkedAngles += wheelSegments[i].AngleOnWheel();
-            if (checkedAngles <= evaluationPosition)
+            Debug.Log("Checked Angles " + checkedAngles + " / EvaluationPos " + evaluationPosition);
+            if (evaluationPosition <= checkedAngles)
             {
+                Debug.Log("FOUND " + wheelSegments[i].SegColour().ToString() + " SEGMENT");
                 return wheelSegments[i];
             }
         }

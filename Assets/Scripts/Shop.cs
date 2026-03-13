@@ -105,7 +105,15 @@ public class Shop : Interactable
 
     public void BuyItemInSlot(int slot)
     {
+        ShopItem itemToBuy = shopSlots[slot].ItemInSlot();
 
+        switch (itemToBuy.Type) 
+        {
+            case ShopItem.ItemType.Wedge:
+                Wheel.main.AddSegment(1, itemToBuy.SegmentColour, itemToBuy.VisualColour);
+                break;
+        }    
+        
     }
 }
 

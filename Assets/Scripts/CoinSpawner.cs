@@ -52,7 +52,7 @@ public class CoinSpawner : MonoBehaviour
             }
             else
             {
-                List<Transform> list = new List<Transform>();
+                List<Transform> list = new List<Transform>(spawnPoints);
                 for(int i = 0; i < wave; i++)
                 {
                     Transform t = list[Random.Range(0, list.Count)];

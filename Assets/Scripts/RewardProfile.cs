@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class RewardProfile : MonoBehaviour
+[CreateAssetMenu(fileName = "RewardProfile", menuName = "ScriptableObjects/RewardProfile")]
+public class RewardProfile : ScriptableObject
 {
     public enum RewardType { Fuel, Coins }
     [SerializeField] RewardType rewardType;

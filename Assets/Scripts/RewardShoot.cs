@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RewardShoot : MonoBehaviour
@@ -6,12 +7,14 @@ public class RewardShoot : MonoBehaviour
     public static RewardShoot main;
 
     [SerializeField] GameObject fuelSpherePrefab;
-
+    List<GameObject> fuel = new List<GameObject>();
+    
     [SerializeField] Vector3[] shootPath, shootPathScale;
     [SerializeField] float spawnAnimDuration;
     [SerializeField] float delayBetweenSpawn;
     int queue;
     bool queuedSpawns;
+    bool leverBusy;
 
     private void Awake()
     {
@@ -27,12 +30,40 @@ public class RewardShoot : MonoBehaviour
         }
     }
 
+    public void DepositCoalIntoFurnance()
+    {
+        if (leverBusy) { return; }
+
+        if(fuel.Count >= Furnance.main.NextInputAmount())
+        {
+            StartCoroutine(DepositCoalInFurnance(Furnance.main.NextInputAmount()));
+        }
+    }
+
+    GameObject ClosestFuelToFurnanceShoot()
+    {
+        float closestValue = fuel[0].transform.localPosition.x + (fuel[0].transform.localPosition.y * -1);
+        GameObject closestFuel = fuel[0];
+
+        for (int i = 1; i < fuel.Count; i++)
+        {
+            if(closestValue < fuel[i].transform.localPosition.x + (fuel[i].transform.localPosition.y * -1))
+            {
+                closestValue = fuel[i].transform.localPosition.x + (fuel[i].transform.localPosition.y * -1);
+                closestFuel = fuel[i];
+            }
+        }
+
+        return closestFuel;
+    }
+
     IEnumerator SpawnQueue()
     {
         queuedSpawns = true;
         while(queue > 0)
         {
             GameObject obj = Instantiate(fuelSpherePrefab);
+            fuel.Add(obj);
             StartCoroutine(DepositObjInShoot(obj.transform, spawnAnimDuration));
             yield return new WaitForSeconds(delayBetweenSpawn);
         }
@@ -68,5 +99,24 @@ public class RewardShoot : MonoBehaviour
         {
             t.GetComponent<Rigidbody>().isKinematic = false;
         }
+    }
+
+    IEnumerator DepositCoalInFurnance(int amountToDeposit)
+    {
+        leverBusy = true;
+        float dur = 0.4f;
+
+        while(amountToDeposit > 0)
+        {
+            GameObject f = ClosestFuelToFurnanceShoot();
+            fuel.Remove(f);
+            Destroy(f);
+            Furnance.main.AddCoal(1);
+            amountToDeposit--;
+
+            yield return new WaitForSeconds(dur);
+        }
+
+        leverBusy = false;
     }
 }

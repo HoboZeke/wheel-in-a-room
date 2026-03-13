@@ -3,26 +3,34 @@ using UnityEngine.UI;
 
 public class WheelSegment : MonoBehaviour
 {
+    public enum SegmentColour { White, Green, Red};
     [SerializeField] RectTransform rt;
     [SerializeField] Color color;
+    [SerializeField] SegmentColour segmentColour;
     [SerializeField] Image image;
     [SerializeField] int size;
     [SerializeField] RewardProfile reward;
 
-    public void Setup(int s, Color c, RewardProfile reward)
+    public void Setup(int s, Color c, SegmentColour sColour)
     {
         this.color = c;
-        this.reward = reward;
+        segmentColour = sColour;
+        this.reward = Archive.main.RewardProfileForSegmentColour(segmentColour);
         size = s;
         rt.anchoredPosition = Vector3.zero;
         rt.offsetMax = Vector3.zero;
         rt.offsetMin = Vector3.zero;
-        
+
 
         UpdateVisual();
     }
 
     public int SegmentSize() { return size; }
+    public void AdjustSegmentSize(int amount)
+    {
+        size += amount;
+        if(size < -1) {  size = 0; }
+    }
 
     public float SegmentActualSize() { return (float)size / Wheel.main.WheelSize(); }
 
@@ -39,5 +47,6 @@ public class WheelSegment : MonoBehaviour
         reward.ProcessReward(this);
     }
 
+    public SegmentColour SegColour() { return segmentColour; }
 
 }
