@@ -12,6 +12,7 @@ public class Archive : MonoBehaviour
 
     [SerializeField] WheelSegment.SegmentColour colourLookup;
     [SerializeField] RewardProfile[] colourProfiles;
+    [SerializeField] Color[] colourProfileColours;
 
     private void Awake()
     {
@@ -42,5 +43,10 @@ public class Archive : MonoBehaviour
     public RewardProfile RewardProfileForSegmentColour(WheelSegment.SegmentColour colour)
     {
         return colourProfiles[(int)colour];
+    }
+
+    public Color ColourForColourProfile(WheelSegment.SegmentColour colour)
+    {
+        return colourProfileColours[(int)colour];
     }
 }

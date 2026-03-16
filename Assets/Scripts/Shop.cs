@@ -78,6 +78,12 @@ public class Shop : Interactable
         else if (slot != activeSlot)
         {
             activeSlot = slot;
+            if(activeSlot.ItemInSlot() == null)
+            {
+                tooltipBox.gameObject.SetActive(false);
+                return;
+            }
+
             tooltipBox.gameObject.SetActive(true);
             tooltipBox.position = slot.transform.position;
 
@@ -110,10 +116,11 @@ public class Shop : Interactable
         switch (itemToBuy.Type) 
         {
             case ShopItem.ItemType.Wedge:
-                Wheel.main.AddSegment(1, itemToBuy.SegmentColour, itemToBuy.VisualColour);
+                Wheel.main.AddSegment(1, itemToBuy.SegmentColour);
                 break;
-        }    
-        
+        }
+
+        shopSlots[slot].EmptySlot();        
     }
 }
 

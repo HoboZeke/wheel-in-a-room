@@ -12,11 +12,14 @@ public class RewardProfile : ScriptableObject
         switch (rewardType)
         {
             case RewardType.Fuel:
-                RewardShoot.main.SpawnFuelReward(amount);
+                Wheel.main.GainRewardResources(0, amount);
                 break;
             case RewardType.Coins:
-                CoinSpawner.main.SpawnCoins(amount);
+                Wheel.main.GainRewardResources(amount, 0);
                 break;
         }
     }
+
+    public RewardType RewardTypeEnum() { return rewardType; }
+    public int RewardAmount() { return amount; }
 }

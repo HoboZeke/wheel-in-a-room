@@ -9,14 +9,23 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] GameObject coinPrefab;
 
     [SerializeField] Transform[] spawnPoints;
+    [SerializeField] Transform explosionCentre;
+    [SerializeField] float minSpawnForce, maxSpawnForce;
     [SerializeField] float delayBetweenSpawn;
     List<GameObject> coins = new List<GameObject>();
     int toSpawn = 0;
     bool spawning = false;
+    bool delaying = false;
 
     private void Awake()
     {
         main = this;
+    }
+
+    [ContextMenu("DebugSpawn20")]
+    public void DebugSpawn()
+    {
+        SpawnCoins(20);
     }
 
     public void SpawnCoins(int amount)
@@ -29,6 +38,28 @@ public class CoinSpawner : MonoBehaviour
         {
             StartCoroutine(SpawnCoinsCoroutine(amount));
         }
+    }
+
+    public void SpawnCoinsAfterDelay(int amount)
+    {
+        toSpawn += amount;
+        if (!delaying && !spawning)
+        {
+            StartCoroutine(SpawnDelay(1f));
+        }
+    }
+
+    IEnumerator SpawnDelay(float delay)
+    { 
+        delaying = true;
+        yield return new WaitForSeconds(delay);
+
+        if (!spawning)
+        {
+            StartCoroutine(SpawnCoinsCoroutine(0));
+        }
+        
+        delaying = false;
     }
 
     IEnumerator SpawnCoinsCoroutine(int amount)
@@ -48,6 +79,7 @@ public class CoinSpawner : MonoBehaviour
                     GameObject obj = Instantiate(coinPrefab);
                     obj.transform.position = t.position;
                     coins.Add(obj);
+                    obj.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(minSpawnForce, maxSpawnForce), explosionCentre.position, 0f);
                 }
             }
             else
@@ -59,12 +91,13 @@ public class CoinSpawner : MonoBehaviour
                     GameObject obj = Instantiate(coinPrefab);
                     obj.transform.position = t.position;
                     coins.Add(obj);
+                    obj.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(minSpawnForce, maxSpawnForce), explosionCentre.position, 0f);
                     list.Remove(t);
                 }
             }
 
 
-                toSpawn -= wave;
+            toSpawn -= wave;
             if(toSpawn > 0) { yield return new WaitForSeconds(delayBetweenSpawn); }
         }
 

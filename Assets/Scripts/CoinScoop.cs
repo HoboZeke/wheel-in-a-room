@@ -84,7 +84,7 @@ public class CoinScoop : MonoBehaviour
     {
         if(fillMax < coinCount) { fillMax = coinCount; }
 
-        float y = coinCount / fillMax * fillYScaleMax;
+        float y = ((float)coinCount / (float)fillMax) * fillYScaleMax;
         fill.localScale = new Vector3(fill.localScale.x, y, fill.localScale.z);
     }
 }

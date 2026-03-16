@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RewardShoot : MonoBehaviour
@@ -8,7 +9,8 @@ public class RewardShoot : MonoBehaviour
 
     [SerializeField] GameObject fuelSpherePrefab;
     List<GameObject> fuel = new List<GameObject>();
-    
+
+    [SerializeField] TextMeshProUGUI contextValueText;
     [SerializeField] Vector3[] shootPath, shootPathScale;
     [SerializeField] float spawnAnimDuration;
     [SerializeField] float delayBetweenSpawn;
@@ -40,6 +42,15 @@ public class RewardShoot : MonoBehaviour
         }
     }
 
+    void UpdateContents()
+    {
+        if(fuel.Count == 0) { contextValueText.text = "Empty"; }
+        else
+        {
+            contextValueText.text = "Fuel x" + fuel.ToString();
+        }
+    }
+
     GameObject ClosestFuelToFurnanceShoot()
     {
         float closestValue = fuel[0].transform.localPosition.x + (fuel[0].transform.localPosition.y * -1);
@@ -64,6 +75,7 @@ public class RewardShoot : MonoBehaviour
         {
             GameObject obj = Instantiate(fuelSpherePrefab);
             fuel.Add(obj);
+            UpdateContents();
             StartCoroutine(DepositObjInShoot(obj.transform, spawnAnimDuration));
             yield return new WaitForSeconds(delayBetweenSpawn);
         }
@@ -110,6 +122,7 @@ public class RewardShoot : MonoBehaviour
         {
             GameObject f = ClosestFuelToFurnanceShoot();
             fuel.Remove(f);
+            UpdateContents();
             Destroy(f);
             Furnance.main.AddCoal(1);
             amountToDeposit--;

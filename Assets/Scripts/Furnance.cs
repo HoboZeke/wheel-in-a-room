@@ -36,7 +36,7 @@ public class Furnance : MonoBehaviour
         int cur = spinsGenerated;
         int coalCount = heldCoal;
 
-        while (coalCount < Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur)))
+        while (coalCount > Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur)))
         {
             coalCount -= Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur));
             cur++;
@@ -50,7 +50,7 @@ public class Furnance : MonoBehaviour
         int cur = spinsGenerated;
         int coalCount = heldCoal;
 
-        while(coalCount < Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur)))
+        while(coalCount > Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur)))
         {
             coalCount -= Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur));
             cur++;
@@ -61,7 +61,9 @@ public class Furnance : MonoBehaviour
 
     float CoalRequiredMultiplier(int prevFires)
     {
-        if (prevFires < coalReqMulti.Length) { return coalReqMulti[prevFires]; }
+        if (prevFires < coalReqMulti.Length) {
+            Debug.Log("Returning Coal Req Multi " + coalReqMulti[prevFires]);
+            return coalReqMulti[prevFires]; }
         else { return coalReqMulti[coalReqMulti.Length - 1] * (prevFires - coalReqMulti.Length + 2); }
     }
 
@@ -75,7 +77,7 @@ public class Furnance : MonoBehaviour
     {
         for (int i = 0; i < coalObjects.Length; i++)
         {
-            coalObjects[i].SetActive(i <= heldCoal);
+            coalObjects[i].SetActive(i < heldCoal);
         }
         
         coalCountText.text = heldCoal.ToString();

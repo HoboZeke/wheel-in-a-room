@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Wheel : MonoBehaviour
 {
@@ -25,17 +27,18 @@ public class Wheel : MonoBehaviour
 
     private void Start()
     {
-        AddSegment(3, WheelSegment.SegmentColour.White, Color.azure);
-        AddSegment(2, WheelSegment.SegmentColour.Red, Color.orangeRed);
-        AddSegment(1, WheelSegment.SegmentColour.Green, Color.green);
+        AddSegment(3, WheelSegment.SegmentColour.White);
+        AddSegment(2, WheelSegment.SegmentColour.Red);
+        AddSegment(1, WheelSegment.SegmentColour.Green);
     }
 
-    public void AddSegment(int size, WheelSegment.SegmentColour sColour, Color color)
+    public void AddSegment(int size, WheelSegment.SegmentColour sColour)
     {
         if(GetSegment(sColour) != null)
         {
             GetSegment(sColour).AdjustSegmentSize(size);
             AlignAllSegments();
+            RewardBoard.main.SegmentUpdate(sColour);
             return;
         }
 
@@ -46,7 +49,8 @@ public class Wheel : MonoBehaviour
 
         WheelSegment seg = obj.GetComponent<WheelSegment>();
         wheelSegments.Add(seg);
-        seg.Setup(size, color, sColour);
+        seg.Setup(size, Archive.main.ColourForColourProfile(sColour), sColour);
+        RewardBoard.main.SegmentUpdate(sColour);
         AlignAllSegments();
     }
 
@@ -170,4 +174,81 @@ public class Wheel : MonoBehaviour
 
         RewardWheelPosition();
     }
+
+    #region Reward
+    [Header("RewardVisuals")]
+    [SerializeField] GameObject fuelRewardPrefab;
+    [SerializeField] Vector3[] fuelRewardPos;
+    [SerializeField] GameObject coinRewardPrefab;
+    [SerializeField] Vector3[] coinRewardPos;
+    [SerializeField] float rewardDur;
+    [SerializeField] float delayBetweenRewards;
+    int coinsToSpawn = 0;
+    int fuelToSpawn = 0;
+
+    public void GainRewardResources(int coins, int fuel)
+    {
+        coinsToSpawn = coins;
+        fuelToSpawn = fuel;
+
+        StartCoroutine(AnimateSpawnRewardResources());
+
+    }
+
+    IEnumerator AnimateSpawnRewardResources()
+    {
+        int highestValue = Mathf.Max(coinsToSpawn, fuelToSpawn);
+
+        while (highestValue > 0)
+        {
+            if(coinsToSpawn > 0) 
+            {
+                GameObject cObj = Instantiate(coinRewardPrefab);
+                cObj.transform.SetParent(transform);
+                StartCoroutine(MoveRewardObjectAlongPathThenDestroy(cObj.transform, coinRewardPos, rewardDur, RewardProfile.RewardType.Coins));
+                coinsToSpawn--;
+            }
+            if (fuelToSpawn > 0)
+            {
+                GameObject fObj = Instantiate(fuelRewardPrefab);
+                fObj.transform.SetParent(transform);
+                StartCoroutine(MoveRewardObjectAlongPathThenDestroy(fObj.transform, fuelRewardPos, rewardDur, RewardProfile.RewardType.Fuel));
+                fuelToSpawn--;
+            }
+            highestValue--;
+
+            yield return new WaitForSeconds(delayBetweenRewards);
+        }
+    }
+
+    IEnumerator MoveRewardObjectAlongPathThenDestroy(Transform obj, Vector3[] path, float dur, RewardProfile.RewardType rewardType)
+    {
+        float timeElapsed = 0f;
+
+        while (timeElapsed < rewardDur)
+        {
+            float t = timeElapsed / rewardDur;
+            int low = Mathf.FloorToInt((path.Length - 1) * t);
+            t = (path.Length - 1 * t) % 1;
+
+            obj.localPosition = Vector3.Lerp(path[low], path[low + 1], t);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        switch (rewardType)
+        {
+            case RewardProfile.RewardType.Fuel:
+                RewardShoot.main.SpawnFuelReward(1);
+                break;
+            case RewardProfile.RewardType.Coins:
+                CoinSpawner.main.SpawnCoinsAfterDelay(1);
+                break;
+        }
+
+        Destroy(obj.gameObject);
+    }
+
+    #endregion
 }

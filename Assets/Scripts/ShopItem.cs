@@ -11,6 +11,7 @@ public class ShopItem : ScriptableObject
     [SerializeField] int itemCost;
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
+    [SerializeField] Vector3 eulerAngles;
     [SerializeField] ItemType type;
     [SerializeField] ItemRarity rarity;
 
@@ -26,6 +27,7 @@ public class ShopItem : ScriptableObject
     public int ItemCost { get { return itemCost; } private set { itemCost = value; } }
     public Mesh ItemMesh { get { return mesh; } private set { mesh = value; } }
     public Material ItemMaterial { get { return material; } private set { material = value; } }
+    public Vector3 ItemEulerAngles { get { return eulerAngles; } private set { eulerAngles = value; } }
     public ItemType Type { get { return type; } private set { type = value; } }
     public ItemRarity Rarity { get { return rarity; } private set { rarity = value; } }
     public WheelSegment.SegmentColour SegmentColour { get { return segmentColour; } private set { segmentColour = value; } }

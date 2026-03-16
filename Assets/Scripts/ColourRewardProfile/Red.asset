@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Red
   m_EditorClassIdentifier: Assembly-CSharp::RewardProfile
   rewardType: 1
-  amount: 3
+  amount: 1

@@ -5869,6 +5869,7 @@ MonoBehaviour:
   coalRequired: 5
   spinsGenerated: 0
   coalReqMulti:
+  - 1
   - 2
   - 5
   - 10

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e061e11998b96340af7fbe6c75ef79f, type: 3}
   m_Name: Green
   m_EditorClassIdentifier: Assembly-CSharp::RewardProfile
-  rewardType: 0
-  amount: 1
+  rewardType: 1
+  amount: 3

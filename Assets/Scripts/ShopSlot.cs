@@ -26,7 +26,18 @@ public class ShopSlot : MonoBehaviour
         shopItemCost = shopItem.ItemCost;
         shopCostLabel.text = shopItemCost + "g";
 
+        shopItemVisual.SetActive(true);
         shopItemMeshFilter.mesh = shopItem.ItemMesh;
         shopItemMeshRenderer.material = shopItem.ItemMaterial;
+        shopItemVisual.transform.localEulerAngles = shopItem.ItemEulerAngles;
+    }
+
+    public void EmptySlot()
+    {
+        itemInSlot = null;
+        shopItemCost = 0;
+        shopCostLabel.text = "Empty";
+
+        shopItemVisual.SetActive(false);
     }
 }
