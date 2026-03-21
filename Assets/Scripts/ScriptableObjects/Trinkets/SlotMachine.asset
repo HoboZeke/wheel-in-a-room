@@ -12,3 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108d5a5282b26a1429f425d28061aa02, type: 3}
   m_Name: SlotMachine
   m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
+  trinketName: Slots
+  trinketDescription: When you spin the same colour 3 times in a row, increase it's
+    reward by 1.
+  trinketIndex: 0
+  trinketMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  trinketMaterial: {fileID: 2100000, guid: ea2295bc7a3f14640882276464bd2d94, type: 2}
+  trinketListenEvent: 2
+  listenerCaresAboutColour: 0
+  listenColour: 3
+  trinketRewardType: 1
+  rewardColour: 3
+  rewardType: 2
+  rewardStrength: 1

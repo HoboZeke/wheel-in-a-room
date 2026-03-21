@@ -954,6 +954,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1c452dc8cb7f543ac782b02c828b72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrinketManager
+  trinketCabinet: {fileID: 1501581022552168231}
+  trinketPrefab: {fileID: 3903583177276443333, guid: 68b758b7f1279eb4f86eae5e6f54b46b, type: 3}
+  trinketProfiles:
+  - {fileID: 11400000, guid: ea2be0f260041d841b0e536742b9637d, type: 2}
 --- !u!4 &797931875
 Transform:
   m_ObjectHideFlags: 0
@@ -1221,10 +1225,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 68bf4d15e73c4844f857164ed3d4000d, type: 2}
   - {fileID: 11400000, guid: 5a42738d062389e498bb00fa465d7d06, type: 2}
   - {fileID: 11400000, guid: 0aa19bd34ad8fb249ba35e9a1475900a, type: 2}
+  - {fileID: 11400000, guid: fa0bb88545b2e324d83868df56115e37, type: 2}
   colourProfileColours:
   - {r: 0.95, g: 1, b: 1, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.27, b: 0, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
 --- !u!4 &1102654260
 Transform:
   m_ObjectHideFlags: 0
@@ -2133,6 +2139,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7960801404724824550, guid: bedbcc5f6cd911442a536e565433cac3, type: 3}
   m_PrefabInstance: {fileID: 1501581022552168229}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1501581022552168231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1168368999800920703, guid: bedbcc5f6cd911442a536e565433cac3, type: 3}
+  m_PrefabInstance: {fileID: 1501581022552168229}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e07b2a47150a142ba3d546fc271c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrinketCabinet
 --- !u!1001 &2242618450198898856
 PrefabInstance:
   m_ObjectHideFlags: 0
