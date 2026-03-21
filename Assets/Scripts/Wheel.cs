@@ -14,6 +14,7 @@ public class Wheel : MonoBehaviour
     public enum WheelState { Idle, Spinning, Reward }
     [SerializeField] WheelState currentState;
     List<WheelSegment> wheelSegments = new List<WheelSegment>();
+    int spinCount;
 
     [Header("SpinSettings")]
     [SerializeField] float maxSpinSpeed;
@@ -30,6 +31,7 @@ public class Wheel : MonoBehaviour
         AddSegment(3, WheelSegment.SegmentColour.White);
         AddSegment(2, WheelSegment.SegmentColour.Red);
         AddSegment(1, WheelSegment.SegmentColour.Green);
+        spinCount = 0;
     }
 
     public void AddSegment(int size, WheelSegment.SegmentColour sColour)
@@ -78,10 +80,16 @@ public class Wheel : MonoBehaviour
     {
         if (currentState != WheelState.Idle) { return; }
 
+        spinCount++;
         ProgressTracker.main.UseSpin();
+        RunLogger.main.OnSpin();
         ChangeState(WheelState.Spinning);
         StartCoroutine(AnimateWheelSpin(Random.Range(spinDuration.x, spinDuration.y)));
+
+        
     }
+
+    public int SpinCount() { return spinCount; }
 
     void RewardWheelPosition()
     {
@@ -92,6 +100,7 @@ public class Wheel : MonoBehaviour
         if (rewardSegment != null)
         {
             rewardSegment.GainReward();
+            RunLogger.main.OnReward(rewardSegment.SegColour(), rewardSegment.RewardCoins(), rewardSegment.RewardFuel());
         }
         else
         {
@@ -127,8 +136,16 @@ public class Wheel : MonoBehaviour
 
     void ChangeState(WheelState state) 
     { 
-        if(currentState == state) return; 
-        
+        if(currentState == state) return;
+
+        //Leaving states events.
+        switch (currentState)
+        {
+            case WheelState.Reward:
+                RunLogger.main.CheckRewardTrends();
+                break;
+        }
+
         currentState = state;
     }
 
@@ -225,11 +242,12 @@ public class Wheel : MonoBehaviour
     {
         float timeElapsed = 0f;
 
-        while (timeElapsed < rewardDur)
+        while (timeElapsed < dur)
         {
-            float t = timeElapsed / rewardDur;
+            float t = timeElapsed / dur;
             int low = Mathf.FloorToInt((path.Length - 1) * t);
-            t = (path.Length - 1 * t) % 1;
+            t = ((path.Length - 1) * t) % 1;
+            Debug.Log(t.ToString());
 
             obj.localPosition = Vector3.Lerp(path[low], path[low + 1], t);
 

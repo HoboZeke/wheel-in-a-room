@@ -50,7 +50,7 @@ public class Furnance : MonoBehaviour
         int cur = spinsGenerated;
         int coalCount = heldCoal;
 
-        while(coalCount > Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur)))
+        while(coalCount >= Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur)))
         {
             coalCount -= Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur));
             cur++;

@@ -15,7 +15,7 @@ public class ShopItem : ScriptableObject
     [SerializeField] ItemType type;
     [SerializeField] ItemRarity rarity;
 
-    [UnitHeaderInspectable("Optionals")]
+    [Header("Optionals")]
     [SerializeField] WheelSegment.SegmentColour segmentColour;
     [SerializeField] Color visualColour;
 

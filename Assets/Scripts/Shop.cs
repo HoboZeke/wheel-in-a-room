@@ -11,7 +11,7 @@ public class Shop : Interactable
     [SerializeField] BoxCollider boxCollider;
     [Header("Tooltip")]
     [SerializeField] Transform tooltipBox;
-    [SerializeField] TextMeshProUGUI tooltipTitle, tooltipDesc, tooltipType;
+    [SerializeField] TextMeshProUGUI tooltipTitle, tooltipDesc, tooltipType, notEnoughSpaceText;
     [SerializeField] Button tooltipBuyButton;
     bool focused;
 
@@ -106,6 +106,21 @@ public class Shop : Interactable
             tooltipTitle.text = item.ItemName;
             tooltipDesc.text = item.ItemDescription;
             tooltipType.text = item.Type.ToString();
+
+            if(item.Type == ShopItem.ItemType.Trinket)
+            {
+                notEnoughSpaceText.gameObject.SetActive(TrinketManager.main.TrinketsFull());
+                tooltipBuyButton.interactable = TrinketManager.main.TrinketsFull();
+                if (tooltipBuyButton.interactable)
+                {
+                    tooltipBuyButton.interactable = CoinScoop.main.CanAfford(item.ItemCost);
+                }
+            }
+            else
+            {
+                notEnoughSpaceText.gameObject.SetActive(false);
+                tooltipBuyButton.interactable = CoinScoop.main.CanAfford(item.ItemCost);
+            }
         }
     }
 

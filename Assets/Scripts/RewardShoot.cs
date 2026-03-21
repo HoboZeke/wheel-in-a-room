@@ -47,7 +47,7 @@ public class RewardShoot : MonoBehaviour
         if(fuel.Count == 0) { contextValueText.text = "Empty"; }
         else
         {
-            contextValueText.text = "Fuel x" + fuel.ToString();
+            contextValueText.text = "Fuel x" + fuel.Count.ToString();
         }
     }
 
@@ -78,6 +78,7 @@ public class RewardShoot : MonoBehaviour
             UpdateContents();
             StartCoroutine(DepositObjInShoot(obj.transform, spawnAnimDuration));
             yield return new WaitForSeconds(delayBetweenSpawn);
+            queue--;
         }
         queuedSpawns = false;
     }
@@ -94,7 +95,7 @@ public class RewardShoot : MonoBehaviour
         while (timeElapsed < dur)
         {
             float time = timeElapsed / dur;
-            int i = Mathf.FloorToInt(time * shootPath.Length);
+            int i = Mathf.FloorToInt(time * (shootPath.Length-1));
             float segmentT = (time - (segmentDur * i)) / segmentDur;
 
             t.localPosition = Vector3.Lerp(shootPath[i], shootPath[i + 1], segmentT);
