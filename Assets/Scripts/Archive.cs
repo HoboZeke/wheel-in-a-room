@@ -22,6 +22,7 @@ public class Archive : MonoBehaviour
 
     private void Start()
     {
+        foreach (RewardProfile p in colourProfiles) { p.Setup(); }
     }
 
 

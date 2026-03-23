@@ -2,10 +2,19 @@ using UnityEngine;
 
 public class WheelCollider : Interactable
 {
-    [SerializeField] Lever wheelLever;
+    [SerializeField] Wheel wheel;
+    [SerializeField] BoxCollider[] colliders;
 
     public override void Interact()
     {
-        wheelLever.TriggerLever();
+        wheel.FocusIntoWheel();
+    }
+
+    public void ToggleColliders(bool toggle)
+    {
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = toggle;
+        }
     }
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2a92035fad4ce4aa64674d7c275477, type: 3}
+  m_Name: TrueNorth
+  m_EditorClassIdentifier: Assembly-CSharp::ArrowProfile
+  arrowName: True North
+  arrowDescription: Scores the reward below the arrow.
+  arrowMesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
+  arrowMaterial: {fileID: 2100000, guid: 45bc08e935132d640bcb30ff98bfba7f, type: 2}
+  tags: 0100000002000000
+  rewardsSegmentUnderArrow: 1
+  startHP: 0

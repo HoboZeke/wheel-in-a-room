@@ -11,7 +11,7 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviour
 	{
-		public enum Controller { Player, Shop }
+		public enum Controller { Player, Shop, Wheel }
 		[SerializeField] Controller controller;
 
 		[Header("Player")]

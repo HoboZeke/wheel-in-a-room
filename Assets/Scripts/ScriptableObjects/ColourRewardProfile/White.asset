@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e061e11998b96340af7fbe6c75ef79f, type: 3}
-  m_Name: Green
+  m_Name: White
   m_EditorClassIdentifier: Assembly-CSharp::RewardProfile
-  baseRewardTypes: 01000000
+  baseRewardTypes: 00000000
   baseAmounts: 03000000
-  rewardTypes: 01000000
+  rewardTypes: 00000000
   amounts: 03000000

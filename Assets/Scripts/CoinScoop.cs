@@ -70,7 +70,7 @@ public class CoinScoop : MonoBehaviour
         UpdateFill();
     }
 
-    public bool CanAfford(int coinCheck) { return coinCheck >= coinCount; }
+    public bool CanAfford(int coinCheck) { return coinCheck <= coinCount; }
     public bool SpendCoin(int amount)
     {
         if(amount > coinCount) { return false; }

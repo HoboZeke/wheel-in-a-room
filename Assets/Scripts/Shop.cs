@@ -14,6 +14,7 @@ public class Shop : Interactable
     [SerializeField] TextMeshProUGUI tooltipTitle, tooltipDesc, tooltipType, notEnoughSpaceText;
     [SerializeField] Button tooltipBuyButton;
     bool focused;
+    bool altFocus = false;
 
     private void Start()
     {
@@ -64,7 +65,8 @@ public class Shop : Interactable
     {
         if (Input.GetKeyUp(KeyCode.Escape) && focused)
         {
-            UnfocusShop();
+            if (altFocus) { RevertAltFocus(); }
+            else { UnfocusShop(); }
         }
     }
 
@@ -110,7 +112,7 @@ public class Shop : Interactable
             if(item.Type == ShopItem.ItemType.Trinket)
             {
                 notEnoughSpaceText.gameObject.SetActive(TrinketManager.main.TrinketsFull());
-                tooltipBuyButton.interactable = TrinketManager.main.TrinketsFull();
+                tooltipBuyButton.interactable = !TrinketManager.main.TrinketsFull();
                 if (tooltipBuyButton.interactable)
                 {
                     tooltipBuyButton.interactable = CoinScoop.main.CanAfford(item.ItemCost);
@@ -124,18 +126,40 @@ public class Shop : Interactable
         }
     }
 
-    public void BuyItemInSlot(int slot)
+    public void BuyActiveSlot()
     {
-        ShopItem itemToBuy = shopSlots[slot].ItemInSlot();
+        ShopItem itemToBuy = activeSlot.ItemInSlot();
 
-        switch (itemToBuy.Type) 
+        if(!CoinScoop.main.SpendCoin(itemToBuy.ItemCost)) { return; }
+
+        switch (itemToBuy.Type)
         {
             case ShopItem.ItemType.Wedge:
                 Wheel.main.AddSegment(1, itemToBuy.SegmentColour);
                 break;
+            case ShopItem.ItemType.Trinket:
+                TrinketManager.main.CreateTrinket(itemToBuy.TrinketProfile.TrinketIndex);
+                break;
+            case ShopItem.ItemType.Arrow:
+                ArrowManager.main.CreateArrowToPlace(itemToBuy.ArrowProfile);
+                PlaceArrowScreen();
+                break;
         }
 
-        shopSlots[slot].EmptySlot();        
+        activeSlot.EmptySlot();
+    }
+
+    public void PlaceArrowScreen()
+    {
+        altFocus = true;
+        Wheel.main.ArrowPlacementView();
+    }
+
+    public void RevertAltFocus()
+    {
+        FocusIntoShop();
+        Wheel.main.LeaveArrowPlacementView();
+        altFocus = false;
     }
 }
 

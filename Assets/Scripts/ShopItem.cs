@@ -18,6 +18,8 @@ public class ShopItem : ScriptableObject
     [Header("Optionals")]
     [SerializeField] WheelSegment.SegmentColour segmentColour;
     [SerializeField] Color visualColour;
+    [SerializeField] TrinketProfile trinketProfile;
+    [SerializeField] ArrowProfile arrowProfile;
 
     public enum ItemType { Wedge, Arrow, Trinket }
     public enum ItemRarity { Common, Uncommon, Rare, Unique }
@@ -32,4 +34,6 @@ public class ShopItem : ScriptableObject
     public ItemRarity Rarity { get { return rarity; } private set { rarity = value; } }
     public WheelSegment.SegmentColour SegmentColour { get { return segmentColour; } private set { segmentColour = value; } }
     public Color VisualColour { get {return visualColour; } private set { visualColour = value; } }
+    public TrinketProfile TrinketProfile { get { return trinketProfile; } private set { trinketProfile = value; } }
+    public ArrowProfile ArrowProfile { get { return arrowProfile; } private set { arrowProfile = value; } }
 }

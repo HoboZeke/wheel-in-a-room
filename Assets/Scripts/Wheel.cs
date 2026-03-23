@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,12 +9,16 @@ public class Wheel : MonoBehaviour
     public static Wheel main;
 
     [SerializeField] Transform wheel;
+    [SerializeField] ArrowSlot[] arrowSlots;
     [SerializeField] Transform segmentCanvas;
     [SerializeField] GameObject wheelSegmentPrefab;
     public enum WheelState { Idle, Spinning, Reward }
     [SerializeField] WheelState currentState;
+
+    public enum WheelArrowClockPositions { Twelve, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven }
     List<WheelSegment> wheelSegments = new List<WheelSegment>();
     int spinCount;
+
 
     [Header("SpinSettings")]
     [SerializeField] float maxSpinSpeed;
@@ -28,10 +32,19 @@ public class Wheel : MonoBehaviour
 
     private void Start()
     {
+        ToggleTooltip(false);
         AddSegment(3, WheelSegment.SegmentColour.White);
         AddSegment(2, WheelSegment.SegmentColour.Red);
         AddSegment(1, WheelSegment.SegmentColour.Green);
         spinCount = 0;
+    }
+
+    private void Update()
+    {
+        if(focused && Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnfocusWheel();
+        }
     }
 
     public void AddSegment(int size, WheelSegment.SegmentColour sColour)
@@ -110,7 +123,7 @@ public class Wheel : MonoBehaviour
         ChangeState(WheelState.Idle);
     }
 
-    WheelSegment RewardSegmentAtPoint(float evaluationAngle)
+    public WheelSegment RewardSegmentAtPoint(float evaluationAngle)
     {
         float evaluationPosition = TopOfWheelAngle();
         float checkedAngles = 0f;
@@ -130,7 +143,54 @@ public class Wheel : MonoBehaviour
         return null;
     }
 
+    public float WheelArrowAngle(WheelArrowClockPositions clockPos)
+    {
+        switch (clockPos)
+        {
+            case WheelArrowClockPositions.Twelve:
+                return TopOfWheelAngle();
+            case WheelArrowClockPositions.One:
+                return AngelFromTopOfTheWheel(30f);
+            case WheelArrowClockPositions.Two:
+                return AngelFromTopOfTheWheel(60f);
+            case WheelArrowClockPositions.Three:
+                return AngelFromTopOfTheWheel(90f);
+            case WheelArrowClockPositions.Four:
+                return AngelFromTopOfTheWheel(120f);
+            case WheelArrowClockPositions.Five:
+                return AngelFromTopOfTheWheel(150f);
+            case WheelArrowClockPositions.Six:
+                return AngelFromTopOfTheWheel(180f);
+            case WheelArrowClockPositions.Seven:
+                return AngelFromTopOfTheWheel(210f);
+            case WheelArrowClockPositions.Eight:
+                return AngelFromTopOfTheWheel(240f);
+            case WheelArrowClockPositions.Nine:
+                return AngelFromTopOfTheWheel(270f);
+            case WheelArrowClockPositions.Ten:
+                return AngelFromTopOfTheWheel(300f);
+            case WheelArrowClockPositions.Eleven:
+                return AngelFromTopOfTheWheel(330f);
+            default:
+                return TopOfWheelAngle();
+        }
+    }
+
     float TopOfWheelAngle() { return wheel.localEulerAngles.z; }
+    float AngelFromTopOfTheWheel(float angle)
+    {
+        float result = wheel.localEulerAngles.z + angle;
+        if(result > 360f)
+        {
+            result -= 360f;
+        }
+        else if(result < 0)
+        {
+            result += 360f;
+        }
+
+        return result;
+    }
 
     public float WheelRotationAngle() { return wheel.localEulerAngles.z; }
 
@@ -192,6 +252,88 @@ public class Wheel : MonoBehaviour
         RewardWheelPosition();
     }
 
+    #region Tooltip
+    [Header("ArrowTooltip")]
+    [SerializeField] Transform tooltipBox;
+    [SerializeField] Transform tooltipCanvas;
+    [SerializeField] TextMeshProUGUI tooltipTitle, tooltipDesc, tooltipType, remainingUsesText;
+    [SerializeField] Vector3[] toolTipSlotPositions;
+    [SerializeField] Vector3 wheelViewPos, wheelViewRot;
+    [SerializeField] Transform cameraFocalPoint;
+    [SerializeField] WheelCollider wheelCollider;
+    bool focused;
+    bool arrowPlacementMode;
+
+    public void ToggleTooltip(bool toggle) { ToggleTooltip(toggle, arrowSlots[0]); }
+    public void ToggleTooltip(bool toggle, ArrowSlot slot)
+    {
+        tooltipBox.gameObject.SetActive(toggle);
+        if (toggle)
+        {
+            tooltipBox.position = slot.transform.position;
+
+            Arrow arrow = slot.ArrowInSlot();
+
+            tooltipTitle.text = arrow.ArrowName();
+            tooltipDesc.text = arrow.ArrowDescriptions();
+            tooltipType.text = arrow.ArrowTypes();
+
+            int index = 0;
+            for (int i = 1; i < arrowSlots.Length; i++) { if (arrowSlots[i] == slot) { index = i; break; } }
+            tooltipCanvas.localPosition = toolTipSlotPositions[index];
+        }
+    }
+
+    public void FocusIntoWheel()
+    {
+        focused = true;
+        Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.Wheel);
+        Player.local.MovePlayerToPos(wheelViewPos, wheelViewRot);
+        Player.local.ForceLookAt(cameraFocalPoint);
+        wheelCollider.ToggleColliders(false);
+        Cursor.lockState = CursorLockMode.Confined;
+
+        foreach(ArrowSlot s in arrowSlots)
+        {
+            s.ToggleCollider(true);
+        }
+    }
+
+    public void ArrowPlacementView()
+    {
+        arrowPlacementMode = true;
+        Player.local.MovePlayerToPos(wheelViewPos, wheelViewRot);
+        Player.local.ForceLookAt(cameraFocalPoint);
+        wheelCollider.ToggleColliders(false);
+        Cursor.lockState = CursorLockMode.Confined;
+
+        foreach (ArrowSlot s in arrowSlots)
+        {
+            s.ToggleCollider(true);
+        }
+    }
+
+    public void LeaveArrowPlacementView()
+    {
+        arrowPlacementMode = false;
+    }
+
+    void UnfocusWheel()
+    {
+        focused = false;
+        Player.local.ReleaseControlOfCamera();
+        wheelCollider.ToggleColliders(true);
+        Cursor.lockState = CursorLockMode.Locked;
+
+        foreach (ArrowSlot s in arrowSlots)
+        {
+            s.ToggleCollider(false);
+        }
+    }
+
+
+    #endregion
+
     #region Reward
     [Header("RewardVisuals")]
     [SerializeField] GameObject fuelRewardPrefab;
@@ -247,7 +389,6 @@ public class Wheel : MonoBehaviour
             float t = timeElapsed / dur;
             int low = Mathf.FloorToInt((path.Length - 1) * t);
             t = ((path.Length - 1) * t) % 1;
-            Debug.Log(t.ToString());
 
             obj.localPosition = Vector3.Lerp(path[low], path[low + 1], t);
 

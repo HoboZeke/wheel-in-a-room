@@ -11,6 +11,11 @@ public class Lever : Interactable
     [SerializeField] bool limitedBySpins;
     bool busy = false;
 
+    private void OnMouseDown()
+    {
+        TriggerLever();
+    }
+
     public override void Interact()
     {
         TriggerLever();
