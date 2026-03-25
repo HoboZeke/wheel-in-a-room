@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2a92035fad4ce4aa64674d7c275477, type: 3}
   m_Name: BrittleArrow
   m_EditorClassIdentifier: Assembly-CSharp::ArrowProfile
-  startHP: 0
+  arrowName: Brittle Arrow
+  arrowDescription: Breaks after scoring 3 times.
+  arrowMesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
+  arrowMaterial: {fileID: 2100000, guid: 2ede002b0e80d1746ac0154a2b5b75a1, type: 2}
+  tags: 03000000
+  rewardsSegmentUnderArrow: 1
+  startHP: 3

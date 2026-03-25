@@ -147,6 +147,7 @@ public class Shop : Interactable
         }
 
         activeSlot.EmptySlot();
+        tooltipBox.gameObject.SetActive(false);
     }
 
     public void PlaceArrowScreen()

@@ -316,6 +316,12 @@ public class Wheel : MonoBehaviour
     public void LeaveArrowPlacementView()
     {
         arrowPlacementMode = false;
+        wheelCollider.ToggleColliders(true);
+
+        foreach (ArrowSlot s in arrowSlots)
+        {
+            s.ToggleCollider(false);
+        }
     }
 
     void UnfocusWheel()

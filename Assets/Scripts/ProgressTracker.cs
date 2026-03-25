@@ -29,6 +29,7 @@ public class ProgressTracker : MonoBehaviour
 
     public void AddSpins(int amount)
     {
+        Debug.Log("Added Spins " + amount);
         spinsLeft += amount;
         SetupTracker();
     }

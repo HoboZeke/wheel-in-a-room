@@ -18,7 +18,9 @@ MonoBehaviour:
   mesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
   material: {fileID: 2100000, guid: 2ede002b0e80d1746ac0154a2b5b75a1, type: 2}
   eulerAngles: {x: 0, y: 90, z: 0}
-  type: 0
+  type: 1
   rarity: 0
   segmentColour: 0
   visualColour: {r: 0, g: 0, b: 0, a: 0}
+  trinketProfile: {fileID: 0}
+  arrowProfile: {fileID: 11400000, guid: ea1b9bd654dda4743a6d77549b654689, type: 2}

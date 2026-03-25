@@ -42,7 +42,7 @@ public class Furnance : MonoBehaviour
             cur++;
         }
 
-        return cur - spinsGenerated;
+        return (cur - spinsGenerated) * 3;
     }
 
     public int NextInputAmount()
@@ -89,7 +89,7 @@ public class Furnance : MonoBehaviour
     {
         if(busy) return;
 
-        if(heldCoal < CoalRequiredForFiring())
+        if(heldCoal >= CoalRequiredForFiring())
         {
             StartCoroutine(Firing());
         }
@@ -101,16 +101,17 @@ public class Furnance : MonoBehaviour
 
         int fireCount = 0;
 
-        while(heldCoal < CoalRequiredForFiring())
+        while(heldCoal >= CoalRequiredForFiring())
         {
             heldCoal -= CoalRequiredForFiring();
             spinsGenerated++;
             fireCount++;
+            EnvironmentManager.main.MultiplyTunnelSpeed(1.5f);
         }
 
         heldCoal = 0;
         fireObject.gameObject.SetActive(true);
-        ProgressTracker.main.AddSpins(fireCount);
+        ProgressTracker.main.AddSpins(fireCount * 3);
 
         yield return new WaitForSeconds(3f);
         
