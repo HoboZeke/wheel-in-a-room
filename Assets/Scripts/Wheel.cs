@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Wheel : MonoBehaviour
@@ -10,7 +12,9 @@ public class Wheel : MonoBehaviour
 
     [SerializeField] Transform wheel;
     [SerializeField] ArrowSlot[] arrowSlots;
-    [SerializeField] Transform segmentCanvas;
+    [SerializeField] Transform segmentHolder;
+    [SerializeField] Image highlightSegmentImage, overlayImage;
+    [SerializeField] float highlightFillExcess;
     [SerializeField] GameObject wheelSegmentPrefab;
     public enum WheelState { Idle, Spinning, Reward }
     [SerializeField] WheelState currentState;
@@ -24,6 +28,9 @@ public class Wheel : MonoBehaviour
     [SerializeField] float maxSpinSpeed;
     [SerializeField] float windUpDuration;
     [SerializeField] Vector2 spinDuration;
+
+    [Header("RewardSettings")]
+    [SerializeField] float timeBetweenRewards;
 
     private void Awake()
     {
@@ -58,7 +65,7 @@ public class Wheel : MonoBehaviour
         }
 
         GameObject obj = Instantiate(wheelSegmentPrefab);
-        obj.transform.SetParent(segmentCanvas);
+        obj.transform.SetParent(segmentHolder);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localScale = Vector3.one;
 
@@ -104,23 +111,65 @@ public class Wheel : MonoBehaviour
 
     public int SpinCount() { return spinCount; }
 
-    void RewardWheelPosition()
+    IEnumerator ProcessRewards()
     {
         ChangeState(WheelState.Reward);
 
-        WheelSegment rewardSegment = RewardSegmentAtPoint(TopOfWheelAngle());
+        for (int i = 1; i < arrowSlots.Length; i++)
+        {
+            if (arrowSlots[i].HasArrow())
+            {
+                CheckRewardSegment(WheelArrowAngle(arrowSlots[i].ClockPosition()), arrowSlots[i].ArrowInSlot());
+                yield return new WaitForSeconds(timeBetweenRewards);
+                ClearRewardHighlight();
+                arrowSlots[i].ArrowInSlot().RewardCleanup();
+            }
+        }
+
+        //Finally cash in north arrow.
+        CheckRewardSegment(TopOfWheelAngle(), arrowSlots[0].ArrowInSlot());
+        yield return new WaitForSeconds(timeBetweenRewards);
+        ClearRewardHighlight();
+
+        ChangeState(WheelState.Idle);
+    }
+
+    void CheckRewardSegment(float evalAngle, Arrow triggeringArrow)
+    {
+        WheelSegment rewardSegment = RewardSegmentAtPoint(evalAngle);
 
         if (rewardSegment != null)
         {
-            rewardSegment.GainReward();
-            RunLogger.main.OnReward(rewardSegment.SegColour(), rewardSegment.RewardCoins(), rewardSegment.RewardFuel());
+            triggeringArrow.SegmentLandedUnderArrow(rewardSegment);
+            if (triggeringArrow.InteractsWithSegmentUnderArrow())
+            {
+                HighlightRewardSegment(rewardSegment);
+            }
         }
         else
         {
             Debug.LogWarning("No reward segment found!!!");
         }
+    }
 
-        ChangeState(WheelState.Idle);
+    void HighlightRewardSegment(WheelSegment seg)
+    {
+        highlightSegmentImage.transform.localEulerAngles = seg.transform.localEulerAngles;
+        highlightSegmentImage.transform.localEulerAngles += Vector3.back * 5f;
+        highlightSegmentImage.fillAmount = seg.SegmentActualSize() + highlightFillExcess;
+
+        overlayImage.fillAmount = 1f - highlightSegmentImage.fillAmount;
+        overlayImage.transform.localEulerAngles = highlightSegmentImage.transform.localEulerAngles;
+
+        int sibs = segmentHolder.childCount;
+        highlightSegmentImage.transform.SetSiblingIndex(sibs-1);
+        seg.transform.SetSiblingIndex(sibs-1);
+    }
+
+    void ClearRewardHighlight()
+    {
+        highlightSegmentImage.fillAmount = 0f;
+        overlayImage.fillAmount = 1f;
     }
 
     public WheelSegment RewardSegmentAtPoint(float evaluationAngle)
@@ -249,7 +298,7 @@ public class Wheel : MonoBehaviour
             yield return null;
         }
 
-        RewardWheelPosition();
+        StartCoroutine(ProcessRewards());
     }
 
     #region Tooltip

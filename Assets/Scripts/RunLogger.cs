@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -108,6 +109,8 @@ public class RunLogger : MonoBehaviour
         CheckConsecutiveRewards(WheelSegment.SegmentColour.Green, consecutiveGreenReward);
         CheckConsecutiveRewards(WheelSegment.SegmentColour.Red, consecutiveRedReward);
 
+        CheckPresentAndAbsentColours(RecentSpin(0));
+
     }
 
     void CheckConsecutiveRewards(WheelSegment.SegmentColour c, int consec)
@@ -132,6 +135,18 @@ public class RunLogger : MonoBehaviour
         if(quads > 0 && excessQuads == 0)
         {
             TrinketManager.main.FourRewardsOfTheSameColourInARow(c);
+        }
+    }
+
+    void CheckPresentAndAbsentColours(SpinLog log)
+    {
+        foreach (WheelSegment.SegmentColour c in Enum.GetValues(typeof(WheelSegment.SegmentColour)))
+        {
+            if(c != WheelSegment.SegmentColour.None)
+            {
+                if (log.SpinRewardedColour(c)) { TrinketManager.main.ColourSegmentPresent(c); }
+                else { TrinketManager.main.ColourSegmentAbsent(c); }
+            }
         }
     }
 }

@@ -15,6 +15,8 @@ public class TrinketManager : MonoBehaviour
     public EventHandler<TrinketEventArgs> OnTwoInARow;
     public EventHandler<TrinketEventArgs> OnThreeInARow;
     public EventHandler<TrinketEventArgs> OnFourInARow;
+    public EventHandler<TrinketEventArgs> OnColourPresentInSpin;
+    public EventHandler<TrinketEventArgs> OnColourAbsentInSpin;
 
     [ContextMenu("UpdateTrinketProfileIndices")]
     void UpdateTrinketProfileIndices()
@@ -63,6 +65,16 @@ public class TrinketManager : MonoBehaviour
     {
 
         OnFourInARow?.Invoke(this, new TrinketEventArgs() { segmentColour = colour });
+    }
+
+    public void ColourSegmentPresent(WheelSegment.SegmentColour colour)
+    {
+        OnColourPresentInSpin?.Invoke(this, new TrinketEventArgs() { segmentColour = colour });
+    }
+
+    public void ColourSegmentAbsent(WheelSegment.SegmentColour colour)
+    {
+        OnColourAbsentInSpin?.Invoke(this, new TrinketEventArgs() {  segmentColour= colour });
     }
 }
 

@@ -26,13 +26,13 @@ public class TrinketProfile : ScriptableObject
     public Mesh TrinketMesh { get { return trinketMesh; } private set { trinketMesh = value; } }
     public Material TrinketMaterial { get { return trinketMaterial; } private set { trinketMaterial = value; } }
 
-    public enum TrinketListenEvent { None, TwoInARow, ThreeInARow, FourInARow };
+    public enum TrinketListenEvent { None, TwoInARow, ThreeInARow, FourInARow, ColourPresentInSpin, ColourAbsentInSpin };
     public TrinketListenEvent TrinketListen { get { return trinketListenEvent; } private set { trinketListenEvent = value; } }
 
     public bool ListenerCaresAboutColour { get { return listenerCaresAboutColour; } private set { listenerCaresAboutColour = value; } }
     public WheelSegment.SegmentColour ListenColour { get { return listenColour; } private set { listenColour = value; } }
 
-    public enum TrinketRewardType { None, IncreaseRewardValue };
+    public enum TrinketRewardType { None, IncreaseRewardValue, IncreaseOtherRewardValue };
     public TrinketRewardType TrinketReward { get { return trinketRewardType; } private set { trinketRewardType = value; } }
 
     public WheelSegment.SegmentColour RewardColour { get { return rewardColour; } private set { rewardColour = value; } }

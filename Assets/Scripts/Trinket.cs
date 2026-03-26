@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Trinket : MonoBehaviour
@@ -22,8 +23,20 @@ public class Trinket : MonoBehaviour
     {
         switch (trinketProfile.TrinketListen)
         {
+            case TrinketProfile.TrinketListenEvent.TwoInARow:
+                TrinketManager.main.OnTwoInARow += ListenerTriggered;
+                break;
             case TrinketProfile.TrinketListenEvent.ThreeInARow:
                 TrinketManager.main.OnThreeInARow += ListenerTriggered;
+                break;
+            case TrinketProfile.TrinketListenEvent.FourInARow:
+                TrinketManager.main.OnFourInARow += ListenerTriggered;
+                break;
+            case TrinketProfile.TrinketListenEvent.ColourPresentInSpin:
+                TrinketManager.main.OnColourPresentInSpin += ListenerTriggered;
+                break;
+            case TrinketProfile.TrinketListenEvent.ColourAbsentInSpin:
+                TrinketManager.main.OnColourAbsentInSpin += ListenerTriggered;
                 break;
         }
     }
@@ -45,6 +58,15 @@ public class Trinket : MonoBehaviour
                 else
                 {
                     Archive.main.RewardProfileForSegmentColour(trinketProfile.RewardColour).IncreaseRewardType(trinketProfile.RewardType, trinketProfile.RewardStrength);
+                }
+                break;
+            case TrinketProfile.TrinketRewardType.IncreaseOtherRewardValue:
+                foreach (WheelSegment.SegmentColour c in Enum.GetValues(typeof(WheelSegment.SegmentColour)))
+                { 
+                    if(c != WheelSegment.SegmentColour.None && c != trinketProfile.RewardColour)
+                    {
+                        Archive.main.RewardProfileForSegmentColour(c).IncreaseRewardType(trinketProfile.RewardType, trinketProfile.RewardStrength);
+                    }
                 }
                 break;
         }

@@ -2283,6 +2283,10 @@ PrefabInstance:
       value: 0.74498624
       objectReference: {fileID: 0}
     - target: {fileID: 7229630950476712729, guid: 140a879078bbb4a479363dad693c0c42, type: 3}
+      propertyPath: highlightFillExcess
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229630950476712729, guid: 140a879078bbb4a479363dad693c0c42, type: 3}
       propertyPath: arrowSlots.Array.size
       value: 12
       objectReference: {fileID: 0}
@@ -2517,6 +2521,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1671559144}
     m_Modifications:
+    - target: {fileID: 1168368999800920703, guid: bedbcc5f6cd911442a536e565433cac3, type: 3}
+      propertyPath: cabinetViewPos.x
+      value: -0.785
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168368999800920703, guid: bedbcc5f6cd911442a536e565433cac3, type: 3}
+      propertyPath: cabinetViewPos.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168368999800920703, guid: bedbcc5f6cd911442a536e565433cac3, type: 3}
+      propertyPath: cabinetViewPos.z
+      value: 2.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168368999800920703, guid: bedbcc5f6cd911442a536e565433cac3, type: 3}
+      propertyPath: cabinetViewRot.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 7833933951683175873, guid: bedbcc5f6cd911442a536e565433cac3, type: 3}
       propertyPath: m_Name
       value: TrinketCabinet

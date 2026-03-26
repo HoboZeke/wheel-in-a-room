@@ -133,6 +133,117 @@ Transform:
   - {fileID: 8972836110665545799}
   m_Father: {fileID: 6988542787885074778}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1214696490685160947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8219567284910074732}
+  - component: {fileID: 5416968568965918949}
+  - component: {fileID: 7809726608576829906}
+  m_Layer: 0
+  m_Name: SegmentHighlight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8219567284910074732
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214696490685160947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8710055954098330545}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5416968568965918949
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214696490685160947}
+  m_CullTransparentMesh: 1
+--- !u!114 &7809726608576829906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214696490685160947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8584906, g: 0.7660827, b: 0.020247417, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b74c31d447d2f5d41a61081bdf5e7126, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 0
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1409212090596269767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8710055954098330545}
+  m_Layer: 0
+  m_Name: Segments
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8710055954098330545
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409212090596269767}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8219567284910074732}
+  m_Father: {fileID: 1907528572013585151}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2567921668266111051
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 4306935441305764224}
+  positionOnWheel: 6
 --- !u!65 &4306935441305764224
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -248,6 +360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 1973698703425555137}
+  positionOnWheel: 11
 --- !u!65 &1973698703425555137
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -299,7 +412,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0.125}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 8710055954098330545}
+  - {fileID: 1321896302996108002}
   m_Father: {fileID: 8330655715507275966}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -660,6 +775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 1541599739887172407}
+  positionOnWheel: 2
 --- !u!65 &1541599739887172407
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -728,6 +844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 1063189326808327880}
+  positionOnWheel: 9
 --- !u!65 &1063189326808327880
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -796,6 +913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 3949455711418241107}
+  positionOnWheel: 8
 --- !u!65 &3949455711418241107
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -864,6 +982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 8097981185520522563}
+  positionOnWheel: 4
 --- !u!65 &8097981185520522563
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -932,6 +1051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 53533880148121262}
+  positionOnWheel: 5
 --- !u!65 &53533880148121262
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1101,6 +1221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 409328381848308560}
+  positionOnWheel: 10
 --- !u!65 &409328381848308560
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1306,6 +1427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 3073552047449843589}
+  positionOnWheel: 1
 --- !u!65 &3073552047449843589
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1327,6 +1449,81 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.35, y: 0.4, z: 0.2}
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!1 &6871777224337143468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1321896302996108002}
+  - component: {fileID: 2716355036139136463}
+  - component: {fileID: 2625413679397739161}
+  m_Layer: 0
+  m_Name: Overlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1321896302996108002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6871777224337143468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1907528572013585151}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2716355036139136463
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6871777224337143468}
+  m_CullTransparentMesh: 1
+--- !u!114 &2625413679397739161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6871777224337143468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.047169805, g: 0.040272333, b: 0.040272333, a: 0.69411767}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b74c31d447d2f5d41a61081bdf5e7126, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7060469236751094646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,13 +1925,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wheel
   wheel: {fileID: 8330655715507275966}
-  arrowSlots: []
-  segmentCanvas: {fileID: 1907528572013585151}
+  arrowSlots:
+  - {fileID: 1170295768095512210}
+  - {fileID: 686775766227177186}
+  - {fileID: 5755445008940392594}
+  - {fileID: 4956665002839243947}
+  - {fileID: 5235772212535849441}
+  - {fileID: 5596487945526392728}
+  - {fileID: 1111145380756941987}
+  - {fileID: 2965243308002389080}
+  - {fileID: 3281112469684226830}
+  - {fileID: 3121085633266441990}
+  - {fileID: 1142509649854366455}
+  - {fileID: 137874075463757673}
+  segmentHolder: {fileID: 8710055954098330545}
+  highlightSegmentImage: {fileID: 7809726608576829906}
+  overlayImage: {fileID: 2625413679397739161}
+  highlightFillExcess: 0.025
   wheelSegmentPrefab: {fileID: 8553953428463667229, guid: 9288e5ccf4f7d1947950265aad3d338a, type: 3}
   currentState: 0
   maxSpinSpeed: 1500
   windUpDuration: 0.5
   spinDuration: {x: 3, y: 6}
+  timeBetweenRewards: 0.8
   tooltipBox: {fileID: 5324877865400707094}
   tooltipCanvas: {fileID: 8609650320824681912}
   tooltipTitle: {fileID: 7246091469274792450}
@@ -1818,6 +2031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 5870667408764189370}
+  positionOnWheel: 0
 --- !u!65 &5870667408764189370
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1886,6 +2100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 2369750302649794766}
+  positionOnWheel: 3
 --- !u!65 &2369750302649794766
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1954,6 +2169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowSlot
   arrowInSlot: {fileID: 0}
   slotCollider: {fileID: 602126092407149054}
+  positionOnWheel: 7
 --- !u!65 &602126092407149054
 BoxCollider:
   m_ObjectHideFlags: 0

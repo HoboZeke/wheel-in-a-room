@@ -40,11 +40,15 @@ public class Arrow : MonoBehaviour
         if (profile.IsBrittle)
         {
             arrowHP -= 1;
-            if(arrowHP <= 0)
-            {
-                ArrowManager.main.RemoveArrow(this);
-                Destroy(gameObject);
-            }
+        }
+    }
+
+    public void RewardCleanup()
+    {
+        if (arrowHP <= 0)
+        {
+            ArrowManager.main.RemoveArrow(this);
+            Destroy(gameObject);
         }
     }
 
@@ -64,4 +68,6 @@ public class Arrow : MonoBehaviour
     public string ArrowName() { return profile.ArrowName; }
     public string ArrowDescriptions() { return profile.ArrowDescription; }
     public string ArrowTypes() { return profile.ArrowTags; }
+    public bool InteractsWithSegmentUnderArrow() { return profile.RewardsSegmentUnderArrow; }
+    public void SetPositionOnWheel(Wheel.WheelArrowClockPositions pos) { positionOnWheel = pos; }
 }
