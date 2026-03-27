@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [CreateAssetMenu(fileName = "RewardProfile", menuName = "ScriptableObjects/RewardProfile")]
 public class RewardProfile : ScriptableObject
@@ -10,6 +11,8 @@ public class RewardProfile : ScriptableObject
 
     [SerializeField] List<RewardType> rewardTypes = new List<RewardType>();
     [SerializeField] List<int> amounts = new List<int>();
+
+    public EventHandler<EventArgs> OnValueChanged;
 
     public void Setup()
     {
@@ -36,7 +39,10 @@ public class RewardProfile : ScriptableObject
     }
 
     public RewardType RewardTypeEnum() { return rewardTypes[0]; }
+    public RewardType RewardTypeEnum(int i) {  return rewardTypes[i]; }
+    public RewardType[] RewardTypes() { return rewardTypes.ToArray(); }
     public int RewardAmount() { return amounts[0]; }
+    public int RewardAmount(int i) { return amounts[i]; }
 
     public void IncreaseAllRewards(int increase)
     {
@@ -44,6 +50,8 @@ public class RewardProfile : ScriptableObject
         {
             amounts[i] += increase;
         }
+
+        OnValueChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void DecreaseAllRewards(int decrease)
@@ -57,6 +65,8 @@ public class RewardProfile : ScriptableObject
                 amounts.RemoveAt(i);
             }
         }
+
+        OnValueChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void IncreaseRewardType(RewardType type, int increase)
@@ -70,6 +80,7 @@ public class RewardProfile : ScriptableObject
 
         rewardTypes.Add(type);
         amounts.Add(increase);
+        OnValueChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void DecreaseRewardType(RewardType type, int decrease)
@@ -86,6 +97,7 @@ public class RewardProfile : ScriptableObject
                     amounts.RemoveAt(i);
                     rewardTypes.RemoveAt(i);
                 }
+                OnValueChanged?.Invoke(this, EventArgs.Empty);
 
                 return; 
             }

@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be338f1fa1a354a46badeefe0cd33f2d, type: 3}
   m_Name: GreenGem
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
-  itemName: 
-  itemDescription: 
-  itemCost: 0
-  mesh: {fileID: 0}
-  material: {fileID: 0}
+  itemName: GreenGem
+  itemDescription: Increase the value Green by 1 whenever white isn't scored.
+  itemCost: 6
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: aaf647606172f1f48af366e937dc7155, type: 2}
   eulerAngles: {x: 0, y: 0, z: 0}
-  type: 0
+  type: 2
   rarity: 0
-  segmentColour: 0
+  segmentColour: 1
   visualColour: {r: 0, g: 0, b: 0, a: 0}
-  trinketProfile: {fileID: 0}
+  trinketProfile: {fileID: 11400000, guid: 63ca0832ac58eca41aa08c96e0d301f0, type: 2}
   arrowProfile: {fileID: 0}

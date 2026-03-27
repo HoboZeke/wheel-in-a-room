@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108d5a5282b26a1429f425d28061aa02, type: 3}
   m_Name: WhiteGem
   m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
-  trinketName: 
-  trinketDescription: 
-  trinketIndex: 0
-  trinketMesh: {fileID: 0}
-  trinketMaterial: {fileID: 0}
-  trinketListenEvent: 0
-  listenerCaresAboutColour: 0
+  trinketName: White Gem
+  trinketDescription: Increase the value White by 1 whenever white isn't scored.
+  trinketIndex: 1
+  trinketMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  trinketMaterial: {fileID: 2100000, guid: 869e6ff5165370d46bf4833e5b2ceb1d, type: 2}
+  trinketListenEvent: 5
+  listenerCaresAboutColour: 1
   listenColour: 0
-  trinketRewardType: 0
+  trinketRewardType: 1
   rewardColour: 0
-  rewardType: 0
-  rewardStrength: 0
+  rewardType: 2
+  rewardStrength: 1

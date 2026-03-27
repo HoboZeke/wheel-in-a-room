@@ -11,6 +11,9 @@ public class Trinket : MonoBehaviour
     public Mesh TrinketMesh { get { return mesh; } private set { mesh = value; } }
     public Material TrinketMaterial { get { return material; } private set { material = value; } }
 
+    public string TrinketName { get { return trinketProfile.TrinketName; } private set { }  }
+    public string TrinketDescription { get { return trinketProfile.TrinketDescription; } private set { } }
+
     public void Setup(TrinketProfile profile)
     {
         trinketProfile = profile;
@@ -38,6 +41,12 @@ public class Trinket : MonoBehaviour
             case TrinketProfile.TrinketListenEvent.ColourAbsentInSpin:
                 TrinketManager.main.OnColourAbsentInSpin += ListenerTriggered;
                 break;
+            case TrinketProfile.TrinketListenEvent.ColourAppearsTwice:
+                TrinketManager.main.OnColourAppearedTwiceInSpin += ListenerTriggered;
+                break;
+            case TrinketProfile.TrinketListenEvent.ColourAppearsThreeTimes:
+                TrinketManager.main.OnColourAppearedThreeTimesInSpin += ListenerTriggered;
+                break;
         }
     }
 
@@ -62,13 +71,29 @@ public class Trinket : MonoBehaviour
                 break;
             case TrinketProfile.TrinketRewardType.IncreaseOtherRewardValue:
                 foreach (WheelSegment.SegmentColour c in Enum.GetValues(typeof(WheelSegment.SegmentColour)))
-                { 
-                    if(c != WheelSegment.SegmentColour.None && c != trinketProfile.RewardColour)
+                {
+                    if (c != WheelSegment.SegmentColour.None && c != trinketProfile.RewardColour)
                     {
                         Archive.main.RewardProfileForSegmentColour(c).IncreaseRewardType(trinketProfile.RewardType, trinketProfile.RewardStrength);
                     }
                 }
                 break;
+            case TrinketProfile.TrinketRewardType.GainReward:
+                switch (trinketProfile.RewardType) 
+                {
+                    case RewardProfile.RewardType.Fuel:
+                        RewardShoot.main.SpawnFuelReward(trinketProfile.RewardStrength);
+                        break;
+                    case RewardProfile.RewardType.Coins:
+                        CoinSpawner.main.SpawnCoins(trinketProfile.RewardStrength);
+                        break;
+                    case RewardProfile.RewardType.All:
+                        RewardShoot.main.SpawnFuelReward(trinketProfile.RewardStrength);
+                        CoinSpawner.main.SpawnCoins(trinketProfile.RewardStrength);
+                        break;
+                }
+                break;
+
         }
     }
 }

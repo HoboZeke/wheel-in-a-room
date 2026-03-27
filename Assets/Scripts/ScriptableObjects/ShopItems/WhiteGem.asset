@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be338f1fa1a354a46badeefe0cd33f2d, type: 3}
   m_Name: WhiteGem
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
-  itemName: 
-  itemDescription: 
-  itemCost: 0
-  mesh: {fileID: 0}
-  material: {fileID: 0}
+  itemName: White Gem
+  itemDescription: Increase the value White by 1 whenever white isn't scored.
+  itemCost: 3
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: 869e6ff5165370d46bf4833e5b2ceb1d, type: 2}
   eulerAngles: {x: 0, y: 0, z: 0}
-  type: 0
+  type: 2
   rarity: 0
   segmentColour: 0
   visualColour: {r: 0, g: 0, b: 0, a: 0}
-  trinketProfile: {fileID: 0}
+  trinketProfile: {fileID: 11400000, guid: 4da6c73c76b5856479db1ab2c5fbfeaf, type: 2}
   arrowProfile: {fileID: 0}

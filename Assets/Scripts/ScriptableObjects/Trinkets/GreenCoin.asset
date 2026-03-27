@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 108d5a5282b26a1429f425d28061aa02, type: 3}
-  m_Name: RedGem
+  m_Name: GreenCoin
   m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
-  trinketName: Red Gem
-  trinketDescription: Increase the value Red by 1 whenever white isn't scored.
-  trinketIndex: 2
-  trinketMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  trinketMaterial: {fileID: 2100000, guid: 8e4044040f715cc43a772f7e721cd053, type: 2}
-  trinketListenEvent: 5
+  trinketName: Green Coin
+  trinketDescription: Whenever Green Scores increase its value by 1
+  trinketIndex: 0
+  trinketMesh: {fileID: 7783137689717838285, guid: 28c086b30f74d9745aff3a497dec61c7, type: 3}
+  trinketMaterial: {fileID: 2100000, guid: aaf647606172f1f48af366e937dc7155, type: 2}
+  trinketListenEvent: 8
   listenerCaresAboutColour: 1
-  listenColour: 2
+  listenColour: 1
   trinketRewardType: 1
-  rewardColour: 2
+  rewardColour: 1
   rewardType: 2
   rewardStrength: 1

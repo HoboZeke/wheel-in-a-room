@@ -984,6 +984,9 @@ MonoBehaviour:
   trinketPrefab: {fileID: 3903583177276443333, guid: 68b758b7f1279eb4f86eae5e6f54b46b, type: 3}
   trinketProfiles:
   - {fileID: 11400000, guid: ea2be0f260041d841b0e536742b9637d, type: 2}
+  - {fileID: 11400000, guid: 4da6c73c76b5856479db1ab2c5fbfeaf, type: 2}
+  - {fileID: 11400000, guid: f412bcd540dc13e4ba822d17a3d3c80a, type: 2}
+  - {fileID: 11400000, guid: 63ca0832ac58eca41aa08c96e0d301f0, type: 2}
 --- !u!4 &797931875
 Transform:
   m_ObjectHideFlags: 0
@@ -3243,6 +3246,18 @@ PrefabInstance:
     - target: {fileID: 836672837141008869, guid: df338d76a70479b47b7b8304c63cbb22, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609294918418542522, guid: df338d76a70479b47b7b8304c63cbb22, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609294918418542522, guid: df338d76a70479b47b7b8304c63cbb22, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.328
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609294918418542522, guid: df338d76a70479b47b7b8304c63cbb22, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.131
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

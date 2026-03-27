@@ -76,6 +76,12 @@ public class Wheel : MonoBehaviour
         AlignAllSegments();
     }
 
+    public void RemoveSegment(WheelSegment segment)
+    {
+        wheelSegments.Remove(segment);
+        AlignAllSegments();
+    }
+
     WheelSegment GetSegment(WheelSegment.SegmentColour sColour)
     {
         foreach (WheelSegment seg in wheelSegments)
@@ -144,6 +150,7 @@ public class Wheel : MonoBehaviour
             if (triggeringArrow.InteractsWithSegmentUnderArrow())
             {
                 HighlightRewardSegment(rewardSegment);
+                TrinketManager.main.ColourScored(rewardSegment.SegColour());
             }
         }
         else

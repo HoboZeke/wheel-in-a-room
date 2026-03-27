@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be338f1fa1a354a46badeefe0cd33f2d, type: 3}
-  m_Name: RedGem
+  m_Name: WhiteCoin
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
-  itemName: Red Gem
-  itemDescription: Increase the value Red by 1 whenever white isn't scored.
-  itemCost: 9
-  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  material: {fileID: 2100000, guid: 8e4044040f715cc43a772f7e721cd053, type: 2}
+  itemName: White Coin
+  itemDescription: Whenever White Scores increase its value by 1
+  itemCost: 0
+  mesh: {fileID: 7783137689717838285, guid: 28c086b30f74d9745aff3a497dec61c7, type: 3}
+  material: {fileID: 2100000, guid: 869e6ff5165370d46bf4833e5b2ceb1d, type: 2}
   eulerAngles: {x: 0, y: 0, z: 0}
   type: 2
-  rarity: 0
-  segmentColour: 2
+  rarity: 1
+  segmentColour: 0
   visualColour: {r: 0, g: 0, b: 0, a: 0}
-  trinketProfile: {fileID: 11400000, guid: f412bcd540dc13e4ba822d17a3d3c80a, type: 2}
+  trinketProfile: {fileID: 11400000, guid: add946555f2dcc44e9515c1b47d95672, type: 2}
   arrowProfile: {fileID: 0}
