@@ -8,7 +8,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] Wheel.WheelArrowClockPositions positionOnWheel;
     [SerializeField] ArrowProfile profile;
 
-    public enum ArrowTag { None, Indestructable, Immovable, Brittle }
+    public enum ArrowTag { None, Indestructable, Immovable, Brittle, Scorer, PickyScorer }
 
     int arrowHP;
 
@@ -34,7 +34,17 @@ public class Arrow : MonoBehaviour
     {
         if (profile.RewardsSegmentUnderArrow)
         {
-            TriggerRewardUnderArrow(segment);
+            if (profile.HasTag(ArrowTag.PickyScorer))
+            {
+                if(segment.SegColour() == profile.SegmentColour)
+                {
+                    TriggerRewardUnderArrow(segment);
+                }
+            }
+            else
+            {
+                TriggerRewardUnderArrow(segment);
+            }
         }
 
         if (profile.IsBrittle)

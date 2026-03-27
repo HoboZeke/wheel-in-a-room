@@ -16,6 +16,6 @@ MonoBehaviour:
   arrowDescription: Scores the reward below the arrow.
   arrowMesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
   arrowMaterial: {fileID: 2100000, guid: 45bc08e935132d640bcb30ff98bfba7f, type: 2}
-  tags: 0100000002000000
-  rewardsSegmentUnderArrow: 1
+  tags: 040000000100000002000000
+  segmentColour: 0
   startHP: 0

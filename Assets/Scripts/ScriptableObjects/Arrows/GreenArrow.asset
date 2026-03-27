@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a2a92035fad4ce4aa64674d7c275477, type: 3}
-  m_Name: BrittleArrow
+  m_Name: GreenArrow
   m_EditorClassIdentifier: Assembly-CSharp::ArrowProfile
-  arrowName: Brittle Arrow
-  arrowDescription: Breaks after scoring 3 times.
+  arrowName: Green Arrow
+  arrowDescription: Only scores Green Segments
   arrowMesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
-  arrowMaterial: {fileID: 2100000, guid: 2ede002b0e80d1746ac0154a2b5b75a1, type: 2}
-  tags: 0400000003000000
-  segmentColour: 0
-  startHP: 3
+  arrowMaterial: {fileID: 2100000, guid: aaf647606172f1f48af366e937dc7155, type: 2}
+  tags: 05000000
+  segmentColour: 1
+  startHP: 0

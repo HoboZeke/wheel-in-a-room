@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be338f1fa1a354a46badeefe0cd33f2d, type: 3}
+  m_Name: GreenArrow
+  m_EditorClassIdentifier: Assembly-CSharp::ShopItem
+  itemName: Green Arrow
+  itemDescription: Only scores Green Segments
+  itemCost: 12
+  mesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
+  material: {fileID: 2100000, guid: aaf647606172f1f48af366e937dc7155, type: 2}
+  eulerAngles: {x: 0, y: 0, z: 0}
+  type: 1
+  rarity: 1
+  segmentColour: 0
+  visualColour: {r: 0, g: 0, b: 0, a: 0}
+  trinketProfile: {fileID: 0}
+  arrowProfile: {fileID: 11400000, guid: ac46acb67b4af1d4b809d28488203c84, type: 2}
