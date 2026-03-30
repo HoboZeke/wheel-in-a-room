@@ -14,10 +14,14 @@ public class Archive : MonoBehaviour
     [SerializeField] RewardProfile[] colourProfiles;
     [SerializeField] Color[] colourProfileColours;
 
+    [SerializeField] PostOption[] postOptions;
+    List<PostOption> postOptionsPool = new List<PostOption>();
+
     private void Awake()
     {
         main = this;
         shopItemPool.AddRange(shopItems);
+        postOptionsPool.AddRange(postOptions);
     }
 
     private void Start()
@@ -50,4 +54,25 @@ public class Archive : MonoBehaviour
     {
         return colourProfileColours[(int)colour];
     }
+
+    public PostOption PullPostFromPool()
+    {
+        if (postOptionsPool.Count > 0)
+        {
+            int i = Random.Range(0, postOptionsPool.Count);
+            PostOption po = postOptionsPool[i];
+            postOptionsPool.RemoveAt(i);
+            return po;
+        }
+        else
+        {
+            return postOptions[0];
+        }
+    }
+
+    public void AddToPostPool(PostOption post)
+    {
+        postOptionsPool.Add(post);
+    }
+
 }
