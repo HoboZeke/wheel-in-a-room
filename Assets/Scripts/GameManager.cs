@@ -27,8 +27,15 @@ public class GameManager : MonoBehaviour
         if (countingDown)
         {
             countDown -= Time.deltaTime;
+            if (countDown < 0f) 
+            { 
+                countDown = 0f;
+                GameOver();
+                countingDown = false;
+                return;
+            }
 
-            if(countDown < 3.5f)
+            if (countDown < 3.5f)
             {
                 trainCabinAnimator.PlayCrushAnimation();
             }
@@ -39,7 +46,13 @@ public class GameManager : MonoBehaviour
             }
 
             UIController.main.CountDownUI((Mathf.Round(countDown * 100) / 100).ToString());
+
         }
+    }
+
+    void GameOver()
+    {
+
     }
 
     public void FiredUpFurnance()
