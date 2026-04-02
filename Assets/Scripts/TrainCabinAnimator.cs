@@ -6,6 +6,7 @@ public class TrainCabinAnimator : MonoBehaviour
     [SerializeField] SkinnedMeshRenderer cabinMeshRenderer;
     [SerializeField] float blendshapeMaxValue;
     [SerializeField] Vector2[] animTimeAndValue;
+    [SerializeField] float uncrushTime;
 
     [ContextMenu("Play Crush Animation")]
     public void PlayCrushAnimation()
@@ -17,6 +18,12 @@ public class TrainCabinAnimator : MonoBehaviour
     public void ResetToRestAnimation()
     {
         AnimationFrame(0f);
+    }
+
+    public void StopCrushAnimation()
+    {
+        StopCoroutine(AnimateCrush());
+        StartCoroutine(AnimatedUndoCrush());
     }
 
     IEnumerator AnimateCrush()
@@ -47,6 +54,23 @@ public class TrainCabinAnimator : MonoBehaviour
         }
 
         Debug.Log("Crush Animation Done");
+    }
+
+    IEnumerator AnimatedUndoCrush()
+    {
+        float timeElapsed = 0f;
+        float startValue = cabinMeshRenderer.GetBlendShapeWeight(0);
+        float endValue = 0f;
+
+        while (timeElapsed < uncrushTime)
+        {
+
+             AnimationFrame(Mathf.Lerp(startValue, endValue, timeElapsed / uncrushTime));
+
+             timeElapsed += Time.deltaTime;
+             yield return null;
+
+        }
     }
 
     void AnimationFrame(float t)

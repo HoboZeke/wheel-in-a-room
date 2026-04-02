@@ -5,7 +5,8 @@ using UnityEngine;
 public class Furnance : MonoBehaviour
 {
     public static Furnance main;
-    
+
+    [SerializeField] PostBox postBox;
     [SerializeField] GameObject fireObject;
     [SerializeField] GameObject[] coalObjects;
     [SerializeField] TextMeshProUGUI coalCountText, spinsCountText, coalNeededText;
@@ -14,6 +15,11 @@ public class Furnance : MonoBehaviour
     int heldCoal;
     [SerializeField] float[] coalReqMulti;
     bool busy;
+
+    [Header("Soot")]
+    [SerializeField] ParticleSystem sootPS;
+    [SerializeField] float sootAnimationDuration;
+
 
 
     private void Awake()
@@ -118,6 +124,20 @@ public class Furnance : MonoBehaviour
         fireObject.gameObject.SetActive(false);
         UpdateCoalVisuals();
 
+        StartCoroutine(ExpelSoot());
+
+        postBox.PopulatePost();
+
         busy = false;
+    }
+
+    IEnumerator ExpelSoot()
+    {
+        sootPS.gameObject.SetActive(true);
+        sootPS.Play();
+
+        yield return new WaitForSeconds(sootAnimationDuration);
+
+        Wheel.main.AddToSegment(1, WheelSegment.SegmentColour.Soot);
     }
 }

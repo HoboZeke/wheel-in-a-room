@@ -40,9 +40,9 @@ public class Wheel : MonoBehaviour
     private void Start()
     {
         ToggleTooltip(false);
-        AddSegment(3, WheelSegment.SegmentColour.White);
-        AddSegment(2, WheelSegment.SegmentColour.Red);
-        AddSegment(1, WheelSegment.SegmentColour.Green);
+        AddToSegment(3, WheelSegment.SegmentColour.White);
+        AddToSegment(2, WheelSegment.SegmentColour.Red);
+        AddToSegment(1, WheelSegment.SegmentColour.Green);
         spinCount = 0;
     }
 
@@ -54,7 +54,7 @@ public class Wheel : MonoBehaviour
         }
     }
 
-    public void AddSegment(int size, WheelSegment.SegmentColour sColour)
+    public void AddToSegment(int size, WheelSegment.SegmentColour sColour)
     {
         if(GetSegment(sColour) != null)
         {
@@ -71,7 +71,7 @@ public class Wheel : MonoBehaviour
 
         WheelSegment seg = obj.GetComponent<WheelSegment>();
         wheelSegments.Add(seg);
-        seg.Setup(size, Archive.main.ColourForColourProfile(sColour), sColour);
+        seg.Setup(size, sColour);
         RewardBoard.main.SegmentUpdate(sColour);
         AlignAllSegments();
     }
@@ -89,6 +89,58 @@ public class Wheel : MonoBehaviour
             if(seg.SegColour() == sColour) { return seg; }
         }
         return null;
+    }
+
+    public WheelSegment.SegmentColour[] LargestSegment()
+    {
+        List<WheelSegment> segments = new List<WheelSegment>();
+        segments.Add(wheelSegments[0]);
+        int largestSize = wheelSegments[0].SegmentSize();
+
+        for (int i = 1; i < wheelSegments.Count; i++)
+        {
+            if (wheelSegments[i].SegmentSize() > largestSize)
+            {
+                segments.Clear();
+                segments.Add(wheelSegments[i]);
+                largestSize = wheelSegments[i].SegmentSize();
+            }
+            else if (wheelSegments[i].SegmentSize() == largestSize)
+            {
+                segments.Add(wheelSegments[i]);
+            }
+        }
+
+        WheelSegment.SegmentColour[] result = new WheelSegment.SegmentColour[segments.Count];
+        for(int i = 0; i < segments.Count; i++) { result[i] = segments[i].SegColour(); }
+
+        return result;
+    }
+
+    public WheelSegment.SegmentColour[] SmallestSegment()
+    {
+        List<WheelSegment> segments = new List<WheelSegment>();
+        segments.Add(wheelSegments[0]);
+        int smallestSize = wheelSegments[0].SegmentSize();
+
+        for (int i = 1; i < wheelSegments.Count; i++)
+        {
+            if (wheelSegments[i].SegmentSize() < smallestSize)
+            {
+                segments.Clear();
+                segments.Add(wheelSegments[i]);
+                smallestSize = wheelSegments[i].SegmentSize();
+            }
+            else if (wheelSegments[i].SegmentSize() == smallestSize)
+            {
+                segments.Add(wheelSegments[i]);
+            }
+        }
+
+        WheelSegment.SegmentColour[] result = new WheelSegment.SegmentColour[segments.Count];
+        for (int i = 0; i < segments.Count; i++) { result[i] = segments[i].SegColour(); }
+
+        return result;
     }
 
     void AlignAllSegments()
@@ -138,6 +190,11 @@ public class Wheel : MonoBehaviour
         ClearRewardHighlight();
 
         ChangeState(WheelState.Idle);
+
+        if(ProgressTracker.main.SpinsLeft() <= 0)
+        {
+            GameManager.main.LastSpinUsed();
+        }
     }
 
     void CheckRewardSegment(float evalAngle, Arrow triggeringArrow)

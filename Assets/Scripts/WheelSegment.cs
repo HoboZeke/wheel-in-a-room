@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WheelSegment : MonoBehaviour
 {
-    public enum SegmentColour { White, Green, Red, None};
+    public enum SegmentColour { White, Green, Red, None, Soot, Unique};
     [SerializeField] RectTransform rt;
     [SerializeField] Color color;
     [SerializeField] SegmentColour segmentColour;
@@ -18,10 +18,11 @@ public class WheelSegment : MonoBehaviour
     [SerializeField] RectTransform labelAnchorRect, labelRect;
     [SerializeField] TextMeshProUGUI labelText;
 
-    public void Setup(int s, Color c, SegmentColour sColour)
+    public void Setup(int s, SegmentColour sColour)
     {
-        this.color = c;
+        this.color = Archive.main.ColourForColourProfile(sColour);
         segmentColour = sColour;
+        labelText.color = Archive.main.LabelColourForColourProfile(sColour);
         this.reward = Archive.main.RewardProfileForSegmentColour(segmentColour);
         size = s;
         rt.anchoredPosition = Vector3.zero;
@@ -104,6 +105,7 @@ public class WheelSegment : MonoBehaviour
 
     string LabelText()
     {
+        if (reward.IsEmpty()) { return "Nothing"; }
 
         string s = reward.RewardTypeEnum().ToString() + " x" + reward.RewardAmount();
         RewardProfile.RewardType[] rewards = reward.RewardTypes();

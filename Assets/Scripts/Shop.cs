@@ -135,7 +135,7 @@ public class Shop : Interactable
         switch (itemToBuy.Type)
         {
             case ShopItem.ItemType.Wedge:
-                Wheel.main.AddSegment(1, itemToBuy.SegmentColour);
+                Wheel.main.AddToSegment(1, itemToBuy.SegmentColour);
                 break;
             case ShopItem.ItemType.Trinket:
                 TrinketManager.main.CreateTrinket(itemToBuy.TrinketProfile.TrinketIndex);

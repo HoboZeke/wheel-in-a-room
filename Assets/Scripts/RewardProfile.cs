@@ -38,6 +38,7 @@ public class RewardProfile : ScriptableObject
         }
     }
 
+    public bool IsEmpty() { return rewardTypes.Count == 0; }
     public RewardType RewardTypeEnum() { return rewardTypes[0]; }
     public RewardType RewardTypeEnum(int i) {  return rewardTypes[i]; }
     public RewardType[] RewardTypes() { return rewardTypes.ToArray(); }

@@ -22,6 +22,8 @@ public class ColourRewardProfileUI : MonoBehaviour
 
         RewardProfile p = Archive.main.RewardProfileForSegmentColour(Colour);
 
+        if (p.IsEmpty()) { rewardText.text = "Nothing"; return; }
+
         switch (p.RewardTypeEnum())
         {
             case RewardProfile.RewardType.Fuel:

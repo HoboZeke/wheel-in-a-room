@@ -13,6 +13,8 @@ public class Archive : MonoBehaviour
     [SerializeField] WheelSegment.SegmentColour colourLookup;
     [SerializeField] RewardProfile[] colourProfiles;
     [SerializeField] Color[] colourProfileColours;
+    [SerializeField] Color[] labelColourProfileColours;
+    [SerializeField] Color[] uniqueSegmentColours;
 
     [SerializeField] PostOption[] postOptions;
     List<PostOption> postOptionsPool = new List<PostOption>();
@@ -53,6 +55,16 @@ public class Archive : MonoBehaviour
     public Color ColourForColourProfile(WheelSegment.SegmentColour colour)
     {
         return colourProfileColours[(int)colour];
+    }
+
+    public Color LabelColourForColourProfile(WheelSegment.SegmentColour colour)
+    {
+        return labelColourProfileColours[(int)colour];
+    }
+
+    public Color ColourForUniqueSegment(int uniqueIndex)
+    {
+        return uniqueSegmentColours[(int)uniqueIndex];
     }
 
     public PostOption PullPostFromPool()
