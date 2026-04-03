@@ -10,7 +10,10 @@ public class Door : Interactable
 
     public override void Interact()
     {
-        OpenDoor();
+        if (PlayerInventory.main.HasKey())
+        {
+            OpenDoor();
+        }
     }
 
     [ContextMenu("LogPosAndRot")]

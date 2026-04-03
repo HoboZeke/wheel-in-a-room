@@ -23,6 +23,7 @@ public class Wheel : MonoBehaviour
     List<WheelSegment> wheelSegments = new List<WheelSegment>();
     int spinCount;
 
+    [SerializeField] CogSlot cogSlot;
 
     [Header("SpinSettings")]
     [SerializeField] float maxSpinSpeed;
@@ -289,6 +290,11 @@ public class Wheel : MonoBehaviour
         }
     }
 
+    public bool IsArrowPositionOccupied(WheelArrowClockPositions arrowPosition)
+    {
+        return arrowSlots[(int)arrowPosition] != null;
+    }
+
     float TopOfWheelAngle() { return wheel.localEulerAngles.z; }
     float AngelFromTopOfTheWheel(float angle)
     {
@@ -334,6 +340,8 @@ public class Wheel : MonoBehaviour
         float timeElapsed = 0f;
         float rotationSpeed = 0f;
 
+        cogSlot.SpinCogs();
+
         while (timeElapsed < duration)
         {
             if(timeElapsed < windUpDuration)
@@ -361,6 +369,8 @@ public class Wheel : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+
+        cogSlot.EndSpin();
 
         StartCoroutine(ProcessRewards());
     }
