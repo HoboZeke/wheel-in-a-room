@@ -17,7 +17,7 @@ MonoBehaviour:
   itemCost: 12
   mesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
   material: {fileID: 2100000, guid: aaf647606172f1f48af366e937dc7155, type: 2}
-  eulerAngles: {x: 0, y: 0, z: 0}
+  eulerAngles: {x: 0, y: 90, z: 0}
   type: 1
   rarity: 1
   segmentColour: 0

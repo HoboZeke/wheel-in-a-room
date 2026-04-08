@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5294209109022363126}
   - component: {fileID: 2451876909620467193}
+  - component: {fileID: 4438898103814465165}
   m_Layer: 0
   m_Name: CogItem
   m_TagString: Interactable
@@ -54,6 +55,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 0.8, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4438898103814465165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808425267708206677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e7640e50c5d0654c910f7994a3867c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  item: 0
 --- !u!1001 &7217501895519947251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114,6 +128,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: af17908fe945136449ed55059a55c021, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 404f9faecac1f6d43b5fcefa89522ab1, type: 2}
     - target: {fileID: 919132149155446097, guid: af17908fe945136449ed55059a55c021, type: 3}
       propertyPath: m_Name
       value: cog

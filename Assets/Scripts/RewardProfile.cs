@@ -5,7 +5,7 @@ using System;
 [CreateAssetMenu(fileName = "RewardProfile", menuName = "ScriptableObjects/RewardProfile")]
 public class RewardProfile : ScriptableObject
 {
-    public enum RewardType { Fuel, Coins, All }
+    public enum RewardType { Fuel, Coins, All, Multiplier }
     [SerializeField] RewardType[] baseRewardTypes;
     [SerializeField] int[] baseAmounts;
 
@@ -14,13 +14,37 @@ public class RewardProfile : ScriptableObject
 
     public EventHandler<EventArgs> OnValueChanged;
 
+    [Header("Mini Wheel Values")]
+    [SerializeField] RewardType miniWheelReward;
+    [SerializeField] float miniWheelMulti;
+
     public void Setup()
     {
         rewardTypes = new List<RewardType>(baseRewardTypes);
         amounts = new List<int>(baseAmounts);
     }
 
-    public virtual void ProcessReward(WheelSegment fromSegment) 
+    public virtual void ProcessReward(WheelSegment fromSegment, MiniWheelSegment multi = null) 
+    {
+        for (int i = 0; i < rewardTypes.Count; i++)
+        {
+            RewardType rewardType = rewardTypes[i];
+            int amount = amounts[i];
+            if(multi != null) { amount = multi.AdjustRewardStrength(amount); }
+
+            switch (rewardType)
+            {
+                case RewardType.Fuel:
+                    Wheel.main.GainRewardResources(0, amount);
+                    break;
+                case RewardType.Coins:
+                    Wheel.main.GainRewardResources(amount, 0);
+                    break;
+            }
+        }
+    }
+
+    public virtual void ProcessReward(MiniWheelSegment fromSegment)
     {
         for (int i = 0; i < rewardTypes.Count; i++)
         {
@@ -42,8 +66,10 @@ public class RewardProfile : ScriptableObject
     public RewardType RewardTypeEnum() { return rewardTypes[0]; }
     public RewardType RewardTypeEnum(int i) {  return rewardTypes[i]; }
     public RewardType[] RewardTypes() { return rewardTypes.ToArray(); }
+    public RewardType MiniWheelRewardType() { return miniWheelReward; }
     public int RewardAmount() { return amounts[0]; }
     public int RewardAmount(int i) { return amounts[i]; }
+    public float MiniWheelMulti() { return miniWheelMulti; }
 
     public void IncreaseAllRewards(int increase)
     {

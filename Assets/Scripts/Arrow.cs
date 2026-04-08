@@ -30,7 +30,7 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    public void SegmentLandedUnderArrow(WheelSegment segment)
+    public void SegmentLandedUnderArrow(WheelSegment segment, MiniWheelSegment multiSegment = null)
     {
         if (profile.RewardsSegmentUnderArrow)
         {
@@ -38,12 +38,12 @@ public class Arrow : MonoBehaviour
             {
                 if(segment.SegColour() == profile.SegmentColour)
                 {
-                    TriggerRewardUnderArrow(segment);
+                    TriggerRewardUnderArrow(segment, multiSegment);
                 }
             }
             else
             {
-                TriggerRewardUnderArrow(segment);
+                TriggerRewardUnderArrow(segment, multiSegment);
             }
         }
 
@@ -62,11 +62,11 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    void TriggerRewardUnderArrow(WheelSegment rewardSegment)
+    void TriggerRewardUnderArrow(WheelSegment rewardSegment, MiniWheelSegment miniSegment)
     {
         if (rewardSegment != null)
         {
-            rewardSegment.GainReward();
+            if (miniSegment != null) { rewardSegment.GainReward(miniSegment); }
             RunLogger.main.OnReward(rewardSegment.SegColour(), rewardSegment.RewardCoins(), rewardSegment.RewardFuel());
         }
         else

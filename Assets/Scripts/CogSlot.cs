@@ -58,7 +58,7 @@ public class CogSlot : Interactable
                 if (riser.transform.localPosition != riserEndPos)
                 {
                     riser.transform.localPosition += Vector3.up * riserSpeed * Time.deltaTime;
-                    if (riser.transform.localPosition.y > riserBasePos.y)
+                    if (riser.transform.localPosition.y > riserEndPos.y)
                     {
                         riser.transform.position = riserEndPos;
                         RiserAtTop();

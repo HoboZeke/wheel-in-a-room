@@ -7,15 +7,24 @@ public class Archive : MonoBehaviour
 {
     public static Archive main;
 
+    [Header("Shop")]
     [SerializeField] ShopItem[] shopItems;
     List<ShopItem> shopItemPool = new List<ShopItem>();
 
+    [Header("Wheel")]
     [SerializeField] WheelSegment.SegmentColour colourLookup;
     [SerializeField] RewardProfile[] colourProfiles;
     [SerializeField] Color[] colourProfileColours;
     [SerializeField] Color[] labelColourProfileColours;
     [SerializeField] Color[] uniqueSegmentColours;
 
+    [Header("Mini Wheel")]
+    [SerializeField] MiniWheelSegment.MiniSegmentColour miniColourLookup;
+    [SerializeField] Color[] miniColourProfileColours;
+    [SerializeField] Color[] miniLabelColourProfileColours;
+    [SerializeField] Color[] miniUniqueSegmentColours;
+
+    [Header("Post")]
     [SerializeField] PostOption[] postOptions;
     List<PostOption> postOptionsPool = new List<PostOption>();
 
@@ -52,9 +61,19 @@ public class Archive : MonoBehaviour
         return colourProfiles[(int)colour];
     }
 
+    public RewardProfile RewardProfileForSegmentColour(MiniWheelSegment.MiniSegmentColour colour)
+    {
+        return colourProfiles[(int)colour];
+    }
+
     public Color ColourForColourProfile(WheelSegment.SegmentColour colour)
     {
         return colourProfileColours[(int)colour];
+    }
+
+    public Color ColourForColourProfile(MiniWheelSegment.MiniSegmentColour colour)
+    {
+        return miniColourProfileColours[(int)colour];
     }
 
     public Color LabelColourForColourProfile(WheelSegment.SegmentColour colour)
@@ -62,9 +81,19 @@ public class Archive : MonoBehaviour
         return labelColourProfileColours[(int)colour];
     }
 
+    public Color LabelColourForColourProfile(MiniWheelSegment.MiniSegmentColour colour)
+    {
+        return miniLabelColourProfileColours[(int)colour];
+    }
+
     public Color ColourForUniqueSegment(int uniqueIndex)
     {
         return uniqueSegmentColours[(int)uniqueIndex];
+    }
+
+    public Color ColourForMiniUniqueSegment(int uniqueIndex)
+    {
+        return miniUniqueSegmentColours[(int)uniqueIndex];
     }
 
     public PostOption PullPostFromPool()

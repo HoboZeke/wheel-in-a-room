@@ -71,6 +71,11 @@ public class WheelSegment : MonoBehaviour
         reward.ProcessReward(this);
     }
 
+    public void GainReward(MiniWheelSegment mulitSeg)
+    {
+        reward.ProcessReward(this, mulitSeg);
+    }
+
     public int RewardCoins() { return reward.CoinRewardAmount(); }
     public int RewardFuel() { return reward.FuelRewardAmount(); }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -204,10 +205,23 @@ public class Wheel : MonoBehaviour
 
         if (rewardSegment != null)
         {
-            triggeringArrow.SegmentLandedUnderArrow(rewardSegment);
+            if (hasMiniWheel)
+            {
+                triggeringArrow.SegmentLandedUnderArrow(rewardSegment, MiniWheelRewardSegmentAtPoint(evalAngle));
+            }
+            else
+            {
+                triggeringArrow.SegmentLandedUnderArrow(rewardSegment);
+            }
+
             if (triggeringArrow.InteractsWithSegmentUnderArrow())
             {
                 HighlightRewardSegment(rewardSegment);
+                if (hasMiniWheel)
+                {
+                    HighlightRewardSegment(MiniWheelRewardSegmentAtPoint(evalAngle));
+                }
+
                 TrinketManager.main.ColourScored(rewardSegment.SegColour());
             }
         }
@@ -292,7 +306,8 @@ public class Wheel : MonoBehaviour
 
     public bool IsArrowPositionOccupied(WheelArrowClockPositions arrowPosition)
     {
-        return arrowSlots[(int)arrowPosition] != null;
+        Debug.Log("Arrow position " + arrowPosition.ToString() + " occupied: " + (arrowSlots[(int)arrowPosition].HasArrow()).ToString());
+        return arrowSlots[(int)arrowPosition].HasArrow();
     }
 
     float TopOfWheelAngle() { return wheel.localEulerAngles.z; }
@@ -354,6 +369,10 @@ public class Wheel : MonoBehaviour
             }
 
             wheel.Rotate(Vector3.forward *  rotationSpeed * Time.deltaTime);
+            if (hasMiniWheel)
+            {
+                miniWheel.Rotate(Vector3.back * rotationSpeed * miniWheelSpinMod * Time.deltaTime);
+            }
 
             timeElapsed += Time.deltaTime;
             yield return null;
@@ -365,6 +384,10 @@ public class Wheel : MonoBehaviour
             rotationSpeed = Mathf.Lerp(maxSpinSpeed, 0, timeElapsed / windUpDuration);
 
             wheel.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+            if (hasMiniWheel)
+            {
+                miniWheel.Rotate(Vector3.back * rotationSpeed * miniWheelSpinMod * Time.deltaTime);
+            }
 
             timeElapsed += Time.deltaTime;
             yield return null;
@@ -374,6 +397,123 @@ public class Wheel : MonoBehaviour
 
         StartCoroutine(ProcessRewards());
     }
+
+    #region MiniWheel
+    [Header("MiniWheel")]
+    [SerializeField] Transform miniWheel;
+    [SerializeField] bool hasMiniWheel;
+    [SerializeField] Vector2 speedRandomRange;
+    [SerializeField] Transform miniSegmentHolder;
+    [SerializeField] Image miniHighlightSegmentImage, miniOverlayImage;
+    [SerializeField] float miniHighlightFillExcess;
+    [SerializeField] GameObject miniWheelSegmentPrefab;
+    float miniWheelSpinMod;
+    
+    List<MiniWheelSegment> miniWheelSegments = new List<MiniWheelSegment>();
+
+    void SetMiniWheelSpeedMod()
+    {
+        miniWheelSpinMod = Random.Range(speedRandomRange.x, speedRandomRange.y);
+    }
+
+    public void AddMiniWheel()
+    {
+        if (hasMiniWheel) { return; }
+
+        miniWheel.gameObject.SetActive(true);
+        hasMiniWheel = true;
+
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.Red, 1);
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.White, 2);
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.Green, 2);
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.White, 2);
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.Soot, 1);
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.White, 2);
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.Green, 2);
+        AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.White, 2);
+    }
+
+    public void AddToMiniSegment(MiniWheelSegment.MiniSegmentColour sColour, int size)
+    {
+        if (miniWheelSegments.Count > 0)
+        {
+            if (miniWheelSegments[miniWheelSegments.Count - 1].SegColour() == sColour)
+            {
+                miniWheelSegments[miniWheelSegments.Count - 1].AdjustSegmentSize(size);
+                AlignAllMiniSegments();
+                return;
+            }
+        }
+
+        GameObject obj = Instantiate(miniWheelSegmentPrefab);
+        obj.transform.SetParent(miniSegmentHolder);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = Vector3.one;
+
+        MiniWheelSegment seg = obj.GetComponent<MiniWheelSegment>();
+        miniWheelSegments.Add(seg);
+        seg.Setup(size, sColour);
+        AlignAllMiniSegments();
+    }
+
+    public void RemoveMiniSegment(MiniWheelSegment segment)
+    {
+        miniWheelSegments.Remove(segment);
+        AlignAllMiniSegments();
+    }
+
+    MiniWheelSegment GetSegment(MiniWheelSegment.MiniSegmentColour sColour)
+    {
+        foreach (MiniWheelSegment seg in miniWheelSegments)
+        {
+            if (seg.SegColour() == sColour) { return seg; }
+        }
+        return null;
+    }
+
+    MiniWheelSegment MiniWheelRewardSegmentAtPoint(float evaluationAngle)
+    {
+        float evaluationPosition = TopOfWheelAngle();
+        float checkedAngles = 0f;
+
+
+        for (int i = 0; i < miniWheelSegments.Count; i++)
+        {
+            checkedAngles += miniWheelSegments[i].AngleOnWheel();
+            if (evaluationPosition <= checkedAngles)
+            {
+                return miniWheelSegments[i];
+            }
+        }
+
+        return null;
+    }
+    void HighlightRewardSegment(MiniWheelSegment seg)
+    {
+        miniHighlightSegmentImage.transform.localEulerAngles = seg.transform.localEulerAngles;
+        miniHighlightSegmentImage.transform.localEulerAngles += Vector3.back * 5f;
+        miniHighlightSegmentImage.fillAmount = seg.SegmentActualSize() + highlightFillExcess;
+
+        miniOverlayImage.fillAmount = 1f - miniHighlightSegmentImage.fillAmount;
+        miniOverlayImage.transform.localEulerAngles = miniHighlightSegmentImage.transform.localEulerAngles;
+
+        int sibs = miniSegmentHolder.childCount;
+        miniHighlightSegmentImage.transform.SetSiblingIndex(sibs - 1);
+        seg.transform.SetSiblingIndex(sibs - 1);
+    }
+
+    void AlignAllMiniSegments()
+    {
+        float zAngle = 0f;
+        for (int i = 0; i < miniWheelSegments.Count; i++)
+        {
+            miniWheelSegments[i].transform.localEulerAngles = new Vector3(0f, 0f, zAngle);
+            zAngle += miniWheelSegments[i].AngleOnWheel();
+            miniWheelSegments[i].UpdateVisual();
+        }
+    }
+
+    #endregion
 
     #region Tooltip
     [Header("ArrowTooltip")]

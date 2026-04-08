@@ -16,3 +16,5 @@ MonoBehaviour:
   baseAmounts: 02000000
   rewardTypes: 01000000
   amounts: 02000000
+  miniWheelReward: 3
+  miniWheelMulti: 4

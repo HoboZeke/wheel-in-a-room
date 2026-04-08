@@ -124,5 +124,7 @@ public class PostBox : Interactable
                 foreach (WheelSegment.SegmentColour c in Wheel.main.SmallestSegment()) { Wheel.main.AddToSegment(post.Strength, c); }
                 break;
         }
+
+        ExitPost();
     }
 }

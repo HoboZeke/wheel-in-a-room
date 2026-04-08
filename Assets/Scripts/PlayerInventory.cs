@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory main;
 
-    [SerializeField] Transform cog, key;
+    [SerializeField] Transform cog, key, hammer;
     [SerializeField] List<Transform> inInventory = new List<Transform>();
     [SerializeField] Vector3 restPos;
     [SerializeField] Vector3 inventoryPos, inventorySpacer;
@@ -22,15 +22,19 @@ public class PlayerInventory : MonoBehaviour
     {
         if(cog.gameObject.activeInHierarchy) cog.Rotate(inventorySpin * Time.deltaTime);
         if(key.gameObject.activeInHierarchy) key.Rotate(inventorySpin * Time.deltaTime);
+        if (key.gameObject.activeInHierarchy) hammer.Rotate(inventorySpin * Time.deltaTime);
     }
 
     public bool HasCog() { return inInventory.Contains(cog); }
     public bool HasKey() { return inInventory.Contains(key); }
+    public bool HasHammer() { return inInventory.Contains(hammer); }
 
     public void AddCogToInv() { StartCoroutine(MoveItemIntoInventory(cog)); }
     public void AddKeyToInv() { StartCoroutine(MoveItemIntoInventory(key)); }
+    public void AddHammerToInv() { StartCoroutine (MoveItemIntoInventory(hammer)); }
     public void RemoveCogFromInv() { inInventory.Remove(cog); cog.gameObject.SetActive(false); }
     public void RemoveKeyFromInv() { inInventory.Remove(key); key.gameObject.SetActive(false); }
+    public void RemoveHammerFromInv() { inInventory.Remove(hammer); hammer.gameObject.SetActive(false); }
 
     IEnumerator MoveItemIntoInventory(Transform t)
     {
@@ -45,3 +49,5 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 }
+
+
