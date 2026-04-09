@@ -66,7 +66,7 @@ public class Arrow : MonoBehaviour
     {
         if (rewardSegment != null)
         {
-            if (miniSegment != null) { rewardSegment.GainReward(miniSegment); }
+            rewardSegment.GainReward(miniSegment); 
             RunLogger.main.OnReward(rewardSegment.SegColour(), rewardSegment.RewardCoins(), rewardSegment.RewardFuel());
         }
         else

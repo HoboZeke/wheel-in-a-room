@@ -22,15 +22,18 @@ public class BreakglassCabinet : Interactable
     void BreakGlass()
     {
         glass.SetActive(false);
-        boxCollider.enabled = false;
         glassFragementsPS.Play();
 
         PlayerInventory.main.RemoveHammerFromInv();
+
+        Debug.Log("BROKE GLASS!");
     }
 
     void PickupWheel()
     {
         wheel.SetActive(false);
         Wheel.main.AddMiniWheel();
+
+        Debug.Log("Picked up wheel");
     }
 }

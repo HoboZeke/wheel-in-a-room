@@ -2154,6 +2154,10 @@ MonoBehaviour:
   overlayImage: {fileID: 2625413679397739161}
   highlightFillExcess: 0.025
   wheelSegmentPrefab: {fileID: 8553953428463667229, guid: 9288e5ccf4f7d1947950265aad3d338a, type: 3}
+  baseLabelDivisionValue: 6
+  miniWheelPresentDivisionValue: 10
+  baseLabelFlipThreshold: 0.1
+  miniWheelPresentLabelFlipThreshold: 0.05
   currentState: 0
   cogSlot: {fileID: 0}
   maxSpinSpeed: 1500

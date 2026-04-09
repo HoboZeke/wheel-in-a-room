@@ -97,6 +97,7 @@ public class Furnance : MonoBehaviour
 
         if(heldCoal >= CoalRequiredForFiring())
         {
+            GameManager.main.FiredUpFurnance();
             StartCoroutine(Firing());
         }
     }

@@ -55,7 +55,7 @@ public class MiniWheelSegment : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public float SegmentActualSize() { return (float)size / Wheel.main.WheelSize(); }
+    public float SegmentActualSize() { return (float)size / Wheel.main.MiniWheelSize(); }
 
     public float AngleOnWheel() { return SegmentActualSize() * 360; }
 
@@ -88,26 +88,24 @@ public class MiniWheelSegment : MonoBehaviour
 
         labelAnchor.localEulerAngles = Vector3.forward * (image.fillAmount * 180f);
         float sizeMod = Mathf.Clamp01(image.fillAmount * 2f);
-        labelRect.sizeDelta = new Vector2(labelAnchorRect.rect.width / 4f, labelAnchorRect.rect.height / 2f) * sizeMod;
+        labelRect.sizeDelta = new Vector2(labelAnchorRect.rect.width / 2f, labelAnchorRect.rect.height / 2f) * sizeMod;
 
-        if (image.fillAmount > 0.25f)
+        if (image.fillAmount > 0.05f)
         {
             labelRect.localEulerAngles = Vector3.zero;
             labelRect.sizeDelta = new Vector2(labelRect.sizeDelta.y, labelRect.sizeDelta.x);
-            labelRect.anchoredPosition = new Vector2(0f, labelAnchorRect.rect.height / 4f);
+            labelRect.anchoredPosition = new Vector2(0f, -labelAnchorRect.rect.height / 7f);
         }
         else
         {
             labelRect.localEulerAngles = new Vector3(0f, 0f, 90f);
             labelRect.sizeDelta = new Vector2(labelRect.sizeDelta.y, labelRect.sizeDelta.x);
-            labelRect.anchoredPosition = new Vector2(0f, labelAnchorRect.rect.height / 4f);
+            labelRect.anchoredPosition = new Vector2(0f, -labelAnchorRect.rect.height / 7f);
         }
     }
 
     string LabelText()
     {
-        if (reward.IsEmpty()) { return "Nothing"; }
-
         string s = "";
         
         if(reward.MiniWheelRewardType() == RewardProfile.RewardType.Multiplier)

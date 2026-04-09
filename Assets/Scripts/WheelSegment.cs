@@ -94,17 +94,17 @@ public class WheelSegment : MonoBehaviour
         float sizeMod = Mathf.Clamp01(image.fillAmount * 2f);
         labelRect.sizeDelta = new Vector2(labelAnchorRect.rect.width / 4f, labelAnchorRect.rect.height / 2f) * sizeMod;
 
-        if(image.fillAmount > 0.25f)
+        if(image.fillAmount > Wheel.main.SegmentLabelFlipThreshold())
         {
             labelRect.localEulerAngles = Vector3.zero;
             labelRect.sizeDelta = new Vector2(labelRect.sizeDelta.y, labelRect.sizeDelta.x);
-            labelRect.anchoredPosition = new Vector2(0f, labelAnchorRect.rect.height / 4f);
+            labelRect.anchoredPosition = new Vector2(0f, -labelAnchorRect.rect.height / Wheel.main.SegmentLabelPositionDivider());
         }
         else
         {
             labelRect.localEulerAngles = new Vector3(0f, 0f, 90f);
             labelRect.sizeDelta = new Vector2(labelRect.sizeDelta.y, labelRect.sizeDelta.x);
-            labelRect.anchoredPosition = new Vector2(0f, labelAnchorRect.rect.height / 4f);
+            labelRect.anchoredPosition = new Vector2(0f, -labelAnchorRect.rect.height / Wheel.main.SegmentLabelPositionDivider());
         }
     }
 
@@ -112,12 +112,12 @@ public class WheelSegment : MonoBehaviour
     {
         if (reward.IsEmpty()) { return "Nothing"; }
 
-        string s = reward.RewardTypeEnum().ToString() + " x" + reward.RewardAmount();
+        string s = reward.RewardAmount() + " " + reward.RewardTypeEnum().ToString();
         RewardProfile.RewardType[] rewards = reward.RewardTypes();
 
         for(int i = 1; i < rewards.Length; i++)
         {
-            s += "\n" + rewards[i].ToString() + " x" + reward.RewardAmount(i);
+            s += "\n" + reward.RewardAmount(i) + " " + rewards[i].ToString();
         }
 
         return s;

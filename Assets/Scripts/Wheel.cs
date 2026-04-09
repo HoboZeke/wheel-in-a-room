@@ -17,6 +17,10 @@ public class Wheel : MonoBehaviour
     [SerializeField] Image highlightSegmentImage, overlayImage;
     [SerializeField] float highlightFillExcess;
     [SerializeField] GameObject wheelSegmentPrefab;
+    [Header("Label values")]
+    [SerializeField] float baseLabelDivisionValue;
+    [SerializeField] float miniWheelPresentDivisionValue;
+    [SerializeField] float baseLabelFlipThreshold, miniWheelPresentLabelFlipThreshold;
     public enum WheelState { Idle, Spinning, Reward }
     [SerializeField] WheelState currentState;
 
@@ -249,6 +253,8 @@ public class Wheel : MonoBehaviour
     {
         highlightSegmentImage.fillAmount = 0f;
         overlayImage.fillAmount = 1f;
+        miniHighlightSegmentImage.fillAmount = 0f;
+        miniOverlayImage.fillAmount = 1f;
     }
 
     public WheelSegment RewardSegmentAtPoint(float evaluationAngle)
@@ -326,7 +332,6 @@ public class Wheel : MonoBehaviour
         return result;
     }
 
-    public float WheelRotationAngle() { return wheel.localEulerAngles.z; }
 
     void ChangeState(WheelState state) 
     { 
@@ -350,12 +355,23 @@ public class Wheel : MonoBehaviour
         return size;
     }
 
+    public float SegmentLabelPositionDivider()
+    {
+        return hasMiniWheel ? miniWheelPresentDivisionValue : baseLabelDivisionValue;   
+    }
+
+    public float SegmentLabelFlipThreshold()
+    {
+        return hasMiniWheel ? miniWheelPresentLabelFlipThreshold : baseLabelFlipThreshold;
+    }
+
     IEnumerator AnimateWheelSpin(float duration)
     {
         float timeElapsed = 0f;
         float rotationSpeed = 0f;
 
         cogSlot.SpinCogs();
+        SetMiniWheelSpeedMod();
 
         while (timeElapsed < duration)
         {
@@ -431,6 +447,8 @@ public class Wheel : MonoBehaviour
         AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.White, 2);
         AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.Green, 2);
         AddToMiniSegment(MiniWheelSegment.MiniSegmentColour.White, 2);
+
+        foreach(WheelSegment segment in wheelSegments) { segment.UpdateLabel(); }
     }
 
     public void AddToMiniSegment(MiniWheelSegment.MiniSegmentColour sColour, int size)
@@ -461,6 +479,12 @@ public class Wheel : MonoBehaviour
         miniWheelSegments.Remove(segment);
         AlignAllMiniSegments();
     }
+    public int MiniWheelSize()
+    {
+        int size = 0;
+        foreach (MiniWheelSegment segment in miniWheelSegments) { size += segment.SegmentSize(); }
+        return size;
+    }
 
     MiniWheelSegment GetSegment(MiniWheelSegment.MiniSegmentColour sColour)
     {
@@ -473,7 +497,7 @@ public class Wheel : MonoBehaviour
 
     MiniWheelSegment MiniWheelRewardSegmentAtPoint(float evaluationAngle)
     {
-        float evaluationPosition = TopOfWheelAngle();
+        float evaluationPosition = TopOfMiniWheelAngle();
         float checkedAngles = 0f;
 
 
@@ -502,6 +526,7 @@ public class Wheel : MonoBehaviour
         seg.transform.SetSiblingIndex(sibs - 1);
     }
 
+
     void AlignAllMiniSegments()
     {
         float zAngle = 0f;
@@ -510,6 +535,57 @@ public class Wheel : MonoBehaviour
             miniWheelSegments[i].transform.localEulerAngles = new Vector3(0f, 0f, zAngle);
             zAngle += miniWheelSegments[i].AngleOnWheel();
             miniWheelSegments[i].UpdateVisual();
+        }
+
+        Debug.Log("Aligned " + miniWheelSegments.Count + " mini wheel segments");
+    }
+
+
+    float TopOfMiniWheelAngle() { return miniWheel.localEulerAngles.z; }
+    float AngelFromTopOfTheMiniWheel(float angle)
+    {
+        float result = miniWheel.localEulerAngles.z + angle;
+        if (result > 360f)
+        {
+            result -= 360f;
+        }
+        else if (result < 0)
+        {
+            result += 360f;
+        }
+
+        return result;
+    }
+    public float MiniWheelArrowAngle(WheelArrowClockPositions clockPos)
+    {
+        switch (clockPos)
+        {
+            case WheelArrowClockPositions.Twelve:
+                return TopOfMiniWheelAngle();
+            case WheelArrowClockPositions.One:
+                return AngelFromTopOfTheMiniWheel(30f);
+            case WheelArrowClockPositions.Two:
+                return AngelFromTopOfTheMiniWheel(60f);
+            case WheelArrowClockPositions.Three:
+                return AngelFromTopOfTheMiniWheel(90f);
+            case WheelArrowClockPositions.Four:
+                return AngelFromTopOfTheMiniWheel(120f);
+            case WheelArrowClockPositions.Five:
+                return AngelFromTopOfTheMiniWheel(150f);
+            case WheelArrowClockPositions.Six:
+                return AngelFromTopOfTheMiniWheel(180f);
+            case WheelArrowClockPositions.Seven:
+                return AngelFromTopOfTheMiniWheel(210f);
+            case WheelArrowClockPositions.Eight:
+                return AngelFromTopOfTheMiniWheel(240f);
+            case WheelArrowClockPositions.Nine:
+                return AngelFromTopOfTheMiniWheel(270f);
+            case WheelArrowClockPositions.Ten:
+                return AngelFromTopOfTheMiniWheel(300f);
+            case WheelArrowClockPositions.Eleven:
+                return AngelFromTopOfTheMiniWheel(330f);
+            default:
+                return TopOfMiniWheelAngle();
         }
     }
 

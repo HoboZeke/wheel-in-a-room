@@ -594,9 +594,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 100, y: 110}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &405715199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2690,8 +2690,8 @@ MonoBehaviour:
   miniColourLookup: 0
   miniColourProfileColours:
   - {r: 0.95, g: 1, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0.27, b: 0, a: 1}
+  - {r: 0.2062567, g: 0.9716981, b: 0.768277, a: 1}
+  - {r: 1, g: 0.6736357, b: 0, a: 1}
   - {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
   - {r: 0, g: 0, b: 0, a: 1}
   miniLabelColourProfileColours:
@@ -4608,10 +4608,6 @@ PrefabInstance:
       value: 0.74498624
       objectReference: {fileID: 0}
     - target: {fileID: 7229630950476712729, guid: 140a879078bbb4a479363dad693c0c42, type: 3}
-      propertyPath: highlightFillExcess
-      value: 0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 7229630950476712729, guid: 140a879078bbb4a479363dad693c0c42, type: 3}
       propertyPath: arrowSlots.Array.size
       value: 12
       objectReference: {fileID: 0}
@@ -6465,6 +6461,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 786cb1ff531c3fc47a40f1ac116a0cb2, type: 3}
+--- !u!1001 &9059940003757149257
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092200259683864736, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504683662779946688, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
+      propertyPath: m_Name
+      value: MenuScene
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 487b6b0239ebf554aafd0e6ff0d1771b, type: 3}
 --- !u!1001 &9160833271465449045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6561,3 +6614,4 @@ SceneRoots:
   - {fileID: 2136799021}
   - {fileID: 2075372325}
   - {fileID: 1653045775}
+  - {fileID: 9059940003757149257}
