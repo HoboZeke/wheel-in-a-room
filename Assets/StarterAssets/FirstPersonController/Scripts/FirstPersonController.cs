@@ -11,7 +11,7 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviour
 	{
-		public enum Controller { Player, Shop, Wheel, TrinketCabinet, PostBox }
+		public enum Controller { Player, Shop, Wheel, TrinketCabinet, PostBox, UI }
 		[SerializeField] Controller controller;
 
 		[Header("Player")]
@@ -279,7 +279,13 @@ namespace StarterAssets
 			if(controller != newController) { controller = newController; }
 		}
 
-		public void ManuallyMoveToPos(Vector3 pos)
+		private void OnApplicationFocus(bool hasFocus)
+		{
+			if (controller == Controller.Player) { Cursor.lockState = CursorLockMode.Locked; }
+			else { Cursor.lockState = CursorLockMode.None; }
+		}
+
+        public void ManuallyMoveToPos(Vector3 pos)
 		{
 			transform.position = pos;
 		}
