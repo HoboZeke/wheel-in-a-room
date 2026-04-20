@@ -43,6 +43,12 @@ public class ArrowSlot : MonoBehaviour
         arrow.SetPositionOnWheel(positionOnWheel);
     }
 
+    public void RemoveArrowFromSlot()
+    {
+        Destroy(arrowInSlot);
+        arrowInSlot = null;
+    }
+
     public Arrow ArrowInSlot() { return arrowInSlot; }
     public bool HasArrow() { return arrowInSlot != null; }
 

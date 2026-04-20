@@ -25,6 +25,14 @@ public class PlayerInventory : MonoBehaviour
         if (key.gameObject.activeInHierarchy) hammer.Rotate(inventorySpin * Time.deltaTime);
     }
 
+    public void ResetInventory()
+    {
+        inInventory.Clear();
+        cog.transform.localPosition = restPos; cog.gameObject.SetActive(true);
+        key.transform.localPosition = restPos; key.gameObject.SetActive(true);
+        hammer.transform.localPosition = restPos; hammer.gameObject.SetActive(true);
+    }
+
     public bool HasCog() { return inInventory.Contains(cog); }
     public bool HasKey() { return inInventory.Contains(key); }
     public bool HasHammer() { return inInventory.Contains(hammer); }
@@ -32,9 +40,9 @@ public class PlayerInventory : MonoBehaviour
     public void AddCogToInv() { StartCoroutine(MoveItemIntoInventory(cog)); }
     public void AddKeyToInv() { StartCoroutine(MoveItemIntoInventory(key)); }
     public void AddHammerToInv() { StartCoroutine (MoveItemIntoInventory(hammer)); }
-    public void RemoveCogFromInv() { inInventory.Remove(cog); cog.gameObject.SetActive(false); }
-    public void RemoveKeyFromInv() { inInventory.Remove(key); key.gameObject.SetActive(false); }
-    public void RemoveHammerFromInv() { inInventory.Remove(hammer); hammer.gameObject.SetActive(false); }
+    public void RemoveCogFromInv() { inInventory.Remove(cog); cog.transform.localPosition = restPos; cog.gameObject.SetActive(false); }
+    public void RemoveKeyFromInv() { inInventory.Remove(key); key.transform.localPosition = restPos; key.gameObject.SetActive(false); }
+    public void RemoveHammerFromInv() { inInventory.Remove(hammer); hammer.transform.localPosition = restPos; hammer.gameObject.SetActive(false); }
 
     IEnumerator MoveItemIntoInventory(Transform t)
     {

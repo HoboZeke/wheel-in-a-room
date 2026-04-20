@@ -7,6 +7,12 @@ public class BreakglassCabinet : Interactable
     [SerializeField] ParticleSystem glassFragementsPS;
     [SerializeField] BoxCollider boxCollider;
 
+    public void ResetToStart()
+    {
+        glass.SetActive(true);
+        wheel.SetActive(true);
+    }
+
     public override void Interact()
     {
         if (PlayerInventory.main.HasHammer() && glass.activeInHierarchy)
@@ -33,6 +39,8 @@ public class BreakglassCabinet : Interactable
     {
         wheel.SetActive(false);
         Wheel.main.AddMiniWheel();
+
+        UIController.main.PickupItem("miniwheel");
 
         Debug.Log("Picked up wheel");
     }

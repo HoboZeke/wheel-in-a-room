@@ -22,6 +22,6 @@ public class InventoryItem : Interactable
                 break;
         }
 
-        Destroy(gameObject);
+        ItemPool.main.RemoveItem(this);
     }
 }

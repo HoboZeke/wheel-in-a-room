@@ -13,12 +13,17 @@ public class RunLogger : MonoBehaviour
         main = this;
     }
 
-    private void Start()
+    public void StartNewRun()
     {
-        logList.Add(new RunLog() { RunNumber = 1 });
+        logList.Add(new RunLog() { RunNumber = RunCount() + 1 });
     }
 
-    RunLog ActiveRunLog() { return logList[logList.Count - 1]; }
+    public void LoadRuns(RunLog[] logs) { logList = new List<RunLog>(logs); }
+
+    public int RunCount() { return logList.Count; }
+    public int SpinCount() { return ActiveRunLog().SpinCount(); }
+    public RunLog ActiveRunLog() { return logList[logList.Count - 1]; }
+    public RunLog[] AllLogs() { return logList.ToArray(); }
     SpinLog ActiveSpinLog() { return ActiveRunLog().LastSpinInList(); }
 
     public void OnSpin()
@@ -31,6 +36,7 @@ public class RunLogger : MonoBehaviour
     {
         ActiveSpinLog().AddSpinRewardData(c, coin, fuel);
         TrinketManager.main.RewardGained(c);
+        SaveLoad.main.Save();
     }
 
     SpinLog RecentSpin(int spinIndex)
@@ -185,6 +191,9 @@ public class SpinLog
 
         return false;
     }
+
+    public int SpinRewardedCoinCount() { return spinRewardLog.CoinsRewarded(); }
+    public int SpinRewardedFuelCount() { return spinRewardLog.FuelRewarded(); }
 }
 
 public class SpinRewardLog
@@ -212,5 +221,23 @@ public class SpinRewardLog
         SegmentColours.Add(c);
         CoinsGained.Add(coin);
         FuelGained.Add(fuel);
+    }
+
+    public int CoinsRewarded()
+    {
+        int result = 0;
+
+        for(int i = 0; i < CoinsGained.Count; i++) { result += CoinsGained[i]; }
+
+        return result;
+    }
+
+    public int FuelRewarded()
+    {
+        int result = 0;
+
+        for (int i = 0; i < FuelGained.Count; i++) { result += FuelGained[i]; }
+
+        return result;
     }
 }

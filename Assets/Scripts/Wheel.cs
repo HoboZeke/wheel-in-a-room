@@ -52,6 +52,28 @@ public class Wheel : MonoBehaviour
         spinCount = 0;
     }
 
+    public void ResetWheel()
+    {
+        for (int i = 1; i < arrowSlots.Length; i++) 
+        {
+            arrowSlots[i].RemoveArrowFromSlot();
+        }
+
+        for(int i = wheelSegments.Count-1; i >= 0; i--)
+        {
+            RemoveSegment(wheelSegments[i]);
+        }
+
+        for(int i = miniWheelSegments.Count-1; i >= 0; i--)
+        {
+            RemoveMiniSegment(miniWheelSegments[i]);
+        }
+
+        miniWheel.gameObject.SetActive(false);
+        hasMiniWheel = false;
+
+    }
+
     private void Update()
     {
         if(focused && Input.GetKeyDown(KeyCode.Escape))
@@ -96,6 +118,8 @@ public class Wheel : MonoBehaviour
         }
         return null;
     }
+
+    public WheelSegment[] SegmentsOnWheel() { return wheelSegments.ToArray(); }
 
     public WheelSegment.SegmentColour[] LargestSegment()
     {
@@ -164,13 +188,12 @@ public class Wheel : MonoBehaviour
     {
         if (currentState != WheelState.Idle) { return; }
 
+        Debug.Log("Spinning The Wheel!");
         spinCount++;
         ProgressTracker.main.UseSpin();
         RunLogger.main.OnSpin();
         ChangeState(WheelState.Spinning);
-        StartCoroutine(AnimateWheelSpin(Random.Range(spinDuration.x, spinDuration.y)));
-
-        
+        StartCoroutine(AnimateWheelSpin(Random.Range(spinDuration.x, spinDuration.y)));        
     }
 
     public int SpinCount() { return spinCount; }
@@ -196,6 +219,7 @@ public class Wheel : MonoBehaviour
         ClearRewardHighlight();
 
         ChangeState(WheelState.Idle);
+        TrinketManager.main.SpinComplete();
 
         if(ProgressTracker.main.SpinsLeft() <= 0)
         {
@@ -353,6 +377,13 @@ public class Wheel : MonoBehaviour
         int size = 0;
         foreach (WheelSegment segment in wheelSegments) { size += segment.SegmentSize(); }
         return size;
+    }
+
+    public int ArrowCount()
+    {
+        int count = 0;
+        foreach(ArrowSlot slot in arrowSlots) { if(slot.HasArrow()) count++; }
+        return count;
     }
 
     public float SegmentLabelPositionDivider()
@@ -709,6 +740,7 @@ public class Wheel : MonoBehaviour
             {
                 GameObject cObj = Instantiate(coinRewardPrefab);
                 cObj.transform.SetParent(transform);
+                cObj.GetComponent<Collider>().enabled = false;
                 StartCoroutine(MoveRewardObjectAlongPathThenDestroy(cObj.transform, coinRewardPos, rewardDur, RewardProfile.RewardType.Coins));
                 coinsToSpawn--;
             }

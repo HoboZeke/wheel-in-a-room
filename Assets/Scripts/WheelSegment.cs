@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WheelSegment : MonoBehaviour
 {
-    public enum SegmentColour { White, Green, Red, None, Soot, Unique};
+    public enum SegmentColour { White, Green, Red, None, Soot, Jackpot};
     [SerializeField] RectTransform rt;
     [SerializeField] Color color;
     [SerializeField] SegmentColour segmentColour;
@@ -71,9 +71,14 @@ public class WheelSegment : MonoBehaviour
         reward.ProcessReward(this);
     }
 
+    public void GainReward(int multi)
+    {
+        reward.ProcessReward(this, multi);
+    }
+
     public void GainReward(MiniWheelSegment mulitSeg)
     {
-        reward.ProcessReward(this, mulitSeg);
+        reward.ProcessReward(this, 1, mulitSeg);
     }
 
     public int RewardCoins() { return reward.CoinRewardAmount(); }

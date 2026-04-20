@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class ProgressTracker : MonoBehaviour
     [SerializeField] Transform[] markers;
     [SerializeField] TextMeshProUGUI spinsLeftText;
     [SerializeField] int spinsLeft;
+
+    public EventHandler OnSpinCountUpdate;
 
     private void Awake()
     {
@@ -61,5 +64,7 @@ public class ProgressTracker : MonoBehaviour
         }
 
         spinsLeftText.text = "Spins: " + spinsLeft;
+
+        OnSpinCountUpdate?.Invoke(this, EventArgs.Empty);
     }
 }

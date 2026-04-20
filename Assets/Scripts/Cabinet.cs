@@ -14,6 +14,17 @@ public class Cabinet : MonoBehaviour
         TrinketManager.main.OnWheelSpun += CheckConditionalOpen;
     }
 
+    public void ResetToStart()
+    {
+        if (opened)
+        {
+            opened = false;
+            TrinketManager.main.OnWheelSpun += CheckConditionalOpen;
+            boxCollider.enabled = true;
+            hinge.localEulerAngles = closeHingeRot;
+        }
+    }
+
     void CheckConditionalOpen(object sender, TrinketEventArgs args)
     {
         if (!opened)

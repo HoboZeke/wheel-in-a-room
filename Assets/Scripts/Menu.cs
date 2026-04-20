@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
+    public static Menu main;
+
     [SerializeField] GameObject menuScreen;
     [SerializeField] Transform menuCamera;
     [SerializeField] Image gameViewCoverImage;
@@ -16,6 +18,15 @@ public class Menu : MonoBehaviour
     [SerializeField] Vector3[] cameraTrackPoints;
     [SerializeField] Vector3[] cameraRotationPoints;
     [SerializeField] float[] cameraTrackTimes;
+    [SerializeField] Vector3 optionsCameraRot, optionsCameraPos;
+    [SerializeField] Vector3 storyCameraRot;
+    [SerializeField] float cameraRotationDuration;
+    bool busy;
+
+    private void Awake()
+    {
+        main = this;
+    }
 
     private void Start()
     {
@@ -24,6 +35,7 @@ public class Menu : MonoBehaviour
 
     public void StartGame()
     {
+        if (busy) { return; }
         StartCoroutine(StartGameAnimation());
     }
 
@@ -54,8 +66,78 @@ public class Menu : MonoBehaviour
         cameraRotationPoints = rots.ToArray();
     }
 
+    public void ReturnToMenu()
+    {
+        ResetCamera();
+        menuScreen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.UI);
+    }
+
+    public void MoveCameraToOptions()
+    {
+        if (busy) { return; }
+        StartCoroutine(MoveAndRotateCamera(cameraBasePos, optionsCameraPos, cameraBaseRot, optionsCameraRot, cameraRotationDuration));
+    }
+
+    public void MoveCameraFromOptions()
+    {
+        if (busy) { return; }
+        StartCoroutine(MoveAndRotateCamera(optionsCameraPos, cameraBasePos, optionsCameraRot, cameraBaseRot, cameraRotationDuration));
+    }
+
+    public void MoveCameraToStory()
+    {
+        if (busy) { return; }
+        StartCoroutine(RotateCamera(cameraBaseRot, storyCameraRot, cameraRotationDuration));
+    }
+
+    public void MoveCameraFromStory()
+    {
+        if (busy) { return; }
+        StartCoroutine(RotateCamera(storyCameraRot, cameraBaseRot, cameraRotationDuration));
+    }
+
+    IEnumerator RotateCamera(Vector3 from, Vector3 to, float dur)
+    {
+        busy = true;
+
+        float timeElapsed = 0f;
+
+        while (timeElapsed < dur)
+        {
+            menuCamera.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(from), Quaternion.Euler(to), timeElapsed / dur);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        menuCamera.transform.localEulerAngles = to;
+        busy = false;
+    }
+
+    IEnumerator MoveAndRotateCamera(Vector3 from, Vector3 to, Vector3 fromRot, Vector3 toRot, float dur)
+    {
+        busy = true;
+        float timeElapsed = 0f;
+
+        while (timeElapsed < dur)
+        {
+            menuCamera.transform.localPosition = Vector3.Lerp(from, to, timeElapsed / dur);
+            menuCamera.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(fromRot), Quaternion.Euler(toRot), timeElapsed / dur);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        menuCamera.transform.localPosition = to;
+        menuCamera.transform.localEulerAngles = toRot;
+        busy = false;
+    }
+
     IEnumerator StartGameAnimation()
     {
+        busy = true;
         Cursor.lockState = CursorLockMode.Locked;
 
         float timeElapsed = 0f;
@@ -98,7 +180,11 @@ public class Menu : MonoBehaviour
         }
 
         gameViewCoverImage.gameObject.SetActive(false);
+        AudioManager.main.SwitchToGameMusic();
 
         Player.local.ReleaseControlOfCamera();
+        busy = false;
+
+        GameManager.main.StartRun();
     }
 }

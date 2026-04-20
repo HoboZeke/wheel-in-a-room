@@ -32,6 +32,15 @@ public class Furnance : MonoBehaviour
         UpdateCoalVisuals();
     }
 
+    public void ResetFurnace()
+    {
+        foreach(GameObject c in coalObjects) { c.SetActive(false); }
+        spinsGenerated = 0;
+        heldCoal = 0;
+
+        UpdateCoalVisuals();
+    }
+
     int CoalRequiredForFiring()
     {
         return Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(spinsGenerated));
@@ -99,6 +108,7 @@ public class Furnance : MonoBehaviour
         {
             GameManager.main.FiredUpFurnance();
             StartCoroutine(Firing());
+            AudioManager.main.PlayFireSFX();
         }
     }
 

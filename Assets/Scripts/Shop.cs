@@ -30,6 +30,14 @@ public class Shop : Interactable
         }
     }
 
+    public void ResetShop()
+    {
+        for (int i = 0; i < shopSlots.Length; i++)
+        {
+            shopSlots[i].EmptySlot();
+        }
+    }
+
     public override void Interact()
     {
         if (!focused)

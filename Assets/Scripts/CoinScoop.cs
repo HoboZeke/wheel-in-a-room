@@ -21,6 +21,13 @@ public class CoinScoop : MonoBehaviour
         main = this;
     }
 
+    public void ResetScoop()
+    {
+        coinCount = 0;
+        coinCountText.text = coinCount.ToString();
+        UpdateFill();
+    }
+
     public void SuckUpCoins()
     {
         if(sucking) { return; }

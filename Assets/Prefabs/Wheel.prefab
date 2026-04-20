@@ -2162,7 +2162,7 @@ MonoBehaviour:
   cogSlot: {fileID: 0}
   maxSpinSpeed: 1500
   windUpDuration: 0.5
-  spinDuration: {x: 3, y: 6}
+  spinDuration: {x: 1.5, y: 3.5}
   timeBetweenRewards: 0.8
   miniWheel: {fileID: 5271302055379997162}
   hasMiniWheel: 0

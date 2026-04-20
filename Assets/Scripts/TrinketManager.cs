@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TrinketManager : MonoBehaviour
 {
@@ -9,8 +11,11 @@ public class TrinketManager : MonoBehaviour
     [SerializeField] TrinketCabinet trinketCabinet;
     [SerializeField] GameObject trinketPrefab;
     [SerializeField] TrinketProfile[] trinketProfiles;
+    [SerializeField] TrinketProfile[] canaryTrinkets;
+    List<TrinketProfile> canaryPool = new List<TrinketProfile>();
 
     public EventHandler<TrinketEventArgs> OnWheelSpun;
+    public EventHandler<TrinketEventArgs> OnSpinComplete;
     public EventHandler<TrinketEventArgs> OnRewardSegmentGained;
     public EventHandler<TrinketEventArgs> OnTwoInARow;
     public EventHandler<TrinketEventArgs> OnThreeInARow;
@@ -44,9 +49,22 @@ public class TrinketManager : MonoBehaviour
         }
     }
 
+    public void RefillCanaryPool() { canaryPool = new List<TrinketProfile>(canaryTrinkets); }
+    public TrinketProfile PullFromCanaryPool()
+    {
+        TrinketProfile profile = canaryPool[Random.Range(0, canaryPool.Count)];
+        canaryPool.Remove(profile);
+        return profile;
+    }
+
     public void WheelSpun()
     {
         OnWheelSpun?.Invoke(this, new TrinketEventArgs() { spinNumber = Wheel.main.SpinCount() });
+    }
+
+    public void SpinComplete()
+    {
+        OnSpinComplete?.Invoke(this, new TrinketEventArgs() { spinNumber = Wheel.main.SpinCount() });
     }
 
     public void RewardGained(WheelSegment.SegmentColour colour)

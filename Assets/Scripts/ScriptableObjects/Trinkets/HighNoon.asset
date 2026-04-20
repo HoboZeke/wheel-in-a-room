@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108d5a5282b26a1429f425d28061aa02, type: 3}
+  m_Name: HighNoon
+  m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
+  trinketName: High Noon
+  trinketDescription: If you have only One arrow the wheel scores twice.
+  trinketIndex: 0
+  trinketMesh: {fileID: -2309305249758762421, guid: 7a8da9d1e895c704fa3e8be33cf80a18, type: 3}
+  trinketMaterial: {fileID: -1495225023128707738, guid: 96f6475fccebdef49a535ca94f60c8e1, type: 3}
+  rewardsOnPickup: 0
+  trinketListenEvent: 9
+  listenerCaresAboutColour: 0
+  listenColour: 0
+  trinketRewardType: 4
+  trinketRewardCondition: 1
+  rewardColour: 0
+  rewardType: 0
+  rewardStrength: 1

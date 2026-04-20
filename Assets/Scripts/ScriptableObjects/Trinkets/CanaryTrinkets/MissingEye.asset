@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108d5a5282b26a1429f425d28061aa02, type: 3}
+  m_Name: MissingEye
+  m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
+  trinketName: Eye of the Canary
+  trinketDescription: Every third time White scores, gain 3 coins.
+  trinketIndex: 0
+  trinketMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  trinketMaterial: {fileID: 3511325375820423461, guid: 96f6475fccebdef49a535ca94f60c8e1, type: 3}
+  trinketListenEvent: 7
+  listenerCaresAboutColour: 1
+  listenColour: 0
+  trinketRewardType: 3
+  rewardColour: 0
+  rewardType: 1
+  rewardStrength: 3

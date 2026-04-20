@@ -7,6 +7,8 @@ public class InteractManager : MonoBehaviour
 
     private void Update()
     {
+        if (InputManager.main.BlockInteraction()) { return; }
+                    
         CastInteractionRay();
 
         if (Input.GetMouseButtonDown(0) && activeTarget != null)

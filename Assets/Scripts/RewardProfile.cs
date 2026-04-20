@@ -5,7 +5,7 @@ using System;
 [CreateAssetMenu(fileName = "RewardProfile", menuName = "ScriptableObjects/RewardProfile")]
 public class RewardProfile : ScriptableObject
 {
-    public enum RewardType { Fuel, Coins, All, Multiplier }
+    public enum RewardType { Fuel, Coins, All, Multiplier, Spin, Jackpot }
     [SerializeField] RewardType[] baseRewardTypes;
     [SerializeField] int[] baseAmounts;
 
@@ -24,12 +24,13 @@ public class RewardProfile : ScriptableObject
         amounts = new List<int>(baseAmounts);
     }
 
-    public virtual void ProcessReward(WheelSegment fromSegment, MiniWheelSegment multi = null) 
+    public virtual void ProcessReward(WheelSegment fromSegment, int hardMultiplier = 1, MiniWheelSegment multi = null) 
     {
         for (int i = 0; i < rewardTypes.Count; i++)
         {
             RewardType rewardType = rewardTypes[i];
             int amount = amounts[i];
+            amount = Mathf.RoundToInt(amount*hardMultiplier);
             if(multi != null) { amount = multi.AdjustRewardStrength(amount); }
 
             switch (rewardType)
@@ -39,6 +40,18 @@ public class RewardProfile : ScriptableObject
                     break;
                 case RewardType.Coins:
                     Wheel.main.GainRewardResources(amount, 0);
+                    break;
+                case RewardType.Spin:
+                    ProgressTracker.main.AddSpins(amount);
+                    break;
+                case RewardType.Jackpot:
+                    foreach(WheelSegment seg in Wheel.main.SegmentsOnWheel())
+                    {
+                        if(seg.SegColour() != WheelSegment.SegmentColour.Jackpot)
+                        {
+                            seg.GainReward(amount);
+                        }
+                    }
                     break;
             }
         }

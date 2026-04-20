@@ -8,10 +8,22 @@ public class Player : MonoBehaviour
 
     [SerializeField] FirstPersonController firstPersonController;
     [SerializeField] CinemachineVirtualCamera cameraCinemachine;
+    Vector3 resetPos, resetRot;
 
     private void Awake()
     {
         local = this;
+    }
+
+    private void Start()
+    {
+        resetPos = GetPosition();
+        resetRot = GetRotation();
+    }
+
+    public void ResetToStartPositions()
+    {
+        MovePlayerToPos(resetPos, resetRot);
     }
 
     public void TakeControlOfCamera(FirstPersonController.Controller controller)
@@ -40,4 +52,6 @@ public class Player : MonoBehaviour
         firstPersonController.ManuallyMoveToPos(pos);
         firstPersonController.ManuallyMoveToRot(eulerRot);
     }
+    public Vector3 GetPosition() { return firstPersonController.GetPosition(); }
+    public Vector3 GetRotation() { return firstPersonController.GetRotation(); }
 }

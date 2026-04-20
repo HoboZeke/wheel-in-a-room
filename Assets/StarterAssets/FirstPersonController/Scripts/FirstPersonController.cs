@@ -11,7 +11,7 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviour
 	{
-		public enum Controller { Player, Shop, Wheel, TrinketCabinet, PostBox, UI }
+		public enum Controller { Player, Shop, Wheel, TrinketCabinet, PostBox, UI, Story }
 		[SerializeField] Controller controller;
 
 		[Header("Player")]
@@ -294,5 +294,8 @@ namespace StarterAssets
 		{
 			transform.localEulerAngles = euler;
 		}
+
+		public Vector3 GetPosition() {  return transform.position; }
+		public Vector3 GetRotation() { return transform.localEulerAngles; }
 	}
 }
