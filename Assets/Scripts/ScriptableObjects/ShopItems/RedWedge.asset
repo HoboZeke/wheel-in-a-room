@@ -20,5 +20,7 @@ MonoBehaviour:
   eulerAngles: {x: 270, y: 90, z: 0}
   type: 0
   rarity: 0
-  segmentColour: 0
+  segmentColour: 2
   visualColour: {r: 0, g: 0, b: 0, a: 0}
+  trinketProfile: {fileID: 0}
+  arrowProfile: {fileID: 0}

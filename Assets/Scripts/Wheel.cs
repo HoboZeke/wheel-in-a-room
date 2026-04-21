@@ -32,7 +32,7 @@ public class Wheel : MonoBehaviour
 
     [Header("SpinSettings")]
     [SerializeField] float maxSpinSpeed;
-    [SerializeField] float windUpDuration;
+    [SerializeField] float windUpDuration, windDownDuration;
     [SerializeField] Vector2 spinDuration;
 
     [Header("RewardSettings")]
@@ -84,6 +84,8 @@ public class Wheel : MonoBehaviour
 
     public void AddToSegment(int size, WheelSegment.SegmentColour sColour)
     {
+        Debug.Log("Adding " + size + " to " + sColour.ToString());
+
         if(GetSegment(sColour) != null)
         {
             GetSegment(sColour).AdjustSegmentSize(size);
@@ -403,6 +405,7 @@ public class Wheel : MonoBehaviour
 
         cogSlot.SpinCogs();
         SetMiniWheelSpeedMod();
+        clickAngleCooldown = clickRotationAngle;
 
         while (timeElapsed < duration)
         {
@@ -421,20 +424,24 @@ public class Wheel : MonoBehaviour
                 miniWheel.Rotate(Vector3.back * rotationSpeed * miniWheelSpinMod * Time.deltaTime);
             }
 
+            WheelClickUpdate(rotationSpeed * Time.deltaTime, rotationSpeed);
+
             timeElapsed += Time.deltaTime;
             yield return null;
         }
 
         timeElapsed = 0f;
-        while(timeElapsed < windUpDuration)
+        while(timeElapsed < windDownDuration)
         {
-            rotationSpeed = Mathf.Lerp(maxSpinSpeed, 0, timeElapsed / windUpDuration);
+            rotationSpeed = Mathf.Lerp(maxSpinSpeed, 0, timeElapsed / windDownDuration);
 
             wheel.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
             if (hasMiniWheel)
             {
                 miniWheel.Rotate(Vector3.back * rotationSpeed * miniWheelSpinMod * Time.deltaTime);
             }
+
+            WheelClickUpdate(rotationSpeed * Time.deltaTime, rotationSpeed);
 
             timeElapsed += Time.deltaTime;
             yield return null;
@@ -784,6 +791,28 @@ public class Wheel : MonoBehaviour
         }
 
         Destroy(obj.gameObject);
+    }
+
+    #endregion
+
+    #region Audio
+    [Header("Audio")]
+    [SerializeField] AudioPlayer wheelClick;
+    [SerializeField] float wheelSlowPitch, wheelFastPitch;
+    [SerializeField] float clickRotationAngle;
+    float clickAngleCooldown;
+
+    void WheelClickUpdate(float angleChange, float speed)
+    {
+        clickAngleCooldown -= angleChange;
+        if (clickAngleCooldown <= 0f)
+        {
+            float pitch = Mathf.Lerp(wheelSlowPitch, wheelFastPitch, speed / maxSpinSpeed);
+            wheelClick.SetPitch(pitch);
+            wheelClick.Play();
+
+            clickAngleCooldown = clickRotationAngle;
+        }
     }
 
     #endregion

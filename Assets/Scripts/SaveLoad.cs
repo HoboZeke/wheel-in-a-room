@@ -18,6 +18,10 @@ public class SaveLoad : MonoBehaviour
         {
             Load();
         }
+        else
+        {
+            activeSaveFile = new SaveFile();
+        }
     }
 
     public void Save()

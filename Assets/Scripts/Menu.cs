@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Menu : MonoBehaviour
 {
@@ -23,6 +24,14 @@ public class Menu : MonoBehaviour
     [SerializeField] float cameraRotationDuration;
     bool busy;
 
+    [Header("Story")]
+    [SerializeField] TextMeshProUGUI storyText;
+    [TextArea(3, 10)]
+    [SerializeField] string[] storyStrings;
+    [SerializeField] float[] storyTimes;
+    [SerializeField] float storyStartDelay;
+    bool waitingForInput;
+
     private void Awake()
     {
         main = this;
@@ -31,6 +40,14 @@ public class Menu : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void Update()
+    {
+        if (waitingForInput)
+        {
+            if (Input.anyKeyDown) { waitingForInput = false; }
+        }
     }
 
     public void StartGame()
@@ -90,6 +107,7 @@ public class Menu : MonoBehaviour
     {
         if (busy) { return; }
         StartCoroutine(RotateCamera(cameraBaseRot, storyCameraRot, cameraRotationDuration));
+        SetupStory();
     }
 
     public void MoveCameraFromStory()
@@ -187,4 +205,51 @@ public class Menu : MonoBehaviour
 
         GameManager.main.StartRun();
     }
+
+    #region Story
+    Coroutine storyCoroutine;
+
+    void SetupStory()
+    {
+        storyText.text = "";
+        if(storyCoroutine != null ) { StopCoroutine(storyCoroutine); }
+
+        storyCoroutine = StartCoroutine(PlayStory(storyStartDelay + cameraRotationDuration));
+    }
+
+    IEnumerator PlayStory(float initialDelay)
+    {
+        yield return new WaitForSeconds(initialDelay);
+
+        float timeElapsed = 0f;
+        storyText.text = "";
+
+        for (int i = 0; i < storyStrings.Length; i++)
+        {
+            while (timeElapsed < storyTimes[i])
+            {
+                int limit = Mathf.RoundToInt(storyStrings[i].Length * (timeElapsed / storyTimes[i]));
+                storyText.text = storyStrings[i].Substring(0, limit);
+
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            storyText.text = storyStrings[i];
+            timeElapsed = 0f;
+
+            yield return StartCoroutine(WaitForInput());
+
+        }
+
+        MoveCameraFromStory();
+    }
+
+    IEnumerator WaitForInput()
+    {
+        waitingForInput = true;
+        while (waitingForInput) { yield return null; }
+    }
+
+#endregion
 }

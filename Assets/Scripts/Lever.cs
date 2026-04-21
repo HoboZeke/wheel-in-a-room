@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class Lever : Interactable
 {
@@ -13,7 +14,10 @@ public class Lever : Interactable
 
     private void OnMouseDown()
     {
-        TriggerLever();
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            TriggerLever();
+        }
     }
 
     public override void Interact()

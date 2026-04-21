@@ -34,6 +34,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] AudioPlayer fireSFX;
+    [SerializeField] AudioPlayer wheelSFX;
 
     private void Awake()
     {
@@ -113,7 +114,8 @@ public class AudioManager : MonoBehaviour
     {
         return new AudioPlayer[]
         {
-            fireSFX
+            fireSFX,
+            wheelSFX
         };
     }
 
