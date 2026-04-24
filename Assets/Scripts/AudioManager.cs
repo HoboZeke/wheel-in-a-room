@@ -28,9 +28,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] Slider musicSlider, sfxSlider;
     [SerializeField] Toggle muteToggle;
 
+    [Header("Pause UI")]
+    [SerializeField] Slider pauseMasterSlider;
+    [SerializeField] Slider pauseMusicSlider, pauseSfxSlider;
+    [SerializeField] Toggle pauseMuteToggle;
+
     [Header("Music")]
     [SerializeField] AudioPlayer menuBackground;
     [SerializeField] AudioPlayer gameBackground;
+    [SerializeField] AudioPlayer countdownMusic;
 
     [Header("SFX")]
     [SerializeField] AudioPlayer fireSFX;
@@ -55,6 +61,7 @@ public class AudioManager : MonoBehaviour
         if (PlayerPrefs.HasKey("Mute")) mute = PlayerPrefs.GetInt("Mute") == 1? true: false;
 
         UpdateVolumes();
+        UpdateUI();
     }
 
     void SavePlayerPrefs()
@@ -81,7 +88,6 @@ public class AudioManager : MonoBehaviour
             s.SetMute(mute);
         }
 
-
         OnAudioSettingsUpdate?.Invoke(this, new AudioEventArgs());
         SavePlayerPrefs();
     }
@@ -89,9 +95,13 @@ public class AudioManager : MonoBehaviour
     void UpdateUI()
     {
         masterSlider.value = masterVolume;
+        pauseMasterSlider.value = masterVolume;
         musicSlider.value = musicVolume;
+        pauseMusicSlider.value = musicVolume;
         sfxSlider.value = sfxVolume;
+        pauseSfxSlider.value = sfxVolume;
         muteToggle.isOn = mute;
+        pauseMuteToggle.isOn = mute;
     }
 
     
@@ -106,7 +116,8 @@ public class AudioManager : MonoBehaviour
         return new AudioPlayer[]
         {
             menuBackground,
-            gameBackground
+            gameBackground,
+            countdownMusic
         };
     }
 
@@ -128,6 +139,16 @@ public class AudioManager : MonoBehaviour
     public void PlayFireSFX()
     {
         fireSFX.Play();
+    }
+
+    public void PlayCountdownMusic()
+    {
+        countdownMusic.Play();
+    }
+
+    public void StopCountdownMusic()
+    {
+        countdownMusic.Stop();
     }
 }
 

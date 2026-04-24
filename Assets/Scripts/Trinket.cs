@@ -11,6 +11,8 @@ public class Trinket : MonoBehaviour
 
     public Mesh TrinketMesh { get { return mesh; } private set { mesh = value; } }
     public Material TrinketMaterial { get { return material; } private set { material = value; } }
+    public Vector3 TrinketScale() { return trinketProfile.TrinketObjectScale; }
+    public Vector3 TrinketEuler() { return trinketProfile.TrinketObjectEuler; }
 
     public string TrinketName { get { return trinketProfile.TrinketName; } private set { }  }
     public string TrinketDescription { get { return trinketProfile.TrinketDescription; } private set { } }

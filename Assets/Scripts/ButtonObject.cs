@@ -6,9 +6,14 @@ public class ButtonObject : MonoBehaviour
     [SerializeField] UnityEvent OnClick;
     [SerializeField] UnityEvent OnEnter, OnExit;
 
-    private void OnMouseDown()
+    public void Activate()
     {
         OnClick?.Invoke();
+    }
+
+    private void OnMouseDown()
+    {
+        Activate();
     }
 
     private void OnMouseEnter()

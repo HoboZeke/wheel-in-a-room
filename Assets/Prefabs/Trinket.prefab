@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526d61a9a739ebc498926741e6e6fcec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrinketObject
+  trinketModelObject: {fileID: 234458033943652689}
   trinketItemMeshFilter: {fileID: 4960476391704148200}
   trinketItemMeshRenderer: {fileID: 1750228447593268486}
   connectedTrinket: {fileID: 1277316840494515906}
@@ -100,7 +101,7 @@ GameObject:
   - component: {fileID: 4960476391704148200}
   - component: {fileID: 1750228447593268486}
   m_Layer: 0
-  m_Name: TrinketModelPlaceholder
+  m_Name: TrinketModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

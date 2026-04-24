@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     float countDown;
     bool countingDown;
 
+    bool paused;
+
     private void Awake()
     {
         main = this;
@@ -47,11 +49,28 @@ public class GameManager : MonoBehaviour
         StartRun();
     }
 
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        paused = true;
+        UIController.main.Paused();
+    }
+
+    public bool IsPaused() { return paused; }
+
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1f;
+        paused = false;
+        UIController.main.Unpaused();
+    }
+
     public void LastSpinUsed()
     {
         countDown = countDownStart;
         UIController.main.ToggleCountDownUI(true);
         UIController.main.CountDownUI((Mathf.Round(countDown * 100)/100).ToString());
+        AudioManager.main.PlayCountdownMusic();
         countingDown = true;
     }
 
@@ -95,6 +114,7 @@ public class GameManager : MonoBehaviour
             UIController.main.ToggleCountDownUI(false);
             countingDown = false;
             trainCabinAnimator.StopCrushAnimation();
+            AudioManager.main.StopCountdownMusic();
         }
     }
 }

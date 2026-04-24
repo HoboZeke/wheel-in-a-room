@@ -12,6 +12,9 @@ public class Menu : MonoBehaviour
     [SerializeField] Transform menuCamera;
     [SerializeField] Image gameViewCoverImage;
     [SerializeField] float fadeOutTime;
+    [SerializeField] ControllerButton defaultControllerButton, defaultOptionsButton;
+    enum ViewScreen { MenuScreen, Story, Options }
+    ViewScreen currentScreen = ViewScreen.MenuScreen;
 
     [Header("Camera Movement Script")]
     [SerializeField] Vector3 cameraBasePos;
@@ -24,13 +27,6 @@ public class Menu : MonoBehaviour
     [SerializeField] float cameraRotationDuration;
     bool busy;
 
-    [Header("Story")]
-    [SerializeField] TextMeshProUGUI storyText;
-    [TextArea(3, 10)]
-    [SerializeField] string[] storyStrings;
-    [SerializeField] float[] storyTimes;
-    [SerializeField] float storyStartDelay;
-    bool waitingForInput;
 
     private void Awake()
     {
@@ -40,6 +36,10 @@ public class Menu : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
+        if(InputManager.main.ActiveDevice == InputManager.InputDevice.Controller)
+        {
+            defaultControllerButton.GainFocus();
+        }
     }
 
     private void Update()
@@ -54,6 +54,19 @@ public class Menu : MonoBehaviour
     {
         if (busy) { return; }
         StartCoroutine(StartGameAnimation());
+    }
+    public void SwitchToControllerInput()
+    {
+        switch (currentScreen)
+        {
+            case ViewScreen.MenuScreen:
+                defaultControllerButton.GainFocus();
+                break;
+            case ViewScreen.Options:
+                defaultOptionsButton.GainFocus();
+                break;
+
+        }
     }
 
     [ContextMenu("ResetCamera")]
@@ -83,24 +96,28 @@ public class Menu : MonoBehaviour
         cameraRotationPoints = rots.ToArray();
     }
 
+    public bool InMenu() { return menuScreen.activeInHierarchy; }
     public void ReturnToMenu()
     {
         ResetCamera();
         menuScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.UI);
+        currentScreen = ViewScreen.MenuScreen;
     }
 
     public void MoveCameraToOptions()
     {
         if (busy) { return; }
         StartCoroutine(MoveAndRotateCamera(cameraBasePos, optionsCameraPos, cameraBaseRot, optionsCameraRot, cameraRotationDuration));
+        currentScreen = ViewScreen.Options;
     }
 
     public void MoveCameraFromOptions()
     {
         if (busy) { return; }
         StartCoroutine(MoveAndRotateCamera(optionsCameraPos, cameraBasePos, optionsCameraRot, cameraBaseRot, cameraRotationDuration));
+        currentScreen = ViewScreen.MenuScreen;
     }
 
     public void MoveCameraToStory()
@@ -108,12 +125,15 @@ public class Menu : MonoBehaviour
         if (busy) { return; }
         StartCoroutine(RotateCamera(cameraBaseRot, storyCameraRot, cameraRotationDuration));
         SetupStory();
+        currentScreen = ViewScreen.Story;
     }
 
     public void MoveCameraFromStory()
     {
         if (busy) { return; }
+        rocketLaunching = false;
         StartCoroutine(RotateCamera(storyCameraRot, cameraBaseRot, cameraRotationDuration));
+        currentScreen = ViewScreen.MenuScreen;
     }
 
     IEnumerator RotateCamera(Vector3 from, Vector3 to, float dur)
@@ -207,7 +227,24 @@ public class Menu : MonoBehaviour
     }
 
     #region Story
+    [Header("Story")]
+    [SerializeField] TextMeshProUGUI storyText;
+    [TextArea(3, 10)]
+    [SerializeField] string[] storyStrings;
+    [SerializeField] float[] storyTimes;
+    [SerializeField] float storyStartDelay;
+    [SerializeField] int moonTurnIndex, rocketLaunchIndex;
+    [SerializeField] GameObject directionalLight;
+    [SerializeField] Transform[] rockets;
+    [SerializeField] ParticleSystem[] rocketPS;
+    [SerializeField] Transform moon;
+    [SerializeField] Light moonLight;
+    [SerializeField] float rocketLaunchSpeed;
+    [SerializeField] float lightIntensity, moonTurnDuration;
+    bool waitingForInput;
     Coroutine storyCoroutine;
+    bool rocketLaunching;
+    Vector3[] rocketStartPos;
 
     void SetupStory()
     {
@@ -215,17 +252,22 @@ public class Menu : MonoBehaviour
         if(storyCoroutine != null ) { StopCoroutine(storyCoroutine); }
 
         storyCoroutine = StartCoroutine(PlayStory(storyStartDelay + cameraRotationDuration));
+        moonLight.intensity = lightIntensity;
     }
 
     IEnumerator PlayStory(float initialDelay)
     {
         yield return new WaitForSeconds(initialDelay);
+        directionalLight.SetActive(false);
 
         float timeElapsed = 0f;
         storyText.text = "";
 
         for (int i = 0; i < storyStrings.Length; i++)
         {
+            if(i == moonTurnIndex) { StartCoroutine(TurnMoon()); }
+            if(i == rocketLaunchIndex) { StartCoroutine(LaunchRockets()); }
+
             while (timeElapsed < storyTimes[i])
             {
                 int limit = Mathf.RoundToInt(storyStrings[i].Length * (timeElapsed / storyTimes[i]));
@@ -242,7 +284,45 @@ public class Menu : MonoBehaviour
 
         }
 
+        directionalLight.SetActive(true);
+
+        rocketLaunching = false;
         MoveCameraFromStory();
+    }
+
+    IEnumerator TurnMoon()
+    {
+        float timeElapsed = 0f;
+
+        while (timeElapsed < moonTurnDuration)
+        {
+            moonLight.intensity = Mathf.Lerp(lightIntensity, 0f, timeElapsed / moonTurnDuration);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        moonLight.intensity = 0f;
+    }
+
+    IEnumerator LaunchRockets()
+    {
+        rocketLaunching = true;
+
+        rocketStartPos = new Vector3[rockets.Length];
+        for(int i = 0; i < rockets.Length; i++) { rocketStartPos[i] = rockets[i].position; }
+
+        foreach(ParticleSystem ps in rocketPS) { ps.Play(); }
+
+        while (rocketLaunching)
+        {
+            foreach(Transform t in rockets) { t.localPosition += (rocketLaunchSpeed * Time.deltaTime) * t.forward; }
+
+            yield return null;
+        }
+
+        for(int i = 0; i < rockets.Length; i++) { rockets[i].position = rocketStartPos[i]; }
+        foreach (ParticleSystem ps in rocketPS) { ps.Stop(); }
     }
 
     IEnumerator WaitForInput()

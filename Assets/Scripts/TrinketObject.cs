@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class TrinketObject : MonoBehaviour
 {
+    [SerializeField] Transform trinketModelObject;
     [SerializeField] MeshFilter trinketItemMeshFilter;
     [SerializeField] MeshRenderer trinketItemMeshRenderer;
     [SerializeField] Trinket connectedTrinket;
@@ -12,6 +13,9 @@ public class TrinketObject : MonoBehaviour
         connectedTrinket = t;
         trinketItemMeshFilter.mesh = t.TrinketMesh;
         trinketItemMeshRenderer.material = t.TrinketMaterial;
+
+        trinketModelObject.localScale = t.TrinketScale();
+        trinketModelObject.localEulerAngles = t.TrinketEuler();
     }
 
     public void ToggleCollider(bool b) { boxCollider.enabled = b; }

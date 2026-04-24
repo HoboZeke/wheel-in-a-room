@@ -15,13 +15,16 @@ MonoBehaviour:
   trinketName: Resusication Chamber
   trinketDescription: Your gain an extra 2 spins.
   trinketIndex: 0
+  rewardsOnPickup: 1
   trinketMesh: {fileID: 289301614986012343, guid: 0116791f5ef5d5b42bb619fa3cfd24f7, type: 3}
   trinketMaterial: {fileID: 2100000, guid: ae3558c03e1208747af17dc3de0cb3ac, type: 2}
-  rewardsOnPickup: 1
+  trinketObjectScale: {x: 1, y: 1, z: 0.8}
+  trinketObjectEuler: {x: 0, y: 90, z: 0}
   trinketListenEvent: 0
   listenerCaresAboutColour: 0
   listenColour: 0
   trinketRewardType: 3
+  trinketRewardCondition: 0
   rewardColour: 0
   rewardType: 4
   rewardStrength: 2

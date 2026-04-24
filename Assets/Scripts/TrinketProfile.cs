@@ -6,9 +6,13 @@ public class TrinketProfile : ScriptableObject
     [SerializeField] string trinketName;
     [SerializeField] string trinketDescription;
     [SerializeField] int trinketIndex;
+    [SerializeField] bool rewardsOnPickup;
+
+    [Header("Visuals")]
     [SerializeField] Mesh trinketMesh;
     [SerializeField] Material trinketMaterial;
-    [SerializeField] bool rewardsOnPickup;
+    [SerializeField] Vector3 trinketObjectScale;
+    [SerializeField] Vector3 trinketObjectEuler;
 
     [Header("Listening")]
     [SerializeField] TrinketListenEvent trinketListenEvent;
@@ -29,6 +33,8 @@ public class TrinketProfile : ScriptableObject
 
     public Mesh TrinketMesh { get { return trinketMesh; } private set { trinketMesh = value; } }
     public Material TrinketMaterial { get { return trinketMaterial; } private set { trinketMaterial = value; } }
+    public Vector3 TrinketObjectScale { get { return trinketObjectScale; } private set { trinketObjectScale = value; } }
+    public Vector3 TrinketObjectEuler { get { return trinketObjectEuler; } private set { trinketObjectEuler = value; } }
 
     public bool RewardsOnPickup { get { return rewardsOnPickup; } private set { rewardsOnPickup = value; } }
     public enum TrinketListenEvent { None, TwoInARow, ThreeInARow, FourInARow, ColourPresentInSpin, ColourAbsentInSpin, ColourAppearsTwice, ColourAppearsThreeTimes,

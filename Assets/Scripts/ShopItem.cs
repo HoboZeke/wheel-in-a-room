@@ -12,6 +12,7 @@ public class ShopItem : ScriptableObject
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
     [SerializeField] Vector3 eulerAngles;
+    [SerializeField] Vector3 scale = Vector3.one;
     [SerializeField] ItemType type;
     [SerializeField] ItemRarity rarity;
 
@@ -30,6 +31,7 @@ public class ShopItem : ScriptableObject
     public Mesh ItemMesh { get { return mesh; } private set { mesh = value; } }
     public Material ItemMaterial { get { return material; } private set { material = value; } }
     public Vector3 ItemEulerAngles { get { return eulerAngles; } private set { eulerAngles = value; } }
+    public Vector3 ItemScale { get { return scale; } private set { scale = value; } }
     public ItemType Type { get { return type; } private set { type = value; } }
     public ItemRarity Rarity { get { return rarity; } private set { rarity = value; } }
     public WheelSegment.SegmentColour SegmentColour { get { return segmentColour; } private set { segmentColour = value; } }

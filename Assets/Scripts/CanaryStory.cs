@@ -20,6 +20,7 @@ public class CanaryStory : MonoBehaviour
 
     [Header("Canary Choice")]
     [SerializeField] GameObject canaryChoiceScreen;
+    [SerializeField] ControllerButton defaultControllerButton;
     [SerializeField] TextMeshProUGUI canaryChoiceTitle, canaryChoiceDesc, canaryChoiceInstruction;
     [SerializeField] Button canaryChoiceA, canaryChoiceB, canaryChoiceC;
     [SerializeField] TextMeshProUGUI choiceATitle, choiceBTitle, choiceCTitle;
@@ -90,6 +91,20 @@ public class CanaryStory : MonoBehaviour
 
         canaryChoiceScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+
+        if (InputManager.main.ActiveDevice == InputManager.InputDevice.Controller)
+        {
+            defaultControllerButton.GainFocus();
+        }
+
+        InputManager.InputDeviceChanged += OnDeviceChange;
+    }
+
+    void OnDeviceChange(InputManager.InputDevice device) { if (device == InputManager.InputDevice.Controller) { SetupControllerControls(); } }
+
+    void SetupControllerControls()
+    {
+        defaultControllerButton.GainFocus();
     }
 
     void SetupCanaryTrinketChoiceUI(TrinketProfile t, TextMeshProUGUI title, TextMeshProUGUI desc, Button button)
@@ -115,6 +130,7 @@ public class CanaryStory : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Player.local.ReleaseControlOfCamera();
         InputManager.main.SetBusy(false);
+        InputManager.InputDeviceChanged -= OnDeviceChange;
     }
 
     IEnumerator PlayStory(StoryBeat[] beats)

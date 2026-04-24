@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,6 +44,7 @@ public class UIController : MonoBehaviour
     [Header("Post")]
     [SerializeField] PostBox postBox;
     [SerializeField] GameObject postScreen;
+    [SerializeField] ControllerButton defaultPostControllerButton;
     [SerializeField] TextMeshProUGUI postTitleText, postFluffText, postMemoText;
     [SerializeField] UIPostOptionPanel[] postOptionsPanels;
 
@@ -60,6 +62,8 @@ public class UIController : MonoBehaviour
         }
 
         postScreen.SetActive(true);
+
+        if(InputManager.main.ActiveDevice == InputManager.InputDevice.Controller) { defaultGameOverControllerButton.GainFocus(); }
     }
 
     public void HidePostScreen()
@@ -99,36 +103,32 @@ public class UIController : MonoBehaviour
     #region GameOver
     [Header("GameOver")]
     [SerializeField] GameObject gameOverScreen;
-    [SerializeField] RectTransform globeImage;
-    [SerializeField] Transform lineHolder;
-    [SerializeField] GameObject lineSegPrefab;
+    [SerializeField] GameObject xMarker;
+    [SerializeField] ControllerButton defaultGameOverControllerButton;
     [SerializeField] float gameOverScreenDuration;
-    Vector3 gameOverLineStart, gameoverStepSize;
-    float minVariance, maxVariance;
-    List<GameObject> line = new List<GameObject>();
 
-    void ClearLine()
-    {
-        foreach(GameObject go in line) { Destroy(go); }
-        line.Clear();
-    }
+    [SerializeField] Slider gameOverSlider;
+    [SerializeField] Transform underLine, trainLineScreen;
+    [SerializeField] RectTransform gameOverText;
+    [SerializeField] float lineRevealTime;
+    [SerializeField] Vector3 underlineFinishScale;
+    [SerializeField] Vector3 gameOverTextStartPos, gameOverTextEndPos;
+
 
     void SetupGameOverValues()
     {
-        ClearLine();
-        gameOverLineStart = globeImage.sizeDelta * 0.35f;
-        gameOverLineStart = new Vector3(gameOverLineStart.x * -1f, gameOverLineStart.y, gameOverLineStart.z);
-        gameoverStepSize = gameOverLineStart / 120f;
-        gameoverStepSize *= -1f;
-        minVariance = gameoverStepSize.x * 0.5f;
-        maxVariance = gameoverStepSize.x * 1.5f;
+        underLine.localScale = Vector3.one;
+        trainLineScreen.localScale = new Vector3(1f, 0f, 1f);
+        gameOverSlider.value = 0f;
+        gameOverText.anchoredPosition = gameOverTextStartPos;
+        xMarker.gameObject.SetActive(false);
     }
 
     public void GameOverUI()
     {
         ToggleCountDownUI(false);
         gameOverScreen.SetActive(true);
-        StartCoroutine(PlotJourney());
+        StartCoroutine(RevealTravelLine());
     }
 
     public void GoAgainButton()
@@ -143,57 +143,89 @@ public class UIController : MonoBehaviour
         Menu.main.ReturnToMenu();
     }
 
-    Vector3[] JourneyPositions()
+    IEnumerator RevealTravelLine()
     {
-        List<Vector3> pos = new List<Vector3>() { gameOverLineStart };
+        yield return new WaitForSeconds(lineRevealTime);
 
-        for(int i = 1; i <= RunLogger.main.SpinCount(); i++)
-        {
-            Vector3 v = pos[pos.Count - 1] + gameoverStepSize;
-            v += new Vector3(Random.Range(minVariance, maxVariance), Random.Range(minVariance, maxVariance) * -1f, 1f);
-            pos.Add(v);
-        }
-
-        return pos.ToArray();
-    }
-
-    IEnumerator PlotJourney()
-    {
-        Vector3[] plotPoint = JourneyPositions();
-        int step = 0;
         float timeElapsed = 0f;
+
+        float dur1 = lineRevealTime / 3f;
+        float dur2 = dur1 * 2f;
+
+        while(timeElapsed < dur2)
+        {
+            underLine.localScale = Vector3.Lerp(Vector3.one, underlineFinishScale, timeElapsed / dur2);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        underLine.localScale = underlineFinishScale;
+        timeElapsed = 0f;
+
+        while(timeElapsed < dur1)
+        {
+            float t = timeElapsed / dur1;
+
+            trainLineScreen.localScale = new Vector3(1f, Mathf.Lerp(0f, 1f, t), 1f);
+            gameOverText.anchoredPosition = Vector3.Lerp(gameOverTextStartPos, gameOverTextEndPos, t);
+
+            if(t > 0.4f) { underLine.localScale = Vector3.zero; }
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        trainLineScreen.localScale = Vector3.one;
+        gameOverText.anchoredPosition = gameOverTextEndPos;
+
+        float targetValue = RunLogger.main.SpinCount() / 50f;
+        timeElapsed = 0f;
 
         while(timeElapsed < gameOverScreenDuration)
         {
-            float t = timeElapsed / gameOverScreenDuration;
-            int intT = Mathf.FloorToInt(t * plotPoint.Length);
-
-            if (intT >= step)
-            {
-                int dif = intT - step;
-                for(int i = 0; i <= dif; i++)
-                {
-                    step++;
-                    GameObject lSeg = Instantiate(lineSegPrefab);
-                    lSeg.transform.SetParent(lineHolder);
-                    lSeg.transform.localPosition = plotPoint[step];
-                    lSeg.transform.up = plotPoint[step + 1] - lSeg.transform.position;
-                    lSeg.transform.localScale = new Vector2(lSeg.transform.localScale.x, Vector3.Distance(plotPoint[step], plotPoint[step + 1]));
-                    line.Add(lSeg);
-                }
-            }
+            gameOverSlider.value = Mathf.Lerp(0f, targetValue, timeElapsed / gameOverScreenDuration);
 
             timeElapsed += Time.deltaTime;
             yield return null;
         }
 
-        for (int i = 0; i < line.Count; i++)
+        gameOverSlider.value = targetValue;
+        xMarker.gameObject.SetActive(true);
+        if (InputManager.main.ActiveDevice == InputManager.InputDevice.Controller)
         {
-            GameObject lSeg = line[i];
-            lSeg.transform.localPosition = plotPoint[i];
-            lSeg.transform.up = plotPoint[i + 1] - lSeg.transform.position;
-            lSeg.transform.localScale = new Vector2(lSeg.transform.localScale.x, Vector3.Distance(plotPoint[step], plotPoint[step + 1]));
+            defaultGameOverControllerButton.GainFocus();
         }
+
+    }
+
+
+    #endregion
+
+    #region Pause
+    [Header("Pause")]
+    [SerializeField] GameObject pauseScreen;
+    [SerializeField] ControllerButton defaultPauseControllerButton;
+
+    public void Paused()
+    {
+        pauseScreen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.UI);
+        if (InputManager.main.ActiveDevice == InputManager.InputDevice.Controller)
+        {
+            defaultPauseControllerButton.GainFocus();
+        }
+    }
+
+    public void Unpaused()
+    {
+        pauseScreen.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Player.local.ReleaseControlOfCamera();
+    }
+
+    public void ResumeButton()
+    {
+        GameManager.main.UnpauseGame();
     }
 
     #endregion
@@ -216,5 +248,10 @@ public class UIController : MonoBehaviour
         }
     }
 
-
+    public void SwitchToControllerInput()
+    {
+        if (postScreen.activeInHierarchy) { defaultPostControllerButton.GainFocus(); }
+        if (gameOverScreen.activeInHierarchy) { defaultGameOverControllerButton.GainFocus(); }
+        if (pauseScreen.activeInHierarchy) { defaultPauseControllerButton.GainFocus(); }
+    }
 }

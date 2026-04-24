@@ -15,12 +15,16 @@ MonoBehaviour:
   trinketName: Red Coin
   trinketDescription: Whenever Red Scores increase its value by 1
   trinketIndex: 0
+  rewardsOnPickup: 0
   trinketMesh: {fileID: 7783137689717838285, guid: 28c086b30f74d9745aff3a497dec61c7, type: 3}
   trinketMaterial: {fileID: 2100000, guid: 8e4044040f715cc43a772f7e721cd053, type: 2}
+  trinketObjectScale: {x: 0.2, y: 0.2, z: 0.2}
+  trinketObjectEuler: {x: 0, y: 0, z: 0}
   trinketListenEvent: 8
   listenerCaresAboutColour: 1
   listenColour: 2
   trinketRewardType: 1
+  trinketRewardCondition: 0
   rewardColour: 2
   rewardType: 2
   rewardStrength: 1
