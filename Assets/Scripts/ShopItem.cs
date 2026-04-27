@@ -1,5 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "ShopItem", menuName = "ScriptableObjects/ShopItem")]
 public class ShopItem : ScriptableObject
@@ -38,4 +38,22 @@ public class ShopItem : ScriptableObject
     public Color VisualColour { get {return visualColour; } private set { visualColour = value; } }
     public TrinketProfile TrinketProfile { get { return trinketProfile; } private set { trinketProfile = value; } }
     public ArrowProfile ArrowProfile { get { return arrowProfile; } private set { arrowProfile = value; } }
+
+    private void OnValidate()
+    {
+        if(arrowProfile != null)
+        {
+            itemName = arrowProfile.ArrowName;
+            itemDescription = arrowProfile.ArrowDescription;
+            mesh = arrowProfile.ArrowMesh;
+            material = arrowProfile.ArrowMaterial;
+        }
+        else if(trinketProfile != null)
+        {
+            itemName = trinketProfile.TrinketName;
+            itemDescription = trinketProfile.TrinketDescription;
+            mesh = trinketProfile.TrinketMesh;
+            material = trinketProfile.TrinketMaterial;
+        }
+    }
 }

@@ -24,14 +24,24 @@ public class RewardProfile : ScriptableObject
         amounts = new List<int>(baseAmounts);
     }
 
-    public virtual void ProcessReward(WheelSegment fromSegment, int hardMultiplier = 1, MiniWheelSegment multi = null) 
+    public virtual void ProcessReward(WheelSegment fromSegment, int hardMultiplier = 1, MiniWheelSegment multi = null, RewardType selective = RewardType.All, RewardType convertive = RewardType.All) 
     {
         for (int i = 0; i < rewardTypes.Count; i++)
         {
             RewardType rewardType = rewardTypes[i];
+            
+            //Check for selective
+            if(selective != RewardType.All || selective != rewardType) { continue; }
+
             int amount = amounts[i];
             amount = Mathf.RoundToInt(amount*hardMultiplier);
             if(multi != null) { amount = multi.AdjustRewardStrength(amount); }
+
+            //Check for Convertive
+            if(convertive != RewardType.All)
+            {
+                rewardType = convertive;
+            }
 
             switch (rewardType)
             {
@@ -52,24 +62,6 @@ public class RewardProfile : ScriptableObject
                             seg.GainReward(amount);
                         }
                     }
-                    break;
-            }
-        }
-    }
-
-    public virtual void ProcessReward(MiniWheelSegment fromSegment)
-    {
-        for (int i = 0; i < rewardTypes.Count; i++)
-        {
-            RewardType rewardType = rewardTypes[i];
-            int amount = amounts[i];
-            switch (rewardType)
-            {
-                case RewardType.Fuel:
-                    Wheel.main.GainRewardResources(0, amount);
-                    break;
-                case RewardType.Coins:
-                    Wheel.main.GainRewardResources(amount, 0);
                     break;
             }
         }

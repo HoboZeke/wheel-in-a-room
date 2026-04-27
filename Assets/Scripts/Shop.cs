@@ -2,18 +2,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Shop : Interactable
+public class Shop : Focussable
 {
+    [Header("Shop")]
     [SerializeField] ShopSlot[] shopSlots;
     ShopSlot activeSlot;
-    [SerializeField] Transform cameraFocalPoint;
-    [SerializeField] Vector3 shopViewPos, shopViewRot;
-    [SerializeField] BoxCollider boxCollider;
     [Header("Tooltip")]
     [SerializeField] Transform tooltipBox;
     [SerializeField] TextMeshProUGUI tooltipTitle, tooltipDesc, tooltipType, notEnoughSpaceText;
     [SerializeField] Button tooltipBuyButton;
-    bool focused;
     bool altFocus = false;
 
     private void Start()
@@ -38,35 +35,11 @@ public class Shop : Interactable
         }
     }
 
-    public override void Interact()
-    {
-        if (!focused)
-        {
-            FocusIntoShop();
-        }
-        else
-        {
-            UnfocusShop();
-        }
-    }
 
-    void FocusIntoShop()
+    public override void LoseFocus()
     {
-        focused = true;
-        Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.Shop);
-        Player.local.MovePlayerToPos(shopViewPos, shopViewRot);
-        Player.local.ForceLookAt(cameraFocalPoint);
-        boxCollider.enabled = false;
-        Cursor.lockState = CursorLockMode.Confined;
-    }
-
-    void UnfocusShop()
-    {
-        focused = false;
+        base.LoseFocus();
         SelectActiveShopSlot(null);
-        Player.local.ReleaseControlOfCamera();
-        boxCollider.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -74,7 +47,7 @@ public class Shop : Interactable
         if (Input.GetKeyUp(KeyCode.Escape) && focused)
         {
             if (altFocus) { RevertAltFocus(); }
-            else { UnfocusShop(); }
+            else { LoseFocus(); }
         }
     }
 
@@ -166,7 +139,7 @@ public class Shop : Interactable
 
     public void RevertAltFocus()
     {
-        FocusIntoShop();
+        GainFocus();
         Wheel.main.LeaveArrowPlacementView();
         altFocus = false;
     }

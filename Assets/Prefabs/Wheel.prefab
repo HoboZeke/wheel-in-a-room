@@ -2807,7 +2807,7 @@ MonoBehaviour:
   - {x: -0.5, y: 0, z: 0.22}
   - {x: -0.35, y: -0.4, z: 0.22}
   - {x: -0.35, y: -0.4, z: 0.22}
-  wheelViewPos: {x: 0, y: 0, z: 0}
+  wheelViewPos: {x: -0.01, y: 0.09, z: 0.744}
   wheelViewRot: {x: 0, y: 0, z: 0}
   cameraFocalPoint: {fileID: 6988542787885074778}
   wheelCollider: {fileID: 3208455555885709258}

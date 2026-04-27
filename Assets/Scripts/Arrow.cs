@@ -8,7 +8,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] Wheel.WheelArrowClockPositions positionOnWheel;
     [SerializeField] ArrowProfile profile;
 
-    public enum ArrowTag { None, Indestructable, Immovable, Brittle, Scorer, PickyScorer }
+    public enum ArrowTag { None, Indestructable, Immovable, Brittle, Scorer, PickyScorer, PartialScorer, ConvertingScorer }
 
     int arrowHP;
 
@@ -41,6 +41,15 @@ public class Arrow : MonoBehaviour
                     TriggerRewardUnderArrow(segment, multiSegment);
                 }
             }
+            else if (profile.HasTag(ArrowTag.PartialScorer))
+            {
+                TriggerRewardUnderArrow(segment, multiSegment, profile.RewardType);
+
+            }
+            else if (profile.HasTag(ArrowTag.ConvertingScorer))
+            {
+
+            }
             else
             {
                 TriggerRewardUnderArrow(segment, multiSegment);
@@ -62,11 +71,12 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    void TriggerRewardUnderArrow(WheelSegment rewardSegment, MiniWheelSegment miniSegment)
+    void TriggerRewardUnderArrow(WheelSegment rewardSegment, MiniWheelSegment miniSegment, RewardProfile.RewardType onlyOfType = RewardProfile.RewardType.All, 
+        RewardProfile.RewardType convertToType = RewardProfile.RewardType.All)
     {
         if (rewardSegment != null)
         {
-            rewardSegment.GainReward(miniSegment); 
+            rewardSegment.GainReward(miniSegment, onlyOfType, convertToType);
             RunLogger.main.OnReward(rewardSegment.SegColour(), rewardSegment.RewardCoins(), rewardSegment.RewardFuel());
         }
         else

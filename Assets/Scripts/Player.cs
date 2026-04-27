@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] FirstPersonController firstPersonController;
     [SerializeField] CinemachineVirtualCamera cameraCinemachine;
+    [SerializeField] InteractManager interactManager;
     Vector3 resetPos, resetRot;
 
     private void Awake()
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
 
     public void TakeControlOfCamera(FirstPersonController.Controller controller)
     {
+        if(controller != FirstPersonController.Controller.Player) { interactManager.ClearFocus(); }
         firstPersonController.SetController(controller);
     }
 

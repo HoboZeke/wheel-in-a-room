@@ -15,9 +15,10 @@ MonoBehaviour:
   itemName: High Noon
   itemDescription: If you have only One arrow the wheel scores twice.
   itemCost: 14
-  mesh: {fileID: -2309305249758762421, guid: 7a8da9d1e895c704fa3e8be33cf80a18, type: 3}
+  mesh: {fileID: -5216581434543980006, guid: 1bcfef462ef2e98448a1e7ac433432d3, type: 3}
   material: {fileID: -1495225023128707738, guid: 96f6475fccebdef49a535ca94f60c8e1, type: 3}
-  eulerAngles: {x: 0, y: 0, z: 0}
+  eulerAngles: {x: 0, y: -90, z: 0}
+  scale: {x: 0.3, y: 0.3, z: 0.3}
   type: 2
   rarity: 2
   segmentColour: 0

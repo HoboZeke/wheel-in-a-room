@@ -19,8 +19,8 @@ public class ControllerButton : MonoBehaviour
     public virtual void GainFocus()
     {
         isActiveFocus = true;
-        activeButtonHighlight?.SetActive(true);
-        activeButtonPS?.Play();
+        if (activeButtonHighlight != null) activeButtonHighlight.SetActive(true);
+        if (activeButtonPS != null) activeButtonPS.Play();
 
         InputManager.main.ControllerEventActivate += PressButton;
         InputManager.main.ControllerEventDown += MoveFocusDown;
@@ -36,8 +36,8 @@ public class ControllerButton : MonoBehaviour
         if (sliderFocus) { UnfocusSlider(); }
 
         isActiveFocus = false;
-        activeButtonHighlight?.SetActive(false);
-        activeButtonPS?.Stop();
+        if (activeButtonHighlight != null) activeButtonHighlight.SetActive(false);
+        if(activeButtonPS != null) activeButtonPS.Stop();
 
         InputManager.main.ControllerEventActivate -= PressButton;
         InputManager.main.ControllerEventDown -= MoveFocusDown;

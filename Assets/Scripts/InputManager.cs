@@ -19,6 +19,9 @@ public class InputManager : MonoBehaviour
 
     public event EventHandler ControllerEventDeactivate;
 
+    public event EventHandler ControllerEventRightTab;
+    public event EventHandler ControllerEventLeftTab;
+
     [SerializeField] bool busy;
 
     private void Awake()
@@ -62,6 +65,10 @@ public class InputManager : MonoBehaviour
             else if (Input.GetButtonDown("Down")) { ControllerEventDown?.Invoke(this, EventArgs.Empty); }
             else if (Input.GetButtonDown("Activate")) { ControllerEventActivate?.Invoke(this, EventArgs.Empty); }
             else if (Input.GetButtonDown("Deactivate")) { ControllerEventDeactivate?.Invoke(this, EventArgs.Empty); }
+
+            else if (Input.GetButtonDown("RightTab")) { ControllerEventRightTab?.Invoke(this, EventArgs.Empty); }
+            else if (Input.GetButtonDown("LeftTab")) { ControllerEventLeftTab?.Invoke(this, EventArgs.Empty); }
+
         }
     }
 

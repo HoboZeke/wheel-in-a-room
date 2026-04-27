@@ -81,6 +81,11 @@ public class WheelSegment : MonoBehaviour
         reward.ProcessReward(this, 1, mulitSeg);
     }
 
+    public void GainReward(MiniWheelSegment mulitSeg, RewardProfile.RewardType selective, RewardProfile.RewardType convertive)
+    {
+        reward.ProcessReward(this, 1, mulitSeg, selective, convertive);
+    }
+
     public int RewardCoins() { return reward.CoinRewardAmount(); }
     public int RewardFuel() { return reward.FuelRewardAmount(); }
 

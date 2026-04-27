@@ -6,4 +6,14 @@ public class Interactable : MonoBehaviour
     {
 
     }
+
+    public virtual void OnGainFocus()
+    {
+
+    }
+
+    public virtual void OnLoseFocus()
+    {
+
+    }
 }

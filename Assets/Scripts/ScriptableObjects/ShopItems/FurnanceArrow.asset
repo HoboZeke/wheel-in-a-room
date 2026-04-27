@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be338f1fa1a354a46badeefe0cd33f2d, type: 3}
+  m_Name: FurnanceArrow
+  m_EditorClassIdentifier: Assembly-CSharp::ShopItem
+  itemName: Furnance Arrow
+  itemDescription: When scoring converts all gains into Fuel
+  itemCost: 15
+  mesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
+  material: {fileID: 2100000, guid: f99c2f606e487bd4ba7c619b09a10f39, type: 2}
+  eulerAngles: {x: 0, y: 90, z: 0}
+  scale: {x: 0.6, y: 0.6, z: 0.6}
+  type: 1
+  rarity: 1
+  segmentColour: 0
+  visualColour: {r: 0, g: 0, b: 0, a: 0}
+  trinketProfile: {fileID: 0}
+  arrowProfile: {fileID: 11400000, guid: 3b6f419dfa4e5c548bd8ac1dc29e2f8a, type: 2}

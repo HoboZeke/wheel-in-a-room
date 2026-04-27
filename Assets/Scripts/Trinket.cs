@@ -16,6 +16,7 @@ public class Trinket : MonoBehaviour
 
     public string TrinketName { get { return trinketProfile.TrinketName; } private set { }  }
     public string TrinketDescription { get { return trinketProfile.TrinketDescription; } private set { } }
+    public string TrinketTypeString { get { return ""; } private set { } }
 
     public void Setup(TrinketProfile profile)
     {

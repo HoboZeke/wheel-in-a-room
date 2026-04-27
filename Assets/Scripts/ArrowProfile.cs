@@ -9,6 +9,7 @@ public class ArrowProfile : ScriptableObject
     [SerializeField] Material arrowMaterial;
     [SerializeField] Arrow.ArrowTag[] tags;
     [SerializeField] WheelSegment.SegmentColour segmentColour;
+    [SerializeField] RewardProfile.RewardType rewardType;
     [SerializeField] int startHP;
 
 
@@ -17,6 +18,7 @@ public class ArrowProfile : ScriptableObject
     public Mesh ArrowMesh { get { return arrowMesh; }  set { arrowMesh = value; } }
     public Material ArrowMaterial { get { return arrowMaterial; } set { arrowMaterial = value; } }
     public WheelSegment.SegmentColour SegmentColour { get { return segmentColour; } set { segmentColour = value; } }
+    public RewardProfile.RewardType RewardType { get { return rewardType; } set { rewardType = value; } }
     public bool RewardsSegmentUnderArrow {
         get
         {

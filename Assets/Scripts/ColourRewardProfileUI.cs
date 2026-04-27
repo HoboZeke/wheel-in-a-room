@@ -7,6 +7,7 @@ public class ColourRewardProfileUI : MonoBehaviour
 {
     public WheelSegment.SegmentColour Colour;
 
+    [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] Image colourSquare;
     [SerializeField] TextMeshProUGUI rewardText;
 
@@ -18,6 +19,7 @@ public class ColourRewardProfileUI : MonoBehaviour
 
     public void UpdateInfo()
     {
+        nameText.text = Colour.ToString();
         colourSquare.color = Archive.main.ColourForColourProfile(Colour);
 
         RewardProfile p = Archive.main.RewardProfileForSegmentColour(Colour);

@@ -1,22 +1,19 @@
 using TMPro;
 using UnityEngine;
 
-public class TrinketCabinet : Interactable
+public class TrinketCabinet : Focussable
 {
     public static TrinketCabinet main;
 
+    [Header("Trinket Cabinet")]
     [SerializeField] GameObject[] hooks;
     [SerializeField] int trinketLimit;
     [SerializeField] Vector3 trinketPlacementOffset;
     [SerializeField] GameObject[] trinketsInSlot;
-    [SerializeField] Vector3 cabinetViewPos, cabinetViewRot;
-    [SerializeField] Transform cameraFocalPoint;
-    [SerializeField] BoxCollider boxCollider;
 
     [Header("Tooltip")]
     [SerializeField] Transform tooltipBox;
     [SerializeField] TextMeshProUGUI tooltipTitle, tooltipDesc, tooltipType;
-    bool focused = false;
 
     private void Awake()
     {
@@ -32,14 +29,14 @@ public class TrinketCabinet : Interactable
 
     public override void Interact()
     {
-        FocusIntoCabinet();
+        GainFocus();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && focused)
         {
-            UnfocusCabinet();
+            LoseFocus();
         }
     }
 
@@ -83,31 +80,21 @@ public class TrinketCabinet : Interactable
         trinket.transform.localPosition = hooks[slot].transform.localPosition + trinketPlacementOffset;
     }
 
-    void FocusIntoCabinet()
+    public override void GainFocus()
     {
-        focused = true;
-        Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.TrinketCabinet);
-        Player.local.MovePlayerToPos(cabinetViewPos, cabinetViewRot);
-        Player.local.ForceLookAt(cameraFocalPoint);
-        boxCollider.enabled = false;
-        Cursor.lockState = CursorLockMode.Confined;
-
-        foreach(GameObject t in trinketsInSlot)
+        base.GainFocus();
+        foreach (GameObject t in trinketsInSlot)
         {
-            if(t != null)
+            if (t != null)
             {
                 t.GetComponent<TrinketObject>().ToggleCollider(true);
             }
         }
     }
 
-    void UnfocusCabinet()
+    public override void LoseFocus()
     {
-        focused = false;
-        Player.local.ReleaseControlOfCamera();
-        boxCollider.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
-
+        base.LoseFocus();
         foreach (GameObject t in trinketsInSlot)
         {
             if (t != null)

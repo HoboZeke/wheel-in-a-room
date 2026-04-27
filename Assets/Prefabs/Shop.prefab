@@ -1574,16 +1574,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2573381bf7c3444c935055567df3e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shop
+  cameraFocalPoint: {fileID: 5982685322521805172}
+  cameraOwner: 1
+  shopViewPos: {x: 0.7, y: 0.09, z: -0.84}
+  shopViewRot: {x: 0, y: 90, z: 0}
+  boxCollider: {fileID: 7661216919558381039}
+  focused: 0
   shopSlots:
   - {fileID: 5428733304551113924}
   - {fileID: 5842228487787090850}
   - {fileID: 8816027120400963937}
   - {fileID: 6503715810433260164}
   - {fileID: 4738087123816147337}
-  cameraFocalPoint: {fileID: 5982685322521805172}
-  shopViewPos: {x: 0.7, y: 0.09, z: -0.84}
-  shopViewRot: {x: 0, y: 90, z: 0}
-  boxCollider: {fileID: 7661216919558381039}
   tooltipBox: {fileID: 8482755736734705787}
   tooltipTitle: {fileID: 6644261062540940486}
   tooltipDesc: {fileID: 7832536457515972785}

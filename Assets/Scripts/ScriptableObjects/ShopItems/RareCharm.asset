@@ -17,3 +17,11 @@ MonoBehaviour:
   itemCost: 12
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   material: {fileID: 2100000, guid: 979aef027a1c86c42a15ce35fce366fa, type: 2}
+  eulerAngles: {x: 0, y: 0, z: 0}
+  scale: {x: 0.3, y: 0.3, z: 0.3}
+  type: 0
+  rarity: 0
+  segmentColour: 0
+  visualColour: {r: 0, g: 0, b: 0, a: 0}
+  trinketProfile: {fileID: 0}
+  arrowProfile: {fileID: 0}

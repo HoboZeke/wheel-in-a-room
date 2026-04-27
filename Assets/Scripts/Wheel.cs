@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class Wheel : MonoBehaviour
+public class Wheel : Focussable
 {
     public static Wheel main;
 
@@ -78,7 +76,7 @@ public class Wheel : MonoBehaviour
     {
         if(focused && Input.GetKeyDown(KeyCode.Escape))
         {
-            UnfocusWheel();
+            LoseFocus();
         }
     }
 
@@ -635,10 +633,7 @@ public class Wheel : MonoBehaviour
     [SerializeField] Transform tooltipCanvas;
     [SerializeField] TextMeshProUGUI tooltipTitle, tooltipDesc, tooltipType, remainingUsesText;
     [SerializeField] Vector3[] toolTipSlotPositions;
-    [SerializeField] Vector3 wheelViewPos, wheelViewRot;
-    [SerializeField] Transform cameraFocalPoint;
     [SerializeField] WheelCollider wheelCollider;
-    bool focused;
     bool arrowPlacementMode;
 
     public void ToggleTooltip(bool toggle) { ToggleTooltip(toggle, arrowSlots[0]); }
@@ -661,25 +656,11 @@ public class Wheel : MonoBehaviour
         }
     }
 
-    public void FocusIntoWheel()
-    {
-        focused = true;
-        Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.Wheel);
-        Player.local.MovePlayerToPos(wheelViewPos, wheelViewRot);
-        Player.local.ForceLookAt(cameraFocalPoint);
-        wheelCollider.ToggleColliders(false);
-        Cursor.lockState = CursorLockMode.Confined;
-
-        foreach(ArrowSlot s in arrowSlots)
-        {
-            s.ToggleCollider(true);
-        }
-    }
 
     public void ArrowPlacementView()
     {
         arrowPlacementMode = true;
-        Player.local.MovePlayerToPos(wheelViewPos, wheelViewRot);
+        Player.local.MovePlayerToPos(viewPos, viewRot);
         Player.local.ForceLookAt(cameraFocalPoint);
         wheelCollider.ToggleColliders(false);
         Cursor.lockState = CursorLockMode.Confined;
@@ -701,13 +682,22 @@ public class Wheel : MonoBehaviour
         }
     }
 
-    void UnfocusWheel()
+    public override void GainFocus()
     {
-        focused = false;
-        Player.local.ReleaseControlOfCamera();
-        wheelCollider.ToggleColliders(true);
-        Cursor.lockState = CursorLockMode.Locked;
+        base.GainFocus();
 
+        wheelCollider.ToggleColliders(false);
+        foreach (ArrowSlot s in arrowSlots)
+        {
+            s.ToggleCollider(true);
+        }
+    }
+
+    public override void LoseFocus()
+    {
+        base.LoseFocus();
+
+        wheelCollider.ToggleColliders(true);
         foreach (ArrowSlot s in arrowSlots)
         {
             s.ToggleCollider(false);

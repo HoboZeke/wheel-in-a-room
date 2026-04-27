@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2a92035fad4ce4aa64674d7c275477, type: 3}
+  m_Name: CoalArrow
+  m_EditorClassIdentifier: Assembly-CSharp::ArrowProfile
+  arrowName: Coal Arrow
+  arrowDescription: Only score Fuel rewards when scoring a segment.
+  arrowMesh: {fileID: -7929139438592967118, guid: b03c7347ac8c74a4182a4e75b9baea12, type: 3}
+  arrowMaterial: {fileID: 2100000, guid: eaccb58c706f892479c1d8678d89d4b5, type: 2}
+  tags: 06000000
+  segmentColour: 0
+  rewardType: 0
+  startHP: 0

@@ -7,7 +7,7 @@ public class WheelCollider : Interactable
 
     public override void Interact()
     {
-        wheel.FocusIntoWheel();
+        wheel.GainFocus();
     }
 
     public void ToggleColliders(bool toggle)

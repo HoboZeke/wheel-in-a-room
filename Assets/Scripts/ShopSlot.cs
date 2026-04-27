@@ -30,6 +30,7 @@ public class ShopSlot : MonoBehaviour
         shopItemMeshFilter.mesh = shopItem.ItemMesh;
         shopItemMeshRenderer.material = shopItem.ItemMaterial;
         shopItemVisual.transform.localEulerAngles = shopItem.ItemEulerAngles;
+        shopItemVisual.transform.localScale = shopItem.ItemScale;
     }
 
     public void EmptySlot()

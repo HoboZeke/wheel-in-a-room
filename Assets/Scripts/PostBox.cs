@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class PostBox : Interactable
+public class PostBox : Focussable
 {
+    [Header("PostBox")]
     [SerializeField] PostOption[] boxOptions;
     [SerializeField] string[] postTitles;
     [SerializeField] string[] postMessages;
@@ -9,17 +10,12 @@ public class PostBox : Interactable
     [SerializeField] Transform lightHolder;
     [SerializeField] float lightRotateSpeed;
 
-    [SerializeField] BoxCollider boxCollider;
-    [SerializeField] Transform cameraFocalPoint;
-    [SerializeField] Vector3 boxViewPos, boxViewRot;
-    bool focused = false;
-
 
     public override void Interact()
     {
         if (HasPost())
         {
-            FocusOnPost();
+            GainFocus();
         }
     }
 
@@ -27,7 +23,7 @@ public class PostBox : Interactable
     {
         if(Input.GetKeyDown(KeyCode.Escape) && focused)
         {
-            ExitPost();
+            LoseFocus();
         }
 
         if (HasPost())
@@ -41,15 +37,16 @@ public class PostBox : Interactable
         return boxOptions[0] != null;
     }
 
-    public void FocusOnPost()
+    public override void GainFocus()
     {
-        focused = true;
-        Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.PostBox);
-        Player.local.MovePlayerToPos(boxViewPos, boxViewRot);
-        Player.local.ForceLookAt(cameraFocalPoint);
-        boxCollider.enabled = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        base.GainFocus();
         ShowPostUI();
+    }
+
+    public override void LoseFocus()
+    {
+        base.LoseFocus();
+        EmptyPost();
     }
 
     void ShowPostUI()
@@ -57,15 +54,6 @@ public class PostBox : Interactable
         int i = Random.Range(0, postTitles.Length);
 
         UIController.main.ShowPostScreen(postTitles[i], postMessages[i], boxOptions);
-    }
-
-    public void ExitPost()
-    {
-        focused = false;
-        EmptyPost();
-        Player.local.ReleaseControlOfCamera();
-        boxCollider.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void PopulatePost()
@@ -125,6 +113,6 @@ public class PostBox : Interactable
                 break;
         }
 
-        ExitPost();
+        LoseFocus();
     }
 }
