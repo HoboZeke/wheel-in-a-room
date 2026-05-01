@@ -18,7 +18,10 @@ public class RunLogger : MonoBehaviour
         logList.Add(new RunLog() { RunNumber = RunCount() + 1 });
     }
 
-    public void LoadRuns(RunLog[] logs) { logList = new List<RunLog>(logs); }
+    public void LoadRuns(RunLog[] logs) {
+        if(logs == null) { return; }
+        logList = new List<RunLog>(logs); 
+    }
 
     public int RunCount() { return logList.Count; }
     public int SpinCount() { return ActiveRunLog().SpinCount(); }

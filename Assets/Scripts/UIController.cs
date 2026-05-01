@@ -129,11 +129,13 @@ public class UIController : MonoBehaviour
         ToggleCountDownUI(false);
         gameOverScreen.SetActive(true);
         StartCoroutine(RevealTravelLine());
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void GoAgainButton()
     {
         gameOverScreen.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
         GameManager.main.StartNextRun();
     }
     public void BackToMenuButton()

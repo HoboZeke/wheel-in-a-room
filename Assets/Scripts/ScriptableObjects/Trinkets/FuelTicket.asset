@@ -16,15 +16,18 @@ MonoBehaviour:
   trinketDescription: Gain 1 fuel when the wheel is spun.
   trinketIndex: 0
   rewardsOnPickup: 0
-  trinketMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  trinketMesh: {fileID: -5495902117074765545, guid: 22dc8e651e60849458d55ce345f2b48d, type: 3}
   trinketMaterial: {fileID: 3511325375820423461, guid: 96f6475fccebdef49a535ca94f60c8e1, type: 3}
+  trinketPositionOffset: {x: 0, y: -0.28, z: 0}
   trinketObjectScale: {x: 0.2, y: 0.2, z: 0.2}
   trinketObjectEuler: {x: 0, y: 0, z: 0}
   trinketListenEvent: 9
   listenerCaresAboutColour: 0
   listenColour: 0
+  listenerCaresAboutWheelSize: 0
+  wheelSize: {x: 0, y: 0}
   trinketRewardType: 3
   trinketRewardCondition: 0
   rewardColour: 0
   rewardType: 0
-  rewardStrength: 0
+  rewardStrength: 1

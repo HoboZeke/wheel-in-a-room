@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -29,6 +30,12 @@ public class ShopSlot : MonoBehaviour
         shopItemVisual.SetActive(true);
         shopItemMeshFilter.mesh = shopItem.ItemMesh;
         shopItemMeshRenderer.material = shopItem.ItemMaterial;
+        if (shopItem.ItemMesh.subMeshCount > 1)
+        {
+            List<Material> mats = new List<Material>();
+            for (int i = 0; i < shopItem.ItemMesh.subMeshCount; i++) { mats.Add(shopItem.ItemMaterial); }
+            shopItemMeshRenderer.SetMaterials(mats);
+        }
         shopItemVisual.transform.localEulerAngles = shopItem.ItemEulerAngles;
         shopItemVisual.transform.localScale = shopItem.ItemScale;
     }

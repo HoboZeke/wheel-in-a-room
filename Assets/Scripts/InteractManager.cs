@@ -25,9 +25,16 @@ public class InteractManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            if (hit.collider.CompareTag("Interactable") && hit.collider.gameObject != activeTarget.gameObject)
-            {
-                activeTarget.OnLoseFocus();
+            if (hit.collider.CompareTag("Interactable"))
+            {                
+                if (activeTarget != null)
+                {
+                    if (activeTarget.gameObject == hit.collider.gameObject)
+                    {
+                        return;
+                    } 
+                    activeTarget.OnLoseFocus();
+                }
                 activeTarget = hit.collider.GetComponent<Interactable>();
                 debugstring = hit.collider.gameObject.name;
                 activeTarget.OnGainFocus();

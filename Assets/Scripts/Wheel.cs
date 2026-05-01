@@ -14,6 +14,7 @@ public class Wheel : Focussable
     [SerializeField] Transform segmentHolder;
     [SerializeField] Image highlightSegmentImage, overlayImage;
     [SerializeField] float highlightFillExcess;
+    [SerializeField] TextMeshProUGUI weightText;
     [SerializeField] GameObject wheelSegmentPrefab;
     [Header("Label values")]
     [SerializeField] float baseLabelDivisionValue;
@@ -182,6 +183,12 @@ public class Wheel : Focussable
             zAngle += wheelSegments[i].AngleOnWheel();
             wheelSegments[i].UpdateVisual();
         }
+        UpdateWeightText();
+    }
+
+    void UpdateWeightText()
+    {
+        weightText.text = WheelSize() + "<size=50%>kg";
     }
 
     public void SpinTheWheel()

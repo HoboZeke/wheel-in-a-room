@@ -47,6 +47,7 @@ public class ShopItem : ScriptableObject
             itemDescription = arrowProfile.ArrowDescription;
             mesh = arrowProfile.ArrowMesh;
             material = arrowProfile.ArrowMaterial;
+            type = ItemType.Arrow;
         }
         else if(trinketProfile != null)
         {
@@ -54,6 +55,7 @@ public class ShopItem : ScriptableObject
             itemDescription = trinketProfile.TrinketDescription;
             mesh = trinketProfile.TrinketMesh;
             material = trinketProfile.TrinketMaterial;
+            type = ItemType.Trinket;
         }
     }
 }

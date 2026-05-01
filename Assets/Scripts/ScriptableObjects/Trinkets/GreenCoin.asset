@@ -18,11 +18,14 @@ MonoBehaviour:
   rewardsOnPickup: 0
   trinketMesh: {fileID: 7783137689717838285, guid: 28c086b30f74d9745aff3a497dec61c7, type: 3}
   trinketMaterial: {fileID: 2100000, guid: aaf647606172f1f48af366e937dc7155, type: 2}
+  trinketPositionOffset: {x: 0, y: -0.28, z: 0}
   trinketObjectScale: {x: 0.2, y: 0.2, z: 0.2}
   trinketObjectEuler: {x: 0, y: 0, z: 0}
   trinketListenEvent: 8
   listenerCaresAboutColour: 1
   listenColour: 1
+  listenerCaresAboutWheelSize: 0
+  wheelSize: {x: 0, y: 0}
   trinketRewardType: 1
   trinketRewardCondition: 0
   rewardColour: 1

@@ -15,10 +15,10 @@ MonoBehaviour:
   itemName: Red Coin
   itemDescription: Whenever Red Scores increase its value by 1
   itemCost: 8
-  mesh: {fileID: -5216581434543980006, guid: 1bcfef462ef2e98448a1e7ac433432d3, type: 3}
+  mesh: {fileID: 7783137689717838285, guid: 28c086b30f74d9745aff3a497dec61c7, type: 3}
   material: {fileID: 2100000, guid: 8e4044040f715cc43a772f7e721cd053, type: 2}
   eulerAngles: {x: 0, y: -90, z: 0}
-  scale: {x: 0.5, y: 0.5, z: 0.5}
+  scale: {x: 0.1, y: 0.1, z: 0.1}
   type: 2
   rarity: 1
   segmentColour: 0

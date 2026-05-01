@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class Furnance : MonoBehaviour
     [SerializeField] ParticleSystem sootPS;
     [SerializeField] float sootAnimationDuration;
 
+    public EventHandler OnFurnanceValueUpdate;
 
 
     private void Awake()
@@ -38,7 +40,8 @@ public class Furnance : MonoBehaviour
         spinsGenerated = 0;
         heldCoal = 0;
 
-        UpdateCoalVisuals();
+        UpdateCoalVisuals(); 
+        OnFurnanceValueUpdate?.Invoke(this, EventArgs.Empty);
     }
 
     int CoalRequiredForFiring()
@@ -73,6 +76,8 @@ public class Furnance : MonoBehaviour
 
         return Mathf.FloorToInt(coalRequired * CoalRequiredMultiplier(cur)) - coalCount;
     }
+
+    public int SpinsGenerated() { return spinsGenerated; }
 
     float CoalRequiredMultiplier(int prevFires)
     {
@@ -129,6 +134,7 @@ public class Furnance : MonoBehaviour
         heldCoal = 0;
         fireObject.gameObject.SetActive(true);
         ProgressTracker.main.AddSpins(fireCount * 3);
+        OnFurnanceValueUpdate?.Invoke(this, EventArgs.Empty);
 
         yield return new WaitForSeconds(3f);
         

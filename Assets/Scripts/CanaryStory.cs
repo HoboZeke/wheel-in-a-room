@@ -31,6 +31,7 @@ public class CanaryStory : MonoBehaviour
     [Header("Tutorial")]
     [SerializeField] StoryBeat[] tutorialBeats;
     [SerializeField] float cameraMoveDuration, storyTextDuration;
+    bool tellingStory;
 
     [Header("Stories")]
     [SerializeField] StoryBeat[] runOneStory;
@@ -136,6 +137,7 @@ public class CanaryStory : MonoBehaviour
     IEnumerator PlayStory(StoryBeat[] beats)
     {
         InputManager.main.SetBusy(true);
+        tellingStory = true;
 
         storyText.text = "";
         storyContinueIndicator.gameObject.SetActive(false);
@@ -152,6 +154,7 @@ public class CanaryStory : MonoBehaviour
         Player.local.ReleaseLookAt();
         InputManager.main.SetBusy(false);
         Player.local.MovePlayerToPos(Vector3.zero, Vector3.zero);
+        tellingStory = false;
         ShowCanaryChoice();
     }
 
@@ -207,7 +210,18 @@ public class CanaryStory : MonoBehaviour
 
     private void Update()
     {
-        if (waitingForInput)
+        if (Input.GetKeyDown(KeyCode.Escape) && tellingStory)
+        {
+            StopAllCoroutines();
+            Player.local.ReleaseLookAt();
+            InputManager.main.SetBusy(false);
+            Player.local.MovePlayerToPos(Vector3.zero, Vector3.zero);
+            storyText.text = "";
+            tellingStory = false;
+            waitingForInput = false;
+            ShowCanaryChoice();
+        }
+        else if (waitingForInput)
         {
             if (Input.anyKeyDown) { InputRecieved(); }
         }

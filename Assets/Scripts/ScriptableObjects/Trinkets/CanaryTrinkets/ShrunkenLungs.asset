@@ -13,16 +13,19 @@ MonoBehaviour:
   m_Name: ShrunkenLungs
   m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
   trinketName: Shriveled Lungs
-  trinketDescription: Gain 1 Fuel when your score Soot
+  trinketDescription: Gain 1 Fuel when you score Soot
   trinketIndex: 0
   rewardsOnPickup: 0
   trinketMesh: {fileID: -5495902117074765545, guid: 96f6475fccebdef49a535ca94f60c8e1, type: 3}
-  trinketMaterial: {fileID: 3511325375820423461, guid: 96f6475fccebdef49a535ca94f60c8e1, type: 3}
+  trinketMaterial: {fileID: -5101517688679608205, guid: bb9eb9c884c7b9645809e2a92b150695, type: 3}
+  trinketPositionOffset: {x: 0.0318, y: -0.2654, z: 0}
   trinketObjectScale: {x: 1, y: 1, z: 1}
-  trinketObjectEuler: {x: 270, y: 270, z: 0}
+  trinketObjectEuler: {x: 50.22684, y: 270, z: 0}
   trinketListenEvent: 8
   listenerCaresAboutColour: 0
   listenColour: 4
+  listenerCaresAboutWheelSize: 0
+  wheelSize: {x: 0, y: 0}
   trinketRewardType: 0
   trinketRewardCondition: 0
   rewardColour: 0

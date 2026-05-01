@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour
             InputDeviceChanged?.Invoke(activeDevice);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !Menu.main.InMenu())
+        if (Input.GetKeyDown(KeyCode.Escape) && !Menu.main.InMenu() && !busy)
         {
             if (GameManager.main.IsPaused())
             {

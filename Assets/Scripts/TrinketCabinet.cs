@@ -83,25 +83,30 @@ public class TrinketCabinet : Focussable
     public override void GainFocus()
     {
         base.GainFocus();
-        foreach (GameObject t in trinketsInSlot)
-        {
-            if (t != null)
-            {
-                t.GetComponent<TrinketObject>().ToggleCollider(true);
-            }
-        }
+        //foreach (GameObject t in trinketsInSlot)
+        //{
+        //    if (t != null)
+        //    {
+        //        t.GetComponent<TrinketObject>().ToggleCollider(true);
+        //    }
+        //}
     }
 
     public override void LoseFocus()
     {
         base.LoseFocus();
-        foreach (GameObject t in trinketsInSlot)
-        {
-            if (t != null)
-            {
-                t.GetComponent<TrinketObject>().ToggleCollider(false);
-            }
-        }
+        //foreach (GameObject t in trinketsInSlot)
+        //{
+        //    if (t != null)
+        //    {
+        //        t.GetComponent<TrinketObject>().ToggleCollider(false);
+        //    }
+        //}
+    }
+
+    public bool IsFocused()
+    {
+        return focused;
     }
 
     public void HideTooltip()

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be338f1fa1a354a46badeefe0cd33f2d, type: 3}
-  m_Name: FuelTicket
+  m_Name: FatPig
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
-  itemName: Fuel Ticket
-  itemDescription: Gain 1 fuel when the wheel is spun.
-  itemCost: 7
-  mesh: {fileID: -5495902117074765545, guid: 22dc8e651e60849458d55ce345f2b48d, type: 3}
-  material: {fileID: 3511325375820423461, guid: 96f6475fccebdef49a535ca94f60c8e1, type: 3}
-  eulerAngles: {x: 0, y: 270, z: 0}
-  scale: {x: 0.1, y: 0.15, z: 0.1}
+  itemName: Fat Pig
+  itemDescription: When the wheel is spun gain 1 fuel for each kg over 10.
+  itemCost: 5
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: b80b25c8f396f7a41bcb9d182502dbf3, type: 2}
+  eulerAngles: {x: 0, y: 0, z: 0}
+  scale: {x: 0.3, y: 0.3, z: 0.3}
   type: 2
   rarity: 0
   segmentColour: 0
   visualColour: {r: 0, g: 0, b: 0, a: 0}
-  trinketProfile: {fileID: 11400000, guid: 8c09257fefd811243b7ffab4482d67ef, type: 2}
+  trinketProfile: {fileID: 11400000, guid: cd456c17063aab14e8727d986262be25, type: 2}
   arrowProfile: {fileID: 0}

@@ -29,9 +29,12 @@ public class RewardProfile : ScriptableObject
         for (int i = 0; i < rewardTypes.Count; i++)
         {
             RewardType rewardType = rewardTypes[i];
-            
+
             //Check for selective
-            if(selective != RewardType.All || selective != rewardType) { continue; }
+            if (selective != RewardType.All)
+            {
+                if (selective != rewardType) { continue; }
+            }
 
             int amount = amounts[i];
             amount = Mathf.RoundToInt(amount*hardMultiplier);

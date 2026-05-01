@@ -42,6 +42,11 @@ public class SaveLoad : MonoBehaviour
 
         RunLogger.main.LoadRuns(activeSaveFile.runLogs);
     }
+
+    public void WipeSaveFile()
+    {
+        File.Delete(Application.dataPath + "/save.txt");
+    }
 }
 
 public class SaveFile

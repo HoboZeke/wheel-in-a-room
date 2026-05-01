@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 108d5a5282b26a1429f425d28061aa02, type: 3}
-  m_Name: GreenGem
+  m_Name: FatPig
   m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
-  trinketName: Green Gem
-  trinketDescription: Increase the value Green by 1 whenever white isn't scored.
-  trinketIndex: 3
+  trinketName: Fat Pig
+  trinketDescription: When the wheel is spun gain 1 fuel for each kg over 10.
+  trinketIndex: 0
   rewardsOnPickup: 0
   trinketMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  trinketMaterial: {fileID: 2100000, guid: aaf647606172f1f48af366e937dc7155, type: 2}
+  trinketMaterial: {fileID: 2100000, guid: b80b25c8f396f7a41bcb9d182502dbf3, type: 2}
   trinketPositionOffset: {x: 0, y: -0.28, z: 0}
-  trinketObjectScale: {x: 0.2, y: 0.2, z: 0.2}
+  trinketObjectScale: {x: 0, y: 0, z: 0}
   trinketObjectEuler: {x: 0, y: 0, z: 0}
-  trinketListenEvent: 5
-  listenerCaresAboutColour: 1
-  listenColour: 1
-  listenerCaresAboutWheelSize: 0
-  wheelSize: {x: 0, y: 0}
-  trinketRewardType: 1
+  trinketListenEvent: 9
+  listenerCaresAboutColour: 0
+  listenColour: 0
+  listenerCaresAboutWheelSize: 1
+  wheelSize: {x: 10, y: 0}
+  trinketRewardType: 3
   trinketRewardCondition: 0
-  rewardColour: 1
-  rewardType: 2
+  rewardColour: 0
+  rewardType: 0
   rewardStrength: 1

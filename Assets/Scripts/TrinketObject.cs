@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -19,9 +20,12 @@ public class TrinketObject : Interactable
         trinketItemMeshRenderer.material = t.TrinketMaterial;
         if (t.TrinketMesh.subMeshCount > 1) 
         {
-            for (int i = 1; i < t.TrinketMesh.subMeshCount; i++) { trinketItemMeshRenderer.materials[i] = t.TrinketMaterial; }
+            List<Material> mats = new List<Material>();
+            for (int i = 0; i < t.TrinketMesh.subMeshCount; i++) { mats.Add(t.TrinketMaterial); }
+            trinketItemMeshRenderer.SetMaterials(mats);
         }
 
+        trinketModelObject.localPosition = t.TrinketOffset();
         trinketModelObject.localScale = t.TrinketScale();
         trinketModelObject.localEulerAngles = t.TrinketEuler();
 
@@ -36,17 +40,20 @@ public class TrinketObject : Interactable
 
     private void OnMouseExit()
     {
+        if (!TrinketCabinet.main.IsFocused()) { return; }
         TrinketCabinet.main.HideTooltip();
     }
 
     private void OnMouseEnter()
     {
+        if (!TrinketCabinet.main.IsFocused()) { return; }
         TrinketCabinet.main.SetupTooltip(this);
     }
 
     public override void OnGainFocus()
     {
-        tooltip.LookAt(Player.local.GetPosition());
+        if (TrinketCabinet.main.IsFocused()) { return; }
+        tooltip.LookAt(Camera.main.transform.position);
         tooltip.gameObject.SetActive(true);
     }
 

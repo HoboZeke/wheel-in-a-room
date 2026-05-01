@@ -11,6 +11,7 @@ public class Trinket : MonoBehaviour
 
     public Mesh TrinketMesh { get { return mesh; } private set { mesh = value; } }
     public Material TrinketMaterial { get { return material; } private set { material = value; } }
+    public Vector3 TrinketOffset() { return trinketProfile.TrinketObjectOffset; }
     public Vector3 TrinketScale() { return trinketProfile.TrinketObjectScale; }
     public Vector3 TrinketEuler() { return trinketProfile.TrinketObjectEuler; }
 
@@ -75,6 +76,12 @@ public class Trinket : MonoBehaviour
         if (trinketProfile.ListenerCaresAboutColour)
         {
             if(eventArgs.segmentColour != trinketProfile.ListenColour) { return; }
+        }
+
+        if (trinketProfile.ListenerCaresAboutWheelSize)
+        {
+            if(Wheel.main.WheelSize() < trinketProfile.MinWheelSize) { return; }
+            if(Wheel.main.WheelSize() > trinketProfile.MaxWheelSize && trinketProfile.MaxWheelSize != 0) { return; }
         }
 
         if (trinketProfile.RewardCondition != TrinketProfile.TrinketRewardCondition.None)
