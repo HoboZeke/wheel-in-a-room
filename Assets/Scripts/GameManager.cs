@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void StartRun()
     {
+        AudioManager.main.SwitchToGameMusic();
         RunLogger.main.StartNewRun();
         canaryStory.OnStartRun();
     }
@@ -105,6 +106,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         UIController.main.GameOverUI();
+        AudioManager.main.SwitchToGameOverMusic();
     }
 
     public void FiredUpFurnance()

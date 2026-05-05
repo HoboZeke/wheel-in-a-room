@@ -37,10 +37,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioPlayer menuBackground;
     [SerializeField] AudioPlayer gameBackground;
     [SerializeField] AudioPlayer countdownMusic;
+    [SerializeField] AudioPlayer gameOverMusic;
+    [SerializeField] AudioPlayer ambientMusic;
 
     [Header("SFX")]
     [SerializeField] AudioPlayer fireSFX;
     [SerializeField] AudioPlayer wheelSFX;
+    [SerializeField] AudioPlayer uiButtonSFX;
 
     private void Awake()
     {
@@ -117,7 +120,9 @@ public class AudioManager : MonoBehaviour
         {
             menuBackground,
             gameBackground,
-            countdownMusic
+            countdownMusic, 
+            gameOverMusic,
+            ambientMusic
         };
     }
 
@@ -126,14 +131,34 @@ public class AudioManager : MonoBehaviour
         return new AudioPlayer[]
         {
             fireSFX,
-            wheelSFX
+            wheelSFX,
+            uiButtonSFX
         };
+    }
+
+    public void SwitchToMenuMusic()
+    {
+        menuBackground.Play();
+        gameBackground.Stop();
+        gameOverMusic.Stop();
+        countdownMusic.Stop();
+        ambientMusic.Stop();
     }
 
     public void SwitchToGameMusic()
     {
         menuBackground.Stop();
         gameBackground.Play();
+        ambientMusic.Play();
+    }
+
+    public void SwitchToGameOverMusic()
+    {
+        menuBackground.Stop();
+        gameBackground.Stop();
+        gameOverMusic.Play();
+        countdownMusic.Stop();
+        ambientMusic.Play();
     }
 
     public void PlayFireSFX()
@@ -149,6 +174,11 @@ public class AudioManager : MonoBehaviour
     public void StopCountdownMusic()
     {
         countdownMusic.Stop();
+    }
+
+    public void PlayUIButtonSFX()
+    {
+        uiButtonSFX.Play();
     }
 }
 

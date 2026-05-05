@@ -46,6 +46,7 @@ public class SaveLoad : MonoBehaviour
     public void WipeSaveFile()
     {
         File.Delete(Application.dataPath + "/save.txt");
+        activeSaveFile = new SaveFile();
     }
 }
 

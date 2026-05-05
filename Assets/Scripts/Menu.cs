@@ -104,6 +104,7 @@ public class Menu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Player.local.TakeControlOfCamera(StarterAssets.FirstPersonController.Controller.UI);
         currentScreen = ViewScreen.MenuScreen;
+        AudioManager.main.SwitchToMenuMusic();
     }
 
     public void MoveCameraToOptions()
@@ -134,6 +135,16 @@ public class Menu : MonoBehaviour
         rocketLaunching = false;
         StartCoroutine(RotateCamera(storyCameraRot, cameraBaseRot, cameraRotationDuration));
         currentScreen = ViewScreen.MenuScreen;
+        directionalLight.SetActive(true);
+
+        rocketLaunching = false;
+    }
+
+    public void ExitStory()
+    {
+        if(storyCoroutine != null) { StopCoroutine(storyCoroutine); }
+        busy = false;
+        MoveCameraFromStory();
     }
 
     IEnumerator RotateCamera(Vector3 from, Vector3 to, float dur)

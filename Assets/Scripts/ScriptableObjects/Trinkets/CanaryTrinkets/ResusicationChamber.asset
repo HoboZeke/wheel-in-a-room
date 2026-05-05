@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ResusicationChamber
   m_EditorClassIdentifier: Assembly-CSharp::TrinketProfile
   trinketName: Resusication Chamber
-  trinketDescription: Your gain an extra 2 spins.
+  trinketDescription: You gain an extra 2 spins.
   trinketIndex: 0
   rewardsOnPickup: 1
   trinketMesh: {fileID: 289301614986012343, guid: 0116791f5ef5d5b42bb619fa3cfd24f7, type: 3}

@@ -9,6 +9,7 @@ public class ButtonObject : MonoBehaviour
     public void Activate()
     {
         OnClick?.Invoke();
+        AudioManager.main.PlayUIButtonSFX();
     }
 
     private void OnMouseDown()

@@ -160,6 +160,7 @@ public class RunLogger : MonoBehaviour
     }
 }
 
+[Serializable]
 public class RunLog
 {
     public int RunNumber;
@@ -174,6 +175,7 @@ public class RunLog
     }
 }
 
+[Serializable]
 public class SpinLog
 {
     public int SpinNumber;
@@ -199,6 +201,7 @@ public class SpinLog
     public int SpinRewardedFuelCount() { return spinRewardLog.FuelRewarded(); }
 }
 
+[Serializable]
 public class SpinRewardLog
 {
     public List<WheelSegment.SegmentColour> SegmentColours = new List<WheelSegment.SegmentColour>();
